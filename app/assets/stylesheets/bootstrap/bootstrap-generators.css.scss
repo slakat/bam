@@ -1,6 +1,9 @@
+// Es archivo genera BOOTSTRAP en si, cargando los temas, variables, etc.
+
 @import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
-@import "bootstrap-variables";
-@import "bootstrap.scss";
+@import "bootstrap/bootstrap-variables";
+@import "bootstrap/bootstrap";
+@import "bootstrap/bootstrap-theme";
 @import "bootstrap/glyphicons";
 
 .navbar {

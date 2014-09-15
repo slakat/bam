@@ -11,7 +11,7 @@
  * file per style scope.
  *= require select2
  *= require select2-bootstrap
- *= require bootstrap-generators
+ *= require bootstrap/bootstrap-generators
  *= require bootstrap_and_overrides
  *= require font-awesome
  *= require_tree .
