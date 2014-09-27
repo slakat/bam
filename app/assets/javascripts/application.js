@@ -17,6 +17,7 @@
 //= require select2
 //= require jquery_nested_form
 //= require jquery.datetimepicker
+//= require gritter
 //= require_self
 //= require_tree .
 

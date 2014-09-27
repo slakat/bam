@@ -14,6 +14,7 @@
  *= require bootstrap/bootstrap-generators
  *= require bootstrap_and_overrides
  *= require font-awesome
+ *= require gritter
  *= require_tree .
  *= require_self
  */

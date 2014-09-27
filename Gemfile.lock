@@ -54,6 +54,7 @@ GEM
     execjs (2.2.1)
     font-awesome-rails (4.2.0.0)
       railties (>= 3.2, < 5.0)
+    gritter (1.1.0)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -158,6 +159,7 @@ DEPENDENCIES
   devise
   devise-i18n-views
   font-awesome-rails
+  gritter (= 1.1.0)
   haml-rails
   highcharts-rails (~> 3.0.0)
   jbuilder (~> 2.0)

@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# Easily add Growl-like notifications
+# https://github.com/RobinBrouwer/gritter
+gem 'gritter', '1.1.0'
+
 # Beautiful icons
 gem 'font-awesome-rails'
 
