@@ -3,6 +3,13 @@ source 'https://rubygems.org'
 # Beautiful icons
 gem 'font-awesome-rails'
 
+# Highcharts
+gem 'highcharts-rails', '~> 3.0.0'
+
+# PDF
+#gem 'wicked_pdf'
+#gem 'wkhtmltopdf-binary' # Binarios que instalan el core de wicked_pdf
+
 # Select2 for rails
 gem 'select2-rails'
 
