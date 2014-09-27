@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# AJAX and History.js
+gem 'wiselinks'
+
 # Easily add Growl-like notifications
 # https://github.com/RobinBrouwer/gritter
 gem 'gritter', '1.1.0'
