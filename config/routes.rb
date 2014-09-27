@@ -2,6 +2,11 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  # Wiselinks example
+  get '/wiselink-example-1' => 'home#wiselink_example_1', as: 'wiselink1'
+  get '/wiselink-example-2' => 'home#wiselink_example_2', as: 'wiselink2'
+  get '/modal_example' => 'home#modal_example', as: 'modal_example'
+
   get '/theme' => 'home#theme'
 
   # The priority is based upon order of creation: first created -> highest priority.

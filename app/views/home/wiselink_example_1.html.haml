@@ -1,0 +1,7 @@
+= active_link_to 'Wiselink 1', wiselink1_path, { home: 'wiselink1' }, { :'data-push' => 'true' }
+= active_link_to 'Wiselink 2', wiselink2_path, { home: 'wiselink2' }, { :'data-push' => 'true' }
+= link_to 'Open modal', modal_example_path, { :'data-push' => 'true', :'data-target' => '#main-modal-body' }
+
+%h1 Hi, I'm wiselink_example_1
+
+= "I'm a random number : #{Random.rand(0..100)}"

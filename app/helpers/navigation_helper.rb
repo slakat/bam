@@ -1,5 +1,21 @@
 module NavigationHelper
 
+  def active_link_to(name, path, options = {}, html_options = {}, &block)
+
+    if name.is_a?(Hash)
+      options = name
+      html_options = path
+    end
+
+    has_active(options, html_options)
+
+    if block_given?
+      link_to name, path, html_options, &block
+    else
+      link_to name, path, html_options
+    end
+  end
+
   # The same as #link_to, but the 3rd param is the active condition, 4rd param is the html_options hash.
   #
   # == Examples:

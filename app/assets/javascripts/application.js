@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require select2
 //= require jquery_nested_form
 //= require jquery.datetimepicker
 //= require gritter
+//= require wiselinks
 //= require_self
 //= require_tree .
 

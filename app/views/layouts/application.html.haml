@@ -7,4 +7,12 @@
     %script{src: '//cdnjs.cloudflare.com/ajax/libs/holder/2.4.0/holder.js'}
     = csrf_meta_tags
   %body
-    = yield
+    - # CAUTION: If you delete/change #main-container name, remember to update wiselinks_app.js.coffee
+    #main-container
+      = yield
+
+    - # Used for AJAX modals. DON'T CHANGE IDS
+    #main-modal.modal.fade.item
+      .modal-dialog
+        .modal-content
+          #main-modal-body.modal-body
