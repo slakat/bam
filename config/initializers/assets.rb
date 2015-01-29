@@ -1,3 +1,8 @@
 Rails.application.config.assets.precompile += %w( ie-spacer.gif )
 Rails.application.config.assets.precompile += %w( gritter.png )
 Rails.application.config.assets.precompile += %w( gritter-close.png )
+Rails.application.config.assets.precompile += %w( success.png )
+Rails.application.config.assets.precompile += %w( warning.png )
+Rails.application.config.assets.precompile += %w( error.png )
+Rails.application.config.assets.precompile += %w( notice.png )
+Rails.application.config.assets.precompile += %w( progress.gif )
