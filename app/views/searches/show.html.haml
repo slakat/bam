@@ -1,0 +1,12 @@
+.page-header
+  = link_to searches_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_search_path(@search), :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show search
+
+%dl.dl-horizontal
+  %dt Term:
+  %dd= @search.term

@@ -1,0 +1,22 @@
+.page-header
+  = link_to new_search_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Search
+  %h1 Listing searches
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Term
+        %th
+        %th
+        %th
+
+    %tbody
+      - @searches.each do |search|
+        %tr
+          %td= search.term
+          %td= link_to 'Show', search
+          %td= link_to 'Edit', edit_search_path(search)
+          %td= link_to 'Destroy', search, :data => { confirm: 'Are you sure?' }, :method => :delete

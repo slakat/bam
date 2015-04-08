@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :searches
+
+  resources :clients
+
+  devise_for :users
+  resources :accounts
+
   root 'home#index'
 
   # Wiselinks example

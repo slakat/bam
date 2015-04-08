@@ -1,0 +1,17 @@
+= form_for @search, :html => { :class => "form-horizontal" } do |f|
+  -if @search.errors.any?
+    .alert.alert-danger.alert-dismissable
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      %h4= "#{pluralize(@search.errors.count, "error")} prohibited this search from being saved:"
+
+      %ul
+        - @search.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :term, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :term, :class => 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit :class => 'btn btn-primary'
