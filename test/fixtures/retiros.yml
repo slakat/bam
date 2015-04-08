@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cuaderno: MyString
+  data_retiro: MyString
+  status: MyString
+
+two:
+  cuaderno: MyString
+  data_retiro: MyString
+  status: MyString

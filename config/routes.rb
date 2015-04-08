@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :movimientos
+
+  resources :retiros
+
+  resources :causas
+
   resources :searches
 
   resources :clients

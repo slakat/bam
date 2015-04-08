@@ -1,0 +1,16 @@
+.page-header
+  = link_to retiros_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_retiro_path(@retiro), :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show retiro
+
+%dl.dl-horizontal
+  %dt Cuaderno:
+  %dd= @retiro.cuaderno
+  %dt Data retiro:
+  %dd= @retiro.data_retiro
+  %dt Status:
+  %dd= @retiro.status

@@ -1,0 +1,24 @@
+.page-header
+  = link_to new_movimiento_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Movimiento
+  %h1 Listing movimientos
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Dato1
+        %th Dato2
+        %th
+        %th
+        %th
+
+    %tbody
+      - @movimientos.each do |movimiento|
+        %tr
+          %td= movimiento.dato1
+          %td= movimiento.dato2
+          %td= link_to 'Show', movimiento
+          %td= link_to 'Edit', edit_movimiento_path(movimiento)
+          %td= link_to 'Destroy', movimiento, :data => { confirm: 'Are you sure?' }, :method => :delete

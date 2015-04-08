@@ -1,0 +1,26 @@
+.page-header
+  = link_to new_retiro_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Retiro
+  %h1 Listing retiros
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Cuaderno
+        %th Data retiro
+        %th Status
+        %th
+        %th
+        %th
+
+    %tbody
+      - @retiros.each do |retiro|
+        %tr
+          %td= retiro.cuaderno
+          %td= retiro.data_retiro
+          %td= retiro.status
+          %td= link_to 'Show', retiro
+          %td= link_to 'Edit', edit_retiro_path(retiro)
+          %td= link_to 'Destroy', retiro, :data => { confirm: 'Are you sure?' }, :method => :delete

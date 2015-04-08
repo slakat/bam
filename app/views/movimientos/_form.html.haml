@@ -1,0 +1,21 @@
+= form_for @movimiento, :html => { :class => "form-horizontal" } do |f|
+  -if @movimiento.errors.any?
+    .alert.alert-danger.alert-dismissable
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      %h4= "#{pluralize(@movimiento.errors.count, "error")} prohibited this movimiento from being saved:"
+
+      %ul
+        - @movimiento.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :dato1, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :dato1, :class => 'form-control'
+  .form-group
+    = f.label :dato2, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :dato2, :class => 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit :class => 'btn btn-primary'

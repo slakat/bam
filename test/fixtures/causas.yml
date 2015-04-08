@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rol: MyString
+  date: 2015-04-08
+  caratulado: MyString
+  tribunal: MyString
+
+two:
+  rol: MyString
+  date: 2015-04-08
+  caratulado: MyString
+  tribunal: MyString

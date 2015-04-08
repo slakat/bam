@@ -1,0 +1,25 @@
+= form_for @retiro, :html => { :class => "form-horizontal" } do |f|
+  -if @retiro.errors.any?
+    .alert.alert-danger.alert-dismissable
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      %h4= "#{pluralize(@retiro.errors.count, "error")} prohibited this retiro from being saved:"
+
+      %ul
+        - @retiro.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :cuaderno, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :cuaderno, :class => 'form-control'
+  .form-group
+    = f.label :data_retiro, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :data_retiro, :class => 'form-control'
+  .form-group
+    = f.label :status, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :status, :class => 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit :class => 'btn btn-primary'

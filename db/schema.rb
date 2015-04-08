@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408200643) do
+ActiveRecord::Schema.define(version: 20150408203617) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -21,10 +21,54 @@ ActiveRecord::Schema.define(version: 20150408200643) do
     t.datetime "updated_at"
   end
 
+  create_table "causas", force: true do |t|
+    t.string   "rol"
+    t.date     "date"
+    t.string   "caratulado"
+    t.string   "tribunal"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "client_causes", force: true do |t|
+    t.integer  "cause_id"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clients", force: true do |t|
     t.string   "name"
     t.string   "lastname"
     t.string   "rut"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "movimientos", force: true do |t|
+    t.string   "dato1"
+    t.string   "dato2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "retiros", force: true do |t|
+    t.string   "cuaderno"
+    t.string   "data_retiro"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "searches", force: true do |t|
+    t.string   "term"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_causes", force: true do |t|
+    t.integer  "cause_id"
+    t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

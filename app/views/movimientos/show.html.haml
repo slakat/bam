@@ -1,0 +1,14 @@
+.page-header
+  = link_to movimientos_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_movimiento_path(@movimiento), :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show movimiento
+
+%dl.dl-horizontal
+  %dt Dato1:
+  %dd= @movimiento.dato1
+  %dt Dato2:
+  %dd= @movimiento.dato2

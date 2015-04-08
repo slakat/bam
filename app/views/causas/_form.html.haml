@@ -1,0 +1,29 @@
+= form_for @causa, :html => { :class => "form-horizontal" } do |f|
+  -if @causa.errors.any?
+    .alert.alert-danger.alert-dismissable
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      %h4= "#{pluralize(@causa.errors.count, "error")} prohibited this causa from being saved:"
+
+      %ul
+        - @causa.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :rol, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :rol, :class => 'form-control'
+  .form-group
+    = f.label :date, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.date_select :date, :class => 'form-control'
+  .form-group
+    = f.label :caratulado, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :caratulado, :class => 'form-control'
+  .form-group
+    = f.label :tribunal, :class => 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :tribunal, :class => 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit :class => 'btn btn-primary'
