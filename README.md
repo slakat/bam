@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 BaseApplication
 ===============
 
@@ -44,3 +45,7 @@ rails g cancan:ability
 
 Más información en <https://github.com/CanCanCommunity/cancancan>
 
+=======
+# bam
+Proyecto Bam
+>>>>>>> 61212e54a6789b1c9459f557c847cfcfc010c424
