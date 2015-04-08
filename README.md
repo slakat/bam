@@ -1,51 +1,13 @@
-<<<<<<< HEAD
-BaseApplication
-===============
+# Procurador web
+##Proyecto BAM
 
-Creemos aquí la aplicación base :)
-
-# Instalación #
-
-Clonar la aplicación base 
-
-```
-git clone https://github.com/HasuSoftware/BaseApplication --origin BaseApplication [MY-NEW-PROJECT] 
-```
-
-Crear en GitHub un repositorio con nombre [MY-NEW-PROJECT]
-
-En consola, ejecutar:
-
-```
-git remote add origin git@github.com:[MY-GITHUB-ACCOUNT]/[MY-NEW-PROJECT].git
-git push -u origin master
-```
-
-Ejemplo:
-
-1. ``` git clone https://github.com/HasuSoftware/BaseApplication --origin BaseApplication hasu-timesheet ```
-2. Se creo en GitHub a nombre de HasuSoftware el repositorio hasu-timesheet
-3. ```git remote add origin https://github.com/HasuSoftware/hasu-timesheet.git```
-4. ```git push -u origin master```
+BAM es una firma chilena de abogados y debido a la cantidad de áreas de práctica que posee, debe revisar día a día los distintos sitios web del Poder Judicial de Chile para obtener actualizaciones del estado judicial de sus casos, con el costo de tiempo que ello implica. Por lo que necesitan la Automatización de la revisión de los diferentes sitios web pertenecientes al Poder Judicial de Chile.
 
 
-## Devise ##
+###Equipo:
+- Andrés Cifuentes
+- Tomás Gunther
+- Katherine Páez
+	
+IIC3143 - Desarrollo de Software 2015/1.
 
-```
-rails generate devise:install
-```
-
-Más información en <https://github.com/plataformatec/devise>
-
-## Cancancan ##
-
-```
-rails g cancan:ability
-```
-
-Más información en <https://github.com/CanCanCommunity/cancancan>
-
-=======
-# bam
-Proyecto Bam
->>>>>>> 61212e54a6789b1c9459f557c847cfcfc010c424

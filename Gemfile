@@ -26,8 +26,8 @@ gem 'bootstrap-sass'
 # Generate bootstrap template automatic
 gem 'bootstrap-generators', '~> 3.1.1'
 
-# Roles for users
-#gem 'cancancan', '~> 1.7'
+# Roles for usebundrs
+gem 'cancancan'
 
 # Use devise for authentication
 gem 'devise'
@@ -89,6 +89,33 @@ gem 'spring',        group: :development
 
 # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
 gem 'thin'
+
+# generar informacion falsa para testear
+gem 'faker'
+
+#validacion de fechas
+gem 'date_validation'
+
+#barra de progreso de procesos
+gem 'progress_bar'
+
+#estadisticas de procesos en front-end
+gem 'rack-mini-profiler'
+
+#silenciar el procesamiento de assets
+gem 'quiet_assets'
+
+#obtener modelo de datos en pdf
+gem 'railroady'
+
+#imprimir bonit los queries anteponiendo ap
+gem 'awesome_print'
+
+#libreria util para javascript
+gem 'underscore-rails'
+
+#para realizar scraper
+gem 'mechanize'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
