@@ -11,17 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408203617) do
+ActiveRecord::Schema.define(version: 20150409155535) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
     t.string   "lastname"
     t.string   "rut"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "causas", force: true do |t|
+  create_table "civil_causas", force: true do |t|
     t.string   "rol"
     t.date     "date"
     t.string   "caratulado"
@@ -30,8 +31,8 @@ ActiveRecord::Schema.define(version: 20150408203617) do
     t.datetime "updated_at"
   end
 
-  create_table "client_causes", force: true do |t|
-    t.integer  "cause_id"
+  create_table "client_causas", force: true do |t|
+    t.integer  "causa_id"
     t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -45,6 +46,30 @@ ActiveRecord::Schema.define(version: 20150408203617) do
     t.datetime "updated_at"
   end
 
+  create_table "corte_causas", force: true do |t|
+    t.string "numero_ingreso"
+    t.date   "fecha_ingreso"
+    t.string "ubicacion"
+    t.date   "fecha_ubicacion"
+    t.string "corte"
+    t.string "caratulado"
+  end
+
+  create_table "general_causas", force: true do |t|
+    t.integer  "causa_id"
+    t.string   "causa_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "laboral_causas", force: true do |t|
+    t.string "rit"
+    t.string "ruc"
+    t.date   "fecha"
+    t.string "caratulado"
+    t.string "tribunal"
+  end
+
   create_table "movimientos", force: true do |t|
     t.string   "dato1"
     t.string   "dato2"
@@ -52,10 +77,19 @@ ActiveRecord::Schema.define(version: 20150408203617) do
     t.datetime "updated_at"
   end
 
+  create_table "procesal_causas", force: true do |t|
+    t.string "tribunal"
+    t.string "tipo"
+    t.string "rol_interno"
+    t.string "rol_unico"
+    t.string "identificacion_causa"
+    t.string "estado"
+  end
+
   create_table "retiros", force: true do |t|
     t.string   "cuaderno"
     t.string   "data_retiro"
-    t.string   "status"
+    t.string   "estado"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -66,8 +100,18 @@ ActiveRecord::Schema.define(version: 20150408203617) do
     t.datetime "updated_at"
   end
 
-  create_table "user_causes", force: true do |t|
-    t.integer  "cause_id"
+  create_table "suprema_causas", force: true do |t|
+    t.string "numero_ingreso"
+    t.string "tipo_recurso"
+    t.date   "fecha_ingreso"
+    t.string "ubicacion"
+    t.date   "fecha_ubicacion"
+    t.string "corte"
+    t.string "caratulado"
+  end
+
+  create_table "user_causas", force: true do |t|
+    t.integer  "causa_id"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
