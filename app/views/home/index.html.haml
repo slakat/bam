@@ -1,2 +1,47 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.haml
+%h1 Busca una causa
+
+%select.select2-search
+
+#reportes.bg-petro
+  .container#report-form
+    .row.marg-t-20
+      = form_tag '', id: 'report-form', role: 'form', remote: true do
+
+        - behaviour = {behaviour: 'select2'} #unless mobile_device?
+
+        .row
+          .col-md-12
+            %i.icon-dados.txt-80.txt-white.pull-left.hidden-xs
+            %span.txt-24.txt-white.marg-t-10.line-h-40.font-bold.txt-14-xs
+              = 'algo'
+            %br/
+            %span.txt-36.txt-white.line-h-30.font-bold.txt-24-xs
+              = 'algo2'
+            %hr.visible-xs/
+          .col-sm-7.marg-t-20
+            %p.txt-18.txt-white.font-bold
+              = 'duh'
+        .row
+          .col-md-6
+            %p.txt-18.txt-white.font-bold.marg-t-20
+              %span.font-normal.txt-14 1.
+              = 'hmm'
+            .row
+              .col-md-3
+                %p.txt-white.font-light.txt-12.pull-left.marg-t-20= 'hola'
+              .col-md-9
+                - options = options_from_collection_for_select(Causa.all, :id, :name)
+                = select2_helper :industry_id, options, behaviour
+            .row.marg-t-20
+              .col-md-3
+                %p.txt-white.text-left.font-light.txt-12.marg-t-20= 'hola'
+              .col-md-9
+                = select_tag :area_id, options_from_collection_for_select(User.all, :id, :name), class: 'form-control select select-default w-100pc', data: behaviour, required: true, id: 'areas_select'
+            .row.marg-t-20
+              .col-md-3
+                = popover_tag('holo', 'chao')
+                %p.txt-white.text-left.font-light.txt-12.marg-t-20= 'chan'
+              .col-md-9
+                //= select_tag :job_id, options_from_collection_for_select(Area.get_positions, :id, :name), class: 'form-control select select-default w-100pc', data: behaviour, required: true, id: 'jobs'
+                - options = options_from_collection_for_select(User.all, :id, :name)
+                = select2_helper :job_id, options, behaviour

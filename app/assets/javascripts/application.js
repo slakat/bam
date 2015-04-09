@@ -21,42 +21,28 @@
 //= require_self
 //= require_tree .
 
+
 function onInit(callback){
     $(document).ready(callback);
     $(document).on('page:load', callback);
 }
 
-/***********************************
- * Datepicker
-************************************/
+function init_container(container_id){
+    var select2s = $("[data-behaviour='select2']",container_id);
+    select2s.select2({
+        minimumResultsForSearch: 5
+    });
 
-var datetimepicker_params = {
-    lang: 'es',
-    format: 'd/m/Y H:i',
-    placeholder: 'dd/mm/aaaa hh:mm',
-    formatDate: 'd/m/Y',
-    formatTime: 'H:i',
-    allowTimes: ['08:30', '10:00', '11:30', '12:50', '14:00', '15:30', '17:00', '18:30', '20:00'],
-    dayOfWeekStart: 1,
-    scrollInput: false,
-    allowBlank: true
-};
-
-var datepicker_params = $.extend({}, datetimepicker_params, {datepicker: true,  timepicker: false, format: 'd/m/Y'});
-var timepicker_params = $.extend({}, datetimepicker_params, {datepicker: false, timepicker: true,  format: 'H:i'});
-
-function initContainer(container_id) {
-
-    var datepickers = $("[data-behaviour='datepicker']", container_id);
-    datepickers.datetimepicker(datepicker_params);
-
-    var timepickers = $("[data-behaviour='timepicker']", container_id);
-    timepickers.datetimepicker(timepicker_params);
-
-    var datetimepickers = $("[data-behaviour='datetimepicker']", container_id);
-    datetimepickers.datetimepicker(datetimepicker_params);
-
+    var popovers = $("[data-behaviour='popover']",container_id);
+    popovers.popover();
 }
+
+function init_new_page(){
+    init_container('body');
+}
+
+
+$(function(){init_new_page();})
 
 onInit(function(){
     initContainer('#main-container');

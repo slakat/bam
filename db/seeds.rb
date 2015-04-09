@@ -5,4 +5,3 @@
     require_relative seed_file
   end
 end
-#TODO: Falta idear una forma de manejar scripts que se suben con el sistema en producción y que deben ser leidos por los seed también. Además debe permitir dividir la carga cuando el script del ambiente se extienda demasiado.
