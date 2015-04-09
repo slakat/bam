@@ -1,7 +1,7 @@
 class CreateUserCauses < ActiveRecord::Migration
   def change
-    create_table :user_causes do |t|
-      t.integer :cause_id
+    create_table :user_causas do |t|
+      t.integer :causa_id
       t.integer :account_id
 
       t.timestamps
