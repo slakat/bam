@@ -87,6 +87,24 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+group :development, :test do
+  gem 'thin' # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
+  gem 'railroady' # diagrama de bd
+  gem 'rails-erd' # diagrama de bd
+  gem 'progress_bar' #para mostrar una progressbar en la consola en procesos largos
+  gem 'rack-mini-profiler' #para mostrar estadísticas de velocidad y queries en las vistas
+  gem 'quiet_assets', '>= 1.0.2' #para no mostrar cuando se cargan las assets en el log
+  gem 'jasmine'
+end
+
+# Test
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'factory_girl'
+  gem 'capybara'
+  gem 'database_cleaner'
+end
+
 # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
 gem 'thin'
 
@@ -95,18 +113,6 @@ gem 'faker'
 
 #validacion de fechas
 gem 'date_validation'
-
-#barra de progreso de procesos
-gem 'progress_bar'
-
-#estadisticas de procesos en front-end
-gem 'rack-mini-profiler'
-
-#silenciar el procesamiento de assets
-gem 'quiet_assets'
-
-#obtener modelo de datos en pdf
-gem 'railroady'
 
 #imprimir bonit los queries anteponiendo ap
 gem 'awesome_print'
