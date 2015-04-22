@@ -35,6 +35,14 @@ class SearchesController < ApplicationController
     @search.destroy
     respond_with(@search)
   end
+  
+  def raw
+  end
+  
+  def search_scraper
+    @listado= LaboralScraper.search_by_rut(params[:rut])
+    puts "======================="
+  end
 
   private
     def set_search

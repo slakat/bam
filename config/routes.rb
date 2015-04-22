@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   resources :accounts
 
   root 'home#index'
-
+  
+  get 'search/raw' => 'searches#raw', as: 'raw_search'
+  post 'search_scraper' =>'searches#search_scraper', defaults: { format: 'js' },as: 'search_scraper'
   # Wiselinks example
   get '/wiselink-example-1' => 'home#wiselink_example_1', as: 'wiselink1'
   get '/wiselink-example-2' => 'home#wiselink_example_2', as: 'wiselink2'
