@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'whenever'
+gem 'daemons-rails'
+
 # AJAX and History.js
 gem 'wiselinks'
 
