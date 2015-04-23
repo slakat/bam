@@ -39,9 +39,16 @@ class SearchesController < ApplicationController
   def raw
   end
   
-  def search_scraper
+  def search_rut_scraper
     @listado= LaboralScraper.search_by_rut(params[:rut])
-    puts "======================="
+  end
+  
+  def search_name_scraper
+    @listado= LaboralScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+  end
+  
+    def search_rut_civil
+    @listado= CivilScraper.search_by_rut(params[:rut])
   end
 
   private
