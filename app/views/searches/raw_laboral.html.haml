@@ -5,7 +5,7 @@
 #reportes.bg-petro
   .container#report-form
     .row.marg-t-20
-      = form_tag search_rut_scraper_path, id: 'raw-search-form', role: 'form', remote: true do
+      = form_tag search_rut_laboral_path, id: 'raw-search-form', role: 'form', remote: true do
 
         - behaviour = {behaviour: 'select2'} #unless mobile_device?
 
@@ -18,7 +18,7 @@
         =submit_tag 'Buscar rut' 
         
     .row.marg-t-20
-      = form_tag search_name_scraper_path, id: 'raw-search-form', role: 'form', remote: true do
+      = form_tag search_name_laboral_path, id: 'raw-search-form', role: 'form', remote: true do
 
         - behaviour = {behaviour: 'select2'} #unless mobile_device?
 
@@ -31,6 +31,7 @@
             = text_field_tag :last_name,'',behaviour
             = text_field_tag :second_last_name,'',behaviour
         =submit_tag 'Buscar nombre'
+       
        
     .row
       #results

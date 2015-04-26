@@ -15,9 +15,12 @@ Rails.application.routes.draw do
 
   root 'home#index'
   
-  get 'search/raw/laboral' => 'searches#raw', as: 'raw_search'
-  post 'search_rut_scraper' =>'searches#search_rut_scraper', defaults: { format: 'js' },as: 'search_rut_scraper'
-  post 'search_name_scraper' =>'searches#search_name_scraper', defaults: { format: 'js' },as: 'search_name_scraper'
+  get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
+  get 'search/raw/civil' => 'searches#raw_civil', as: 'raw_civil_search'
+  post 'search_rut_laboral' =>'searches#search_rut_laboral', defaults: { format: 'js' },as: 'search_rut_laboral'
+  post 'search_name_laboral' =>'searches#search_name_laboral', defaults: { format: 'js' },as: 'search_name_laboral'
+  post 'search_rut_civil' =>'searches#search_rut_civil', defaults: { format: 'js' },as: 'search_rut_civil'
+  post 'search_name_civil' =>'searches#search_name_civil', defaults: { format: 'js' },as: 'search_name_civil'
   
   # Wiselinks example
   get '/wiselink-example-1' => 'home#wiselink_example_1', as: 'wiselink1'

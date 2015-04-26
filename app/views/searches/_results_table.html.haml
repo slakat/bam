@@ -18,13 +18,13 @@
               %tr
                 %td
                   %span
-                    = c[2]
+                    = c[0].force_encoding("ISO-8859-1").encode("UTF-8")
                 %td
                   %span
-                    = c[3]
+                    = c[1].force_encoding("ISO-8859-1").encode("UTF-8")
                 %td
                   %span
-                    = c[4].force_encoding("ISO-8859-1").encode("UTF-8")
+                    = c[2].force_encoding("ISO-8859-1").encode("UTF-8")
                 %td
                   %span
-                    = c[5].force_encoding("ISO-8859-1").encode("UTF-8")
+                    = c[3].force_encoding("ISO-8859-1").encode("UTF-8")
