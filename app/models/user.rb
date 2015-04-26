@@ -5,4 +5,12 @@ class User < ActiveRecord::Base
          		:recoverable, :rememberable, :trackable, :validatable
 
 	has_one		:account
+
+	def to_s
+		"#{self.account.name} #{self.account.lastname}"
+	end
+
+	def is? requested_role
+      self.account.role == requested_role.to_s
+  	end
 end

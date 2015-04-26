@@ -32,10 +32,14 @@
               %a{:href => "#causas"} Causas
             %li
               %a{:href => "#clientes"} Clientes
-            %li.pull-right
-              -unless user_signed_in?
+            -unless user_signed_in?
+              %li
                 = link_to "Login", new_user_session_path
-              - else
+            - else
+              %li
+                %a{ :href => "#" }
+                  = current_user                
+              %li
                 = link_to "Logout", destroy_user_session_path, method: :delete
     .container
       - flash.each do |name, msg|
