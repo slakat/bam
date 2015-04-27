@@ -76,7 +76,8 @@ class SearchesController < ApplicationController
   end
 
   def search_name_corte
-    @listado= CorteScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    #@listado= CorteScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @listado= ProcesalScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
     @type = 2
     render 'search_results'
   end
