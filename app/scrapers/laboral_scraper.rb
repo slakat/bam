@@ -21,8 +21,8 @@ class LaboralScraper
   @list=[]
   #puts page.search("table#filaSel tr").inner_text
   page.search('table#filaSel tr').each do |n|
-    properties = n.search('td/text()').collect {|text| text.to_s}
-    things = [properties[2],properties[3],properties[4],properties[5]]
+    properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
+    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6]]
     @list << (things)
   end
 
@@ -30,6 +30,7 @@ class LaboralScraper
   puts @list.first[1]
   puts @list.first[2]
   puts @list.first[3]
+  puts @list.first[4]
 
   return @list
 
@@ -62,8 +63,8 @@ class LaboralScraper
   @list=[]
     #puts page.search("table#filaSel tr").inner_text
     page.search('table#filaSel tr').each do |n|
-      properties = n.search('td/text()').collect {|text| text.to_s}
-      things = [properties[2],properties[3],properties[4],properties[5]]
+    properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
+    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6]]
       @list << (things)
     end
 
@@ -71,6 +72,7 @@ class LaboralScraper
     puts @list.first[1]
     puts @list.first[2]
     puts @list.first[3]
+    puts @list.first[4]
 
     return @list
 

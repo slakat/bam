@@ -1,1 +1,7 @@
-$('#results').html("<%= escape_javascript (render :partial => 'results_table') %>");
+<% if @type == 0 %>
+	$('#results').html("<%= escape_javascript (render :partial => 'results_laboral_table') %>");
+<% elsif @type == 1 %> 
+	$('#results').html("<%= escape_javascript (render :partial => 'results_civil_table') %>");
+<% elsif @type == 2 %> 
+	$('#results').html("<%= escape_javascript (render :partial => 'results_corte_table') %>");
+<% end %>

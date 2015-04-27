@@ -1,0 +1,37 @@
+%h1 Busca causas de corte por rut
+
+%select.select2-search
+
+#reportes.bg-petro
+  .container#report-form
+    .row.marg-t-20
+      = form_tag search_rut_corte_path, id: 'raw-search-form', role: 'form', remote: true do
+
+        - behaviour = {behaviour: 'select2'} #unless mobile_device?
+
+        .row.marg-t-2
+          .col-md-12
+            = popover_tag('Ingresa el rut', 'e.g. 12345678-9')
+            =#%p.txt-white.text-left.font-light.txt-12.marg-t-20= 'chan'
+            .col-md-9
+            = text_field_tag :rut,'',behaviour
+        =submit_tag 'Buscar rut' 
+        
+    .row.marg-t-20
+      = form_tag search_name_corte_path, id: 'raw-search-form', role: 'form', remote: true do
+
+        - behaviour = {behaviour: 'select2'} #unless mobile_device?
+
+        .row.marg-t-2
+          .col-md-12
+            = popover_tag('Ingresa el nombre', 'e.g. KATHERINE PAEZ RAMOS')
+            =#%p.txt-white.text-left.font-light.txt-12.marg-t-20= 'chan'
+            .col-md-9
+            = text_field_tag :name,'',behaviour
+            = text_field_tag :last_name,'',behaviour
+            = text_field_tag :second_last_name,'',behaviour
+        =submit_tag 'Buscar nombre'
+       
+       
+    .row
+      #results

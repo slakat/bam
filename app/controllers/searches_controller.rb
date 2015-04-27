@@ -41,24 +41,43 @@ class SearchesController < ApplicationController
   
   def raw_civil
   end
+
+  def raw_corte
+  end
   
   def search_rut_laboral
     @listado= LaboralScraper.search_by_rut(params[:rut])
+    @type = 0
     render 'search_results'
   end
   
   def search_name_laboral
     @listado= LaboralScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @type = 0
     render 'search_results'
   end
   
   def search_rut_civil
     @listado= CivilScraper.search_by_rut(params[:rut])
+    @type = 1
     render 'search_results'
   end
 
   def search_name_civil
     @listado= CivilScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @type = 1
+    render 'search_results'
+  end
+
+  def search_rut_corte
+    @listado= CorteScraper.search_by_rut(params[:rut])
+    @type = 2
+    render 'search_results'
+  end
+
+  def search_name_corte
+    @listado= CorteScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @type = 2
     render 'search_results'
   end
 
