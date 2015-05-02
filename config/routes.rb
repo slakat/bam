@@ -18,12 +18,15 @@ Rails.application.routes.draw do
   get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
   get 'search/raw/civil' => 'searches#raw_civil', as: 'raw_civil_search'
   get 'search/raw/corte' => 'searches#raw_corte', as: 'raw_corte_search'
+  get 'search/raw/procesal' => 'searches#raw_procesal', as: 'raw_procesal_search'
   post 'search_rut_laboral' =>'searches#search_rut_laboral', defaults: { format: 'js' },as: 'search_rut_laboral'
   post 'search_name_laboral' =>'searches#search_name_laboral', defaults: { format: 'js' },as: 'search_name_laboral'
   post 'search_rut_civil' =>'searches#search_rut_civil', defaults: { format: 'js' },as: 'search_rut_civil'
   post 'search_name_civil' =>'searches#search_name_civil', defaults: { format: 'js' },as: 'search_name_civil'
   post 'search_rut_corte' =>'searches#search_rut_corte', defaults: { format: 'js' },as: 'search_rut_corte'
   post 'search_name_corte' =>'searches#search_name_corte', defaults: { format: 'js' },as: 'search_name_corte'
+  post 'search_rut_procesal' =>'searches#search_rut_procesal', defaults: { format: 'js' },as: 'search_rut_procesal'
+  post 'search_name_procesal' =>'searches#search_name_procesal', defaults: { format: 'js' },as: 'search_name_procesal'
   
   # Wiselinks example
   get '/wiselink-example-1' => 'home#wiselink_example_1', as: 'wiselink1'

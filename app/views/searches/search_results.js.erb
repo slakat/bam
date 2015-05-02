@@ -4,4 +4,6 @@
 	$('#results').html("<%= escape_javascript (render :partial => 'results_civil_table') %>");
 <% elsif @type == 2 %> 
 	$('#results').html("<%= escape_javascript (render :partial => 'results_corte_table') %>");
+<% elsif @type == 3 %> 
+	$('#results').html("<%= escape_javascript (render :partial => 'results_procesal_table') %>");
 <% end %>

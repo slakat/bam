@@ -16,7 +16,7 @@ class CorteScraper
 end
 
 page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do', {
-"TIP_Consulta"=>"4",
+"TIP_Consulta"=>"2",
 "TIP_Lengueta"=>"tdRut",
 "TIP_Causa"=>"",
 "COD_Libro"=>"",
@@ -35,6 +35,8 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
 "RUC_Tribunal"=>"",
 "RUC_Numero"=>rut[0],
 "RUC_Dv"=>rut[1],
+"RUT_Consulta"=>rut[0],
+"RUT_DvConsulta"=>rut[1],
 "irAccionAtPublico"=>"Consulta"}, {'Cookie'=>"CRR_IdFuncionario=0; COD_TipoCargo=0; COD_Corte=90; COD_Usuario=autoconsulta; GLS_Corte=C.A. de Santiago; COD_Ambiente=3; COD_Aplicacion=3; GLS_Usuario=; HORA_LOGIN=03:49; NUM_SalaUsuario=0; #{a.cookies[0]};"})
 
 
@@ -46,10 +48,6 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
     @list << (things)
   end
   puts @list.first
-  puts @list.first[0]
-  puts @list.first[1]
-  puts @list.first[2]
-  puts @list.first[3]
 
   return @list
 
@@ -91,6 +89,8 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
     "RUC_Tribunal"=>"",
     "RUC_Numero"=>"",
     "RUC_Dv"=>"",
+    "RUT_Consulta"=>"",
+    "RUT_DvConsulta"=>"",
     "irAccionAtPublico"=>"Consulta"}, {'Cookie'=>"CRR_IdFuncionario=0; COD_TipoCargo=0; COD_Corte=90; COD_Usuario=autoconsulta; GLS_Corte=C.A. de Santiago; COD_Ambiente=3; COD_Aplicacion=3; GLS_Usuario=; HORA_LOGIN=03:49; NUM_SalaUsuario=0; #{a.cookies[0]};"})
 
 
@@ -98,7 +98,7 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
     #puts page.search("table#filaSel tr").inner_text
   page.search('div#divRecursos table tr.textoPortal').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
+    things = [properties[0],properties[3],properties[4],properties[5],properties[6],properties[7]]
       @list << (things)
     end
 

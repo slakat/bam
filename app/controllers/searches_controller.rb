@@ -44,6 +44,10 @@ class SearchesController < ApplicationController
 
   def raw_corte
   end
+
+  def raw_procesal
+  end
+
   
   def search_rut_laboral
     @listado= LaboralScraper.search_by_rut(params[:rut])
@@ -76,9 +80,14 @@ class SearchesController < ApplicationController
   end
 
   def search_name_corte
-    #@listado= CorteScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
-    @listado= ProcesalScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @listado= CorteScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
     @type = 2
+    render 'search_results'
+  end
+
+  def search_name_procesal
+    @listado= ProcesalScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @type = 3
     render 'search_results'
   end
 

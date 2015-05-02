@@ -16,7 +16,7 @@ class ProcesalScraper
 end
 
 page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do', {
-"TIP_Consulta"=>"4",
+"TIP_Consulta"=>"2",
 "TIP_Lengueta"=>"tdRut",
 "TIP_Causa"=>"",
 "COD_Libro"=>"",
@@ -35,6 +35,8 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
 "RUC_Tribunal"=>"",
 "RUC_Numero"=>rut[0],
 "RUC_Dv"=>rut[1],
+"RUT_Consulta"=>rut[0],
+"RUT_DvConsulta"=>rut[1],
 "irAccionAtPublico"=>"Consulta"}, {'Cookie'=>"CRR_IdFuncionario=0; COD_TipoCargo=0; COD_Corte=90; COD_Usuario=autoconsulta; GLS_Corte=C.A. de Santiago; COD_Ambiente=3; COD_Aplicacion=3; GLS_Usuario=; HORA_LOGIN=03:49; NUM_SalaUsuario=0; #{a.cookies[0]};"})
 
 
