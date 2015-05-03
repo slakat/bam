@@ -7,12 +7,12 @@ class ProcesalScraper
   agent.user_agent_alias = 'Mac Safari'
   }
 
- a.get('http://corte.poderjudicial.cl/SITCORTEPORWEB/') do |page|
+ a.get('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf') do |page|
   # search_result = page.form_with(:name => 'InicioAplicacionForm'){ |frm|
 
   # }.submit
   a.cookie_jar
-  page = a.get("http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
+  #page = a.get("http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
 end
 
 page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do', {
@@ -73,57 +73,70 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
       #page = a.get("http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
     end
 
-    page = a.post('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf', {
-    "formConsultaCausas:idTabs"=>"idTabNombre",
-    "formConsultaCausas:idValueRadio"=>"1",
-    "formConsultaCausas:idFormRolInterno"=>"",
-    "formConsultaCausas:idFormRolInternoEra"=>"",
-    "formConsultaCausas:idSelectedCodeTipCauRef"=>"",
-    "formConsultaCausas:idFormRolUnico"=>"",
-    "formConsultaCausas:idFormRolUnicoDv"=>"",
-    "formConsultaCausas:idSelectedCodeTribunal"=>"",
-    "formConsultaCausas:tblListaParticipantes:s"=>"-1",
-    "formConsultaCausas:tblListaRelaciones:s"=>"-1",
-    "formConsultaCausas:tblListaTramites:s"=>"-1",
-    "formConsultaCausas:tblListaNotificaciones:s"=>"-1",
-    "formConsultaCausas:idFormNombres"=>"",
-    "formConsultaCausas:idFormApPater"=>"alvear",
-    "formConsultaCausas:idFormApMater"=>"",
-    "formConsultaCausas:idFormFecEra"=>"2014",
-    "formConsultaCausas:idSelectedCodeTribunalNom"=>"1231",
-    "formConsultaCausas:buscar2.x"=>"50",
-    "formConsultaCausas:buscar2.y"=>"9",
-    "formConsultaCausas:tblListaConsultaNombres:s"=>"-1",
-    "formConsultaCausas:tblListaParticipantesNom:s"=>"-1",
-    "formConsultaCausas:tblListaRelacionesNom:"=>"-1",
-    "formConsultaCausas:tblListaTramitesNom:s"=>"-1",
-    "formConsultaCausas:tblListaNotificacionesNom:s"=>"-1",
-    "formConsultaCausas:waitCargaSentOpenedState"=>"",
-    "formConsultaCausas"=>"formConsultaCausas",
-    "autoScroll"=>"",
-    "javax.faces.ViewState"=>a.page.forms[0]['javax.faces.ViewState']})
+    @list=[]
+    tribunales = []
+    a.page.search('select[name="formConsultaCausas:idSelectedCodeTribunalNom"]').children.each do |n|
+      tribunales << n.attr("value")
+    end
+    tribunales.reject! { |c| c == "-1" || c.nil? }
 
-    page.search(".texto").each do |n|
-      puts n.content
+    ## probar distintos años. Ver si hay algun tribunal que sean todos
+    ## almacenar los resultados en la lista
+    tribunales.each do |tribunal|
+      page = a.post('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf', {
+      "formConsultaCausas:idTabs"=>"idTabNombre",
+      "formConsultaCausas:idValueRadio"=>"1",
+      "formConsultaCausas:idFormRolInterno"=>"",
+      "formConsultaCausas:idFormRolInternoEra"=>"",
+      "formConsultaCausas:idSelectedCodeTipCauRef"=>"",
+      "formConsultaCausas:idFormRolUnico"=>"",
+      "formConsultaCausas:idFormRolUnicoDv"=>"",
+      "formConsultaCausas:idSelectedCodeTribunal"=>"",
+      "formConsultaCausas:tblListaParticipantes:s"=>"-1",
+      "formConsultaCausas:tblListaRelaciones:s"=>"-1",
+      "formConsultaCausas:tblListaTramites:s"=>"-1",
+      "formConsultaCausas:tblListaNotificaciones:s"=>"-1",
+      "formConsultaCausas:idFormNombres"=>name,
+      "formConsultaCausas:idFormApPater"=>last_name,
+      "formConsultaCausas:idFormApMater"=>second_last_name,
+      "formConsultaCausas:idFormFecEra"=>"2014",
+      "formConsultaCausas:idSelectedCodeTribunalNom"=>tribunal,
+      "formConsultaCausas:buscar2.x"=>"50",
+      "formConsultaCausas:buscar2.y"=>"9",
+      "formConsultaCausas:tblListaConsultaNombres:s"=>"-1",
+      "formConsultaCausas:tblListaParticipantesNom:s"=>"-1",
+      "formConsultaCausas:tblListaRelacionesNom:"=>"-1",
+      "formConsultaCausas:tblListaTramitesNom:s"=>"-1",
+      "formConsultaCausas:tblListaNotificacionesNom:s"=>"-1",
+      "formConsultaCausas:waitCargaSentOpenedState"=>"",
+      "formConsultaCausas"=>"formConsultaCausas",
+      "autoScroll"=>"",
+      "javax.faces.ViewState"=>a.page.forms[0]['javax.faces.ViewState']})
+
+      page.search(".texto").each do |n|
+        puts n.content
+      end
     end
 
-  @list=[]
+    
+  
     #puts page.search("table#filaSel tr").inner_text
-    page.search('.texto').each do |n|
-      properties = n.search('.td_GLS_RitC/text() a/text()','td/text()','.td_GLS_GeneralFecha/text()','td.td_GLS_GeneralMedium/text()','td.td_GLS_GeneralFecha/text()','td.td_GLS_GeneralMedium/text()','td.td_GLS_GeneralLong/text()').collect {|text| text.to_s}
-      puts properties
-    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
-      @list << (things)
-    end
+    
+    # page.search('.texto').each do |n|
+    #   properties = n.search('.td_GLS_RitC/text() a/text()','td/text()','.td_GLS_GeneralFecha/text()','td.td_GLS_GeneralMedium/text()','td.td_GLS_GeneralFecha/text()','td.td_GLS_GeneralMedium/text()','td.td_GLS_GeneralLong/text()').collect {|text| text.to_s}
+    #   puts properties
+    #   things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
+    #   @list << (things)
+    # end
 
-    puts @list.first[0]
-    puts @list.first[1]
-    puts @list.first[2]
-    puts @list.first[3]
-    puts @list.first[4]
-    puts @list.first[5]
+    # puts @list.first[0]
+    # puts @list.first[1]
+    # puts @list.first[2]
+    # puts @list.first[3]
+    # puts @list.first[4]
+    # puts @list.first[5]
 
-    return @list
+    # return @list
 
 
   end
