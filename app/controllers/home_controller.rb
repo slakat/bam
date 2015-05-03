@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
+  skip_authorize_resource
+  skip_load_resource
+
   def index
   end
 
