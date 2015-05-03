@@ -39,8 +39,8 @@
                 = link_to "Login", new_user_session_path
             - else
               %li
-                %a{ :href => "#" }
-                  = current_user                
+                = link_to current_user, account_path(current_user.account)
+                  
               %li
                 = link_to "Logout", destroy_user_session_path, method: :delete
     .container
