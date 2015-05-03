@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :retiros
 
-  resources :causas
+  resources :general_causas
 
   resources :searches
 

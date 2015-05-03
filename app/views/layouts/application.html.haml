@@ -23,15 +23,17 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to "Procurador Web", "#", :class => "navbar-brand"
+          = link_to "Procurador Web", root_path, :class => "navbar-brand"
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li.active
-              %a{:href => "#"} Home
-            %li
-              %a{:href => "#causas"} Causas
-            %li
-              %a{:href => "#clientes"} Clientes
+              = link_to "Home", root_path
+            - if can? :manage, GeneralCausa
+              %li
+                = link_to "Causas", general_causas_path
+            - if can? :manage, Client
+              %li
+                = link_to "Clientes", clients_path
             -unless user_signed_in?
               %li
                 = link_to "Login", new_user_session_path

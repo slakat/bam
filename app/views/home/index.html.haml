@@ -28,13 +28,13 @@
               = 'hmm'
             .row
               .col-md-3
-                %p.txt-white.font-light.txt-12.pull-left.marg-t-20= 'hola'
+                %p.txt-white.font-light.txt-12.pull-left.marg-t-20= 'Causas'
               .col-md-9
                 - options = options_from_collection_for_select(GeneralCausa.all, :id, :name)
                 = select2_helper :industry_id, options, behaviour
             .row.marg-t-20
               .col-md-3
-                %p.txt-white.text-left.font-light.txt-12.marg-t-20= 'hola'
+                %p.txt-white.text-left.font-light.txt-12.marg-t-20= 'Usuarios'
               .col-md-9
                 = select_tag :area_id, options_from_collection_for_select(User.all, :id, :email), class: 'form-control select select-default w-100pc', data: behaviour, required: true, id: 'areas_select'
             .row.marg-t-2

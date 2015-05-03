@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
 	end
 
 	def is? requested_role
-      self.account.role == requested_role.to_s
-  	end
+    unless self.account.nil?
+      self.account.role == requested_role.to_s 
+    else
+      false
+    end
+  end
 end
