@@ -47,13 +47,10 @@ class CivilScraper
   page.search('table#contentCellsAddTabla tr').each do |n|
     properties = n.search('td.textoC a/text()','td/text()').collect {|text| text.to_s}
     things = [properties[0].strip,properties[3],properties[4],properties[5]]
+    things << n.search('td.textoC a').map{|link| link['href']}.first.strip
     @list << (things)
   end
   puts @list.first
-  puts @list.first[0]
-  puts @list.first[1]
-  puts @list.first[2]
-  puts @list.first[3]
 
   return @list
 
@@ -111,13 +108,11 @@ class CivilScraper
       else
         things = [properties[0].strip,properties[3],properties[4],properties[5]]
       end
+      things << n.search('td.textoC a').map{|link| link['href']}.first.strip     
       @list << (things)
     end
 
-    puts @list.first[0]
-    puts @list.first[1]
-    puts @list.first[2]
-    puts @list.first[3]
+    puts @list.first
 
     return @list
 

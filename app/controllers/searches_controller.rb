@@ -48,6 +48,9 @@ class SearchesController < ApplicationController
   def raw_procesal
   end
 
+  def raw_suprema
+  end
+
   
   def search_rut_laboral
     @listado= LaboralScraper.search_by_rut(params[:rut])
@@ -85,9 +88,27 @@ class SearchesController < ApplicationController
     render 'search_results'
   end
 
+    def search_rut_procesal
+    @listado= ProcesalScraper.search_by_rut(params[:rut])
+    @type = 3
+    render 'search_results'
+  end
+
   def search_name_procesal
     @listado= ProcesalScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
     @type = 3
+    render 'search_results'
+  end
+
+  def search_rut_suprema
+    @listado= SupremaScraper.search_by_rut(params[:rut])
+    @type = 4
+    render 'search_results'
+  end
+
+  def search_name_suprema
+    @listado= SupremaScraper.search_by_name(params[:name],params[:last_name],params[:second_last_name])
+    @type = 4
     render 'search_results'
   end
 

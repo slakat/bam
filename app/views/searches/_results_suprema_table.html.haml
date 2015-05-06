@@ -1,0 +1,44 @@
+.row
+  .col-md-12
+    .grid.simple.can-collapse
+      .grid-title
+        %h4.semi-bold Causas
+        .tools
+          %a.marg-t-10.collapse
+      .grid-body
+        %table.table
+          %thead
+            %tr
+              %th N° Ingreso
+              %th Fec. Ing
+              %th Ubicacion
+              %th Fec. Ub.
+              %th Corte
+              %th Caratulado
+          %tbody
+            -@listado.each do |c|
+              %tr
+                %td
+                  %span
+                    - unless c[0].nil?
+                      = c[0].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[1].nil?
+                      = c[1].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[2].nil?
+                      = c[2].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[3].nil?
+                      = c[3].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[4].nil?
+                      = c[4].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[5].nil?
+                      = c[5].force_encoding("ISO-8859-1").encode("UTF-8")

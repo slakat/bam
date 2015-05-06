@@ -45,6 +45,7 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
   page.search('div#divRecursos table tr.textoPortal').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
     things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
+    things << n.search('td a').map{|link| link['href']}.first.strip
     @list << (things)
   end
   puts @list.first
@@ -99,15 +100,11 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
   page.search('div#divRecursos table tr.textoPortal').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
     things = [properties[0],properties[3],properties[4],properties[5],properties[6],properties[7]]
-      @list << (things)
+    things << n.search('td a').map{|link| link['href']}.first.strip
+    @list << (things)
     end
 
-    puts @list.first[0]
-    puts @list.first[1]
-    puts @list.first[2]
-    puts @list.first[3]
-    puts @list.first[4]
-    puts @list.first[5]
+    puts @list.first
 
     return @list
 
