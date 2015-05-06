@@ -30,6 +30,7 @@ es:
         send_instructions: Un email fue enviado. Favor seguir instrucciones indicadas para resetear su contraseña
         updated: Su contraseña ha sido actualizada
     registrations:
+      signed_up: "¡Bienvenido! Cuenta creada exitosamente."
       edit:
         are_you_sure: ¿Está usted seguro?
         cancel_my_account: Anular mi cuenta

@@ -1,0 +1,28 @@
+.page-header
+  = link_to new_general_causa_path, :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Causa
+  %h1 Listing general_causas
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Rol
+        %th Date
+        %th Caratulado
+        %th Tribunal
+        %th
+        %th
+        %th
+
+    %tbody
+      - @general_causas.each do |general_causa|
+        %tr
+          %td= general_causa.rol
+          %td= general_causa.date
+          %td= general_causa.caratulado
+          %td= general_causa.tribunal
+          %td= link_to 'Show', general_causa
+          %td= link_to 'Edit', edit_general_causa_path(general_causa)
+          %td= link_to 'Destroy', general_causa, :data => { confirm: 'Are you sure?' }, :method => :delete

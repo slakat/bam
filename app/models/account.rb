@@ -4,4 +4,6 @@ class Account < ActiveRecord::Base
 	has_many		:user_causes
 	has_many		:causas, through: :user_causes
 	has_many		:searches
+
+	validates 		:name, :lastname, :rut, presence: true
 end

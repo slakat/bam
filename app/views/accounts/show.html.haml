@@ -10,6 +10,6 @@
   %b Rut:
   = @account.rut
 
-= link_to 'Edit', edit_account_path(@account)
-\|
-= link_to 'Back', accounts_path
+= link_to 'Edit', edit_account_path(@account), class: "btn btn-primary"
+= link_to 'Back', accounts_path, class: "btn btn-primary"
+= link_to 'Change Passwoord', edit_user_registration_path , class: "btn btn-primary"

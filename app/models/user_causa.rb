@@ -1,2 +1,2 @@
-class UserCause < ActiveRecord::Base
+class UserCausa < ActiveRecord::Base
 end
