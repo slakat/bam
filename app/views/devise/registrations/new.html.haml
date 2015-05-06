@@ -1,0 +1,36 @@
+%h2 Sign up
+= nested_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  .field
+    = f.label :email
+    %br
+    = f.email_field :email, autofocus: true
+  .field
+    = f.label :password
+    - if @validatable
+      %em
+        (#{@minimum_password_length} characters minimum)
+    %br
+    = f.password_field :password, autocomplete: "off"
+  .field
+    = f.label :password_confirmation
+    %br
+    = f.password_field :password_confirmation, autocomplete: "off"
+  
+  = f.fields_for :account do |account_f|
+    .field
+      = account_f.label :name
+      %br
+      = account_f.text_field :name, required: :true
+    .field
+      = account_f.label :lastname
+      %br
+      = account_f.text_field :lastname, required: :true
+    .field
+      = account_f.label :rut
+      %br
+      = account_f.text_field :rut, required: :true
+  
+  .actions
+    = f.submit "Sign up"
+= render "devise/shared/links"

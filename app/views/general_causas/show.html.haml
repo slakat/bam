@@ -1,0 +1,18 @@
+.page-header
+  = link_to general_causas_path, :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_general_causa_path(@general_causa), :class => 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show general_causa
+
+%dl.dl-horizontal
+  %dt Rol:
+  %dd= @general_causa.rol
+  %dt Date:
+  %dd= @general_causa.date
+  %dt Caratulado:
+  %dd= @general_causa.caratulado
+  %dt Tribunal:
+  %dd= @general_causa.tribunal

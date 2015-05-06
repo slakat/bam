@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   resources :retiros
 
-  resources :causas
+  resources :general_causas
 
   resources :searches
 
   resources :clients
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "registrations"}
   resources :accounts
 
   root 'home#index'
