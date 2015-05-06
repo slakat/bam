@@ -55,15 +55,12 @@ page = a.post('http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoDAction.do'
   puts page.content
   page.search('table#contentCells tr').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
+    things = [properties[1].strip, properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
+    things << n.search('td a').map{|link| link['href']}.first.strip     
     @list << (things)
     puts n.body
   end
   puts @list.first
-  puts @list.first[0]
-  puts @list.first[1]
-  puts @list.first[2]
-  puts @list.first[3]
 
   return @list
 
@@ -83,7 +80,7 @@ page = a.post('http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoDAction.do'
       }.submit
 
       a.cookie_jar
-      #page = a.get("http://laboral.poderjudicial.cl/SITLAPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
+      page = a.get("http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
 
     end
 
@@ -100,9 +97,9 @@ page = a.post('http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoDAction.do'
     "FEC_Hasta"=>"26/04/2015",
     "TIP_Litigante"=>"999",
     "TIP_Persona"=>"N",
-      "APN_Nombre"=>"",
-      "APE_Paterno"=>"alvear",
-      "APE_Materno"=>"",
+      "APN_Nombre"=>name,
+      "APE_Paterno"=>last_name,
+      "APE_Materno"=>second_last_name,
     "COD_CorteAP_Sda"=>"0",
     "COD_Libro_AP"=>"0",
     "ROL_Recurso_AP"=>"",
@@ -121,20 +118,15 @@ page = a.post('http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoDAction.do'
 
   @list=[]
     #puts page.search("table#filaSel tr").inner_text
-    puts page.content
-    page.search('table#contentCells tr.text').each do |n|
+    page.search('table#contentCells tr.texto').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-      
-    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6],properties[7]]
-      @list << (things)
+    puts n
+    things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
+    things << n.search('td a').map{|link| link['href']}.first.strip     
+    @list << (things)
     end
 
-    puts @list.first[0]
-    puts @list.first[1]
-    puts @list.first[2]
-    puts @list.first[3]
-    puts @list.first[4]
-    puts @list.first[5]
+    puts @list.first
 
     return @list
 

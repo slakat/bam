@@ -10,6 +10,7 @@
           %thead
             %tr
               %th N° Ingreso
+              %th Tipo de Recurso
               %th Fec. Ing
               %th Ubicacion
               %th Fec. Ub.
@@ -42,3 +43,7 @@
                   %span
                     - unless c[5].nil?
                       = c[5].force_encoding("ISO-8859-1").encode("UTF-8")
+                %td
+                  %span
+                    - unless c[6].nil?
+                      = c[6].force_encoding("ISO-8859-1").encode("UTF-8")
