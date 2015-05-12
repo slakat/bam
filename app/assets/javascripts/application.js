@@ -71,7 +71,35 @@ function initDataBehaviour(container_id) {
     select2s.select2();
 }
 
+
+
 function initBla(id) {
+
+
+    function formatRepo (repo) {
+
+        var markup = '<div class="clearfix">' +
+            '<div class="col-sm-1">' +
+            '<i class="fa fa-book"></i>' +
+            '</div>' +
+            '<div clas="col-sm-10">' +
+            '<div class="clearfix">' +
+            '<div class="col-sm-5">' + repo.rit + '</div>' +
+            '<div class="col-sm-5">' + repo.ruc + '</div>' +
+            '</div>';
+
+        if (repo.caratulado) {
+            markup += '<div> <b>Caratulado: </b>' + repo.caratulado + '</div>';
+        }
+
+        markup += '</div></div>';
+
+        return markup;
+    }
+
+    function formatRepoSelection (repo) {
+        return repo.caratulado
+    }
 
     var courses = $('#account_id', id);
 
@@ -94,15 +122,35 @@ function initBla(id) {
                 // alter the remote JSON data, except to indicate that infinite
                 // scrolling can be used
                 params.page = params.page || 1;
-                return {
+               /* return {
                     results: _.map(data, function(course){
-                        return _.extend(course, { text: course.name + ' ' + course.lastname });
+                        return _.extend(course, { text: 'Rit: '+course.rit.toString() + ', RUC, ' + course.ruc.toString() +', Caratulado: '+course.caratulado });
                     })
                 };
             },
             cache: false
         },
-        minimumInputLength: 3
+        minimumInputLength: 3*/
+                var results = [];
+                $.each(data, function(index, item) {
+                    results.push({
+                        text: item.caratulado,
+                        text: item.rit
+                    });
+                });
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 3,
+        formatResult: formatRepo,
+        formatSelection: formatRepoSelection,
+        dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+
 
     });
 }
+

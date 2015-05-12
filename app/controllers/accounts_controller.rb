@@ -38,16 +38,13 @@ class AccountsController < ApplicationController
 
   def search
 
-    courses_arel      = Account.arel_table
+    causas_arel      = LaboralCausa.arel_table
     query_string = "%#{params[:q]}%"
 
-    courses = Account.where(courses_arel[:name].matches(query_string))
-    courses.each do |s|
-      puts s.name
-    end
-    puts courses_arel
+    causas = LaboralCausa.where((causas_arel[:rit].matches(query_string)).or(causas_arel[:ruc].matches(query_string)).or(causas_arel[:caratulado].matches(query_string)).or(causas_arel[:tribunal].matches(query_string)))
 
-    render json: courses
+
+    render json: causas
   end
 
   private

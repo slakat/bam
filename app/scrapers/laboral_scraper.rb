@@ -34,6 +34,8 @@ class LaboralScraper
   puts @list.first[4]
   puts @list.first[5]
 
+
+
   return @list
 
   end
@@ -78,6 +80,19 @@ class LaboralScraper
     puts @list.first[4]
     puts @list.first[5]
 
+=begin
+    @list.each do |l|
+      n = LaboralCausa.new(  :rit => l[0],
+                        :ruc => l[1],
+                        :fecha => l[2],
+                        :caratulado => l[3],
+                        :tribunal => l[4])
+      n.save
+      g = GeneralCausa.new( :causa_id => n.id,
+                            :causa_type => n.class.name)
+      g.save
+    end
+=end
     return @list
 
 
