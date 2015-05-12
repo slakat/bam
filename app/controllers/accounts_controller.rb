@@ -36,6 +36,20 @@ class AccountsController < ApplicationController
     respond_with(@account)
   end
 
+  def search
+
+    courses_arel      = Account.arel_table
+    query_string = "%#{params[:q]}%"
+
+    courses = Account.where(courses_arel[:name].matches(query_string))
+    courses.each do |s|
+      puts s.name
+    end
+    puts courses_arel
+
+    render json: courses
+  end
+
   private
     def set_account
       @account = Account.find(params[:id])

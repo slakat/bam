@@ -91,13 +91,14 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 group :development, :test do
-  gem 'thin' # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
+  #gem 'thin' # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
   gem 'railroady' # diagrama de bd
   gem 'rails-erd' # diagrama de bd
   gem 'progress_bar' #para mostrar una progressbar en la consola en procesos largos
   gem 'rack-mini-profiler' #para mostrar estadísticas de velocidad y queries en las vistas
   gem 'quiet_assets', '>= 1.0.2' #para no mostrar cuando se cargan las assets en el log
   gem 'jasmine'
+  gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 end
 
 # Test
@@ -108,8 +109,11 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-# Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
-gem 'thin'
+group :production do
+  # Servidor bueno para consultas ajax y buena combinacion con unicorn para multithread
+  #gem 'thin'
+end
+
 
 # generar informacion falsa para testear
 gem 'faker'
@@ -123,11 +127,17 @@ gem 'awesome_print'
 #libreria util para javascript
 gem 'underscore-rails'
 
+# Angular.js
+gem 'angularjs-rails', '~> 1.3.0'
+
 #para realizar scraper
 gem 'mechanize'
 
 gem 'better_errors'
 gem 'binding_of_caller'
+
+
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

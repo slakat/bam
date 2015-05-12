@@ -1,25 +1,32 @@
-%h1 Listing accounts
+%div{'ng-controller'=>"ctrlTags"}
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Lastname
-      %th Rut
-      %th
-      %th
-      %th
+  .row
+    .col-sm-6
+      %h4 Tag Picker
+      %select#mySel12.form-control{multiple: "multiple"}
+        %option{'ng-repeat'=>"item in items", 'ng-selected'=>"item.selected", 'ng-model'=>"item.tag"} {{item.tag}}
+  %h1 Listing accounts
 
-  %tbody
-    - @accounts.each do |account|
+  %table
+    %thead
       %tr
-        %td= account.name
-        %td= account.lastname
-        %td= account.rut
-        %td= link_to 'Show', account
-        %td= link_to 'Edit', edit_account_path(account)
-        %td= link_to 'Destroy', account, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %th Name
+        %th Lastname
+        %th Rut
+        %th
+        %th
+        %th
 
-%br
+    %tbody
+      - @accounts.each do |account|
+        %tr
+          %td= account.name
+          %td= account.lastname
+          %td= account.rut
+          %td= link_to 'Show', account
+          %td= link_to 'Edit', edit_account_path(account)
+          %td= link_to 'Destroy', account, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-= link_to 'New Account', new_account_path
+  %br
+
+  = link_to 'New Account', new_account_path

@@ -18,6 +18,18 @@
 //= require jquery.datetimepicker
 //= require gritter
 //= require wiselinks
+//= require underscore
+
+
+//= require angular
+//= require angular-route
+//= require angular-resource
+//= require angular-animate
+//= require ui-bootstrap-tpls-0.12.1.js
+//= require loading-bar
+//= require ui-select
+//= require ./angular/app
+
 //= require_self
 //= require_tree .
 
@@ -45,5 +57,52 @@ function init_new_page(){
 $(function(){init_new_page();})
 
 onInit(function(){
-    initContainer('#main-container');
+    init_container('#main-container');
 });
+
+
+$(document).ready(function() {
+    $("#areas_select").select2();
+
+});
+
+function initDataBehaviour(container_id) {
+    var select2s = $("[data-behaviour='select2']", container_id);
+    select2s.select2();
+}
+
+function initBla(id) {
+
+    var courses = $('#account_id', id);
+
+    courses.css('width', '100%');
+
+    courses.select2({
+
+        ajax: {
+            url: window.location.pathname.replace(/#.*$/, "") + '/search',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params
+                };
+            },
+            results: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+                return {
+                    results: _.map(data, function(course){
+                        return _.extend(course, { text: course.name + ' ' + course.lastname });
+                    })
+                };
+            },
+            cache: false
+        },
+        minimumInputLength: 3
+
+    });
+}

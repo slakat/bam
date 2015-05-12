@@ -10,10 +10,15 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *= require bootstrap_and_overrides
- *= require select2
- *= require select2-bootstrap
  *= require font-awesome
  *= require gritter
+ *= require ui-select
  *= require_tree .
  *= require_self
  */
+
+
+@import url('http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2.css');
+@import url('http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.8/select2-bootstrap.css');
+@import url('http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css');
+.timepicker-picker .table-condensed td{text-align:center}

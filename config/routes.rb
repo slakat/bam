@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   resources :accounts
 
   root 'home#index'
-  
+
+  get 'accounts/:id/search' => 'accounts#search'
+
   get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
   get 'search/raw/civil' => 'searches#raw_civil', as: 'raw_civil_search'
   get 'search/raw/corte' => 'searches#raw_corte', as: 'raw_corte_search'
