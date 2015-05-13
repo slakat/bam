@@ -1,10 +1,5 @@
 
-@font-face {
-  font-family: 'Flat-UI-Icons';
 
-  src: url('../../../../../Hasu/csv_hasu/2015/fonts/glyphicons/flat-ui-icons-regular.eot');
-  src: url('../../../../../Hasu/csv_hasu/2015/fonts/glyphicons/flat-ui-icons-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../Hasu/csv_hasu/2015/fonts/glyphicons/flat-ui-icons-regular.woff') format('woff'), url('../../../../../Hasu/csv_hasu/2015/fonts/glyphicons/flat-ui-icons-regular.ttf') format('truetype'), url('../../../../../Hasu/csv_hasu/2015/fonts/glyphicons/flat-ui-icons-regular.svg#flat-ui-icons-regular') format('svg');
-  }
 [class^="fui-"],
 [class*="fui-"] {
   font-family: 'Flat-UI-Icons';
@@ -3305,8 +3300,8 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   top: 42%;
   right: 16px;
   display: inline-block;
-  border-color: #34495e transparent;
-  border-style: solid;
+  //border-color: #34495e transparent;
+  //border-style: solid;
   border-width: 8px 6px;
   border-bottom-style: none;
   -webkit-transform: scale(1.001);
@@ -3615,19 +3610,19 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   }
 .select2-search-choice .select2-search-choice-close {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  //top: 0;
+  //right: 0;
+  //bottom: 0;
   z-index: 2;
-  width: 100%;
+  //width: 100%;
   padding-right: 10px;
-  font-size: 12px;
-  color: #fff;
+  //font-size: 12px;
+  //color: #fff;
   text-align: right;
   text-decoration: none;
   cursor: pointer;
   filter: alpha(opacity=0);
-  opacity: 0;
+  //opacity: 0;
   -webkit-transition: opacity .25s linear;
           transition: opacity .25s linear;
   }

@@ -1,0 +1,11 @@
+var app = angular.module("bam", ["ngResource", "ngRoute", 'ngAnimate', 'ui' +
+'.bootstrap', 'ui.bootstrap.tooltip']);
+
+
+app.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+}]);
+
+app.config(['$tooltipProvider', function($tooltipProvider) {
+    $tooltipProvider.options({animation: false});
+}]);

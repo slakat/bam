@@ -1,5 +1,5 @@
 !!!
-%html
+%html{'ng-app' => 'bam'}
   %head
     %meta{:charset => "utf-8"}
     %title Procurador Web - Bam Abogados
@@ -40,12 +40,12 @@
             - else
               %li
                 = link_to current_user, account_path(current_user.account)
-                  
               %li
                 = link_to "Logout", destroy_user_session_path, method: :delete
-    .container
-      - flash.each do |name, msg|
-        = content_tag :div, :class => "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable" do
-          %button.close{:type => "button", :data => {:dismiss => "alert"}, :aria => {:hidden => "true"} } &times;
-          = msg
-      = yield
+    #main-container
+      .container
+        - flash.each do |name, msg|
+          = content_tag :div, :class => "alert alert-#{name == :error ? "danger" : "success" } alert-dismissable" do
+            %button.close{:type => "button", :data => {:dismiss => "alert"}, :aria => {:hidden => "true"} } &times;
+            = msg
+        = yield

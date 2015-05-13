@@ -1,3 +1,4 @@
+#encoding: utf-8
 %p#notice= notice
 
 %p
@@ -12,4 +13,34 @@
 
 = link_to 'Edit', edit_account_path(@account), class: "btn btn-primary"
 = link_to 'Back', accounts_path, class: "btn btn-primary"
-= link_to 'Change Passwoord', edit_user_registration_path , class: "btn btn-primary"
+= link_to 'Change Password', edit_user_registration_path , class: "btn btn-primary"
+
+.row
+  .col-md-12
+
+
+    .row
+      .col-md-12
+        %h4 Agregar nueva causa
+        = form_tag do
+          .col-md-8
+            #courses-select-container.form-group
+              = text_field_tag 'general_causa_id', '',class: 'form-control', name: 'general_causa_id', id: 'account_id'
+          .col-md-4
+            .form-group
+              = submit_tag 'Agregar', class: 'btn btn-primary'
+
+
+    .row
+      .col-md-12
+        .form-group
+          %label.form-label Seleccionar Alumnos
+          .controls
+            = select_tag 'general_causa_id', options_from_collection_for_select(Account.all, :id, :name),class: 'form-control', name: 'general_causa_id',data: {behaviour: 'select2'}
+            = select_tag :general_causas_ids, options_for_select(Account.all.collect{|s| [s.name, s.id]}, Account.all.pluck(:id)),
+                                  {multiple: true, class: 'form-control', required: true, data: {behaviour: 'select2'}}
+
+
+
+:javascript
+  initBla('#courses-select-container');

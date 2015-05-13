@@ -36,6 +36,17 @@ class AccountsController < ApplicationController
     respond_with(@account)
   end
 
+  def search
+
+    causas_arel      = LaboralCausa.arel_table
+    query_string = "%#{params[:q]}%"
+
+    causas = LaboralCausa.where((causas_arel[:rit].matches(query_string)).or(causas_arel[:ruc].matches(query_string)).or(causas_arel[:caratulado].matches(query_string)).or(causas_arel[:tribunal].matches(query_string)))
+
+
+    render json: causas
+  end
+
   private
     def set_account
       @account = Account.find(params[:id])
