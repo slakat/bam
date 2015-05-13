@@ -1,3 +1,3 @@
 class Movimiento < ActiveRecord::Base
-	belongs_to		:causas
+	belongs_to		:gereral_causas
 end
