@@ -15,7 +15,7 @@ module Scrapers
         }.submit
 
         a.cookie_jar
-        #page = a.get("http://laboral.poderjudicial.cl/SITLAPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
+        page = a.get("http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
 
       end
 
@@ -57,12 +57,24 @@ module Scrapers
       puts page.content
       page.search('table#contentCells tr').each do |n|
         properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-        things = [properties[1].strip, properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
+        things = [properties[1].strip, properties[2],properties[3],properties[4],properties[5],properties[6].strip,properties[7]]
         things << n.search('td a').map{|link| link['href']}.first.strip     
         @list << (things)
         puts n.body
       end
-      puts @list.first
+
+      #list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
+      #user = User.last
+      
+      @list.each do |list|
+        causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
+         
+        causa_suprema.save
+        general_causa = user.account.general_causas.build        
+        causa_suprema.general_causa = general_causa
+        general_causa.save
+        causa_suprema.save
+      end
 
       return @list
 
@@ -129,9 +141,15 @@ module Scrapers
       end
 
       @list.each do |list|
-        causa_suprema = SupremaCausa.new #rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-        #user.account.general_causas << causa_civil
+        causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
+         
+        causa_suprema.save
+        general_causa = user.account.general_causas.build        
+        causa_suprema.general_causa = general_causa
+        general_causa.save
+        causa_suprema.save
       end
+
 
       return @list
 

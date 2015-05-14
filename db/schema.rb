@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte"
     t.string "caratulado"
+    t.string "link"
   end
 
   create_table "general_causas", force: true do |t|
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha"
     t.string "caratulado"
     t.string "tribunal"
+    t.string "link"
   end
 
   create_table "movimientos", force: true do |t|
@@ -86,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.string "rol_unico"
     t.string "identificacion_causa"
     t.string "estado"
+    t.string "link"
   end
 
   create_table "retiros", force: true do |t|
@@ -111,6 +114,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte"
     t.string "caratulado"
+    t.string "link"
   end
 
   create_table "user_causas", force: true do |t|

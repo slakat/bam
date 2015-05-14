@@ -29,9 +29,16 @@ module Scrapers
                 @list << (things)
             end
 
+            #list = ["M-767-2015", "15- 4-0014884-5", "14/04/2015", "SEGOVIA CON JOFRE", "1\xBA Juzgado de Letras del Trabajo de Santiago", "/SITLAPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&TIP_Cuaderno=0&CRR_IdCuaderno=0&ROL_Causa=767&TIP_Causa=M&ERA_Causa=2015&CRR_IdCausa=364088&COD_Tribunal=1348&"]
+            #user = User.last
             @list.each do |list|
-                causa_laboral = LaboralCausa.new #rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-                #user.account.general_causas << causa_civil
+                causa_laboral = LaboralCausa.new rit: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), ruc: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)
+                  
+                causa_laboral.save
+                general_causa = user.account.general_causas.build        
+                causa_laboral.general_causa = general_causa
+                general_causa.save
+                causa_laboral.save
             end
 
             return @list
@@ -70,8 +77,13 @@ module Scrapers
             end
        
             @list.each do |list|
-                causa_laboral = LaboralCausa.new #rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-                #user.account.general_causas << causa_civil
+                causa_laboral = LaboralCausa.new rit: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), ruc: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)
+                  
+                causa_laboral.save
+                general_causa = user.account.general_causas.build        
+                causa_laboral.general_causa = general_causa
+                general_causa.save
+                causa_laboral.save
             end
 
             return @list

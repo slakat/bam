@@ -74,9 +74,14 @@ module Scrapers
         end
       end
 
-      @list.each do |list|
-        causa_procesal = ProcesalCausa.new #rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-        #user.account.general_causas << causa_civil
+       @list.each do |list|
+        causa_procesal = ProcesalCausa.new tribunal: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), identificacion_causa: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), estado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)#, link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
+         
+        causa_procesal.save
+        general_causa = user.account.general_causas.build        
+        causa_procesal.general_causa = general_causa
+        general_causa.save
+        causa_procesal.save
       end
           
       return @list
@@ -155,8 +160,13 @@ module Scrapers
       end
 
       @list.each do |list|
-        causa_procesal = ProcesalCausa.new #rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-        #user.account.general_causas << causa_civil
+        causa_procesal = ProcesalCausa.new tribunal: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), identificacion_causa: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), estado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)#, link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
+         
+        causa_procesal.save
+        general_causa = user.account.general_causas.build        
+        causa_procesal.general_causa = general_causa
+        general_causa.save
+        causa_procesal.save
       end
           
       return @list

@@ -55,21 +55,19 @@ module Scrapers
       #puts @list
 
       #list = ["C-4023-1999", "30/07/1999", "VELASCO PATRICIO/SOC.DE LUBRIC", "2\xBA Juzgado Civil de Santiago", "/CIVILPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&TIP_Cuaderno=49&CRR_IdCuaderno=3627217&ROL_Causa=4023&TIP_Causa=C&ERA_Causa=1999&CRR_IdCausa=3038972&COD_Tribunal=260&TIP_Informe=1&"] 
-      #user = User.last
       @list.each do |list|        
         #NO se porque no pesca
         # list.each do |l|          
         #   puts l           
         #   l = l.encode('UTF-8', :invalid => :replace, :undef => :replace) 
         # end 
-        causa_civil = CivilCausa.new rol: list[0], date: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace)
-        causa_civil.save
-        a = user.account.general_causas.build
-        user.account.save
-        causa_civil.general_causa = a
-        a.save
-        causa_civil.save
 
+        causa_civil = CivilCausa.new rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), date: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace)
+        causa_civil.save
+        general_causa = user.account.general_causas.build        
+        causa_civil.general_causa = general_causa
+        general_causa.save
+        causa_civil.save
       end
       return @list
     end
@@ -131,9 +129,19 @@ module Scrapers
       end
 
       puts @list.first
-      @list.each do |list|
-        causa_civil = CivilCausa.new rol: list[0], date: list[1], caratulado: list[2], tribunal: list[3], link: list[4]
-        #user.account.general_causas << causa_civil
+      @list.each do |list|        
+        #NO se porque no pesca
+        # list.each do |l|          
+        #   puts l           
+        #   l = l.encode('UTF-8', :invalid => :replace, :undef => :replace) 
+        # end 
+
+        causa_civil = CivilCausa.new rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), date: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace)
+        causa_civil.save
+        general_causa = user.account.general_causas.build        
+        causa_civil.general_causa = general_causa
+        general_causa.save
+        causa_civil.save
       end
 
       return @list
