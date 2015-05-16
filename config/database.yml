@@ -31,7 +31,6 @@ test:
 production:
   <<: *default
   database: bam_prod
-  username: bam_prod_user
-  password: pass
+  username: root
   host: 127.0.0.1
 

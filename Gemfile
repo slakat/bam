@@ -137,7 +137,15 @@ gem 'better_errors'
 gem 'binding_of_caller'
 
 
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-bundler', '~> 1.1.2'
+gem 'capistrano-rails', '~> 1.1.1'
 
+# Add this if you're using rbenv
+# gem 'capistrano-rbenv', github: "capistrano/rbenv"
+
+# Add this if you're using rvm
+gem 'capistrano-rvm', github: "capistrano/rvm"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -150,4 +158,5 @@ gem 'binding_of_caller'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
 
