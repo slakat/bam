@@ -47,6 +47,16 @@ class AccountsController < ApplicationController
     render json: causas
   end
 
+  def add_causa
+    causa = GeneralCausa.find(params[:causa])
+    @account.general_causas << causa
+  end
+
+  def remove_causa
+    causa = GeneralCausa.find(params[:causa])
+    #@account.general_causas.
+  end
+
   private
     def set_account
       @account = Account.find(params[:id])

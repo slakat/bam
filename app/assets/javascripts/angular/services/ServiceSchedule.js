@@ -1,4 +1,4 @@
-app.factory("ServiceSchedule", ['$resource',function($resource) {
+app.factory("Account", ['$resource',function($resource) {
     return $resource("/admin/service_schedules/:id", { id: "@id" },
         {
             'create':  { method: 'POST' },
