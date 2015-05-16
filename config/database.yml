@@ -33,4 +33,3 @@ production:
   database: bam_prod
   username: root
   host: 127.0.0.1
-
