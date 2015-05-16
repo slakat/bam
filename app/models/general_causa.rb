@@ -1,5 +1,6 @@
 class GeneralCausa < ActiveRecord::Base
-	belongs_to :causa, polymorphic: true
+	belongs_to 		:causa, polymorphic: true
+	
 	has_many		:client_causas
 	has_many		:clients, through: :client_causas
 

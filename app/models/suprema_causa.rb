@@ -1,3 +1,3 @@
 class SupremaCausa < ActiveRecord::Base
-  has_many :general_causas, as: :causa
+  has_one :general_causa, as: :causa
 end
