@@ -3,7 +3,7 @@ lock '3.1.0'
 
 set :application, 'bam'
 set :repo_url, 'git@github.com:slakat/bam.git'
-
+set :deploy_user, "root"
 set :deploy_to, '/home/deploy/bam'
 
 set :linked_files, %w{config/database.yml}

@@ -14,7 +14,7 @@ require 'capistrano/rails'
 
 # If you are using rvm add these lines:
  require 'capistrano/rvm'
- set :rvm_type, :root
+ set :rvm_type, :user
  set :rvm_ruby_version, '2.1.5p273'
 
 # Includes tasks from other gems included in your Gemfile
