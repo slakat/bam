@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
   end
 
   create_table "client_causas", force: true do |t|
-    t.integer  "general_causa_id"
+    t.integer  "causa_id"
     t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -101,7 +101,6 @@ ActiveRecord::Schema.define(version: 20150507161610) do
 
   create_table "searches", force: true do |t|
     t.string   "term"
-    t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -118,7 +117,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
   end
 
   create_table "user_causas", force: true do |t|
-    t.integer  "general_causa_id"
+    t.integer  "causa_id"
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
