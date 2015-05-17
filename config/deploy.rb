@@ -22,7 +22,7 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
 
   namespace :assets do
-    task :precompile, :roles => :web do
+    task :precompile do
       from = source.next_revision(current_revision)
       if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ lib/assets/ app/assets/ | wc -l").to_i > 0
         run_locally("rake assets:clean && rake assets:precompile")
