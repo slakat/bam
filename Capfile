@@ -6,6 +6,7 @@ require 'capistrano/deploy'
 
 require 'capistrano/bundler'
 require 'capistrano/rails'
+load 'deploy/assets'
 
 # If you are using rbenv add these lines:
 # require 'capistrano/rbenv'
@@ -15,7 +16,7 @@ require 'capistrano/rails'
 # If you are using rvm add these lines:
  require 'capistrano/rvm'
  set :rvm_type, :user
- set :rvm_ruby_version, '2.0.0-p451'
+ set :rvm_ruby_version, '2.1.5p273'
 
 # Includes tasks from other gems included in your Gemfile
 #
