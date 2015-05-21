@@ -81,6 +81,7 @@ class LaboralScraper
     puts @list.first[5]
 
 
+=begin
     @list.each do |l|
       n = LaboralCausa.new(  :rit => l[0],
                         :ruc => l[1],
@@ -92,6 +93,7 @@ class LaboralScraper
                             :causa_type => n.class.name)
       g.save
     end
+=end
 
     return @list
 

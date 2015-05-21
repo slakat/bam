@@ -19,8 +19,6 @@ class Ability
         can :manage, Cliente
     elsif user.is? :admin
         can :manage, :all
-    else
-      can :manage, :all
     end
     #
     # The first argument to `can` is the action you are giving the user
