@@ -12,7 +12,7 @@ app.controller('AddCausasController', ['$scope', '$http', '$interval', function(
 
     function init(){
 
-        $scope.items = tagsData;
+        //$scope.items = tagsData;
 
     };
 
