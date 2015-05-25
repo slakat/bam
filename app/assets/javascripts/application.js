@@ -74,7 +74,7 @@ function initDataBehaviour(container_id) {
 
 
 function initBla(id) {
-
+    $(".select2-search").show();
 
     function formatRepo (repo) {
 
