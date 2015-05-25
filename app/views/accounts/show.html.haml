@@ -30,14 +30,6 @@
         .form-group
           = submit_tag 'Agregar', class: 'btn btn-primary'
 
-  %table{'ng-table'=>"usersTableParams",'show-filter'=>"true"}
-    %tbody
-      %tr{'ng-repeat'=>"user in **$data**"}
-        %td{'data-title'=>"'Name'"}
-          {{user.full_name}}
-        %td{'data-title'=>"'Email'"}
-          {{user.email}}
-
 
 .row
   .col-md-12
