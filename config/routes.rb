@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   post 'search_name_procesal' =>'searches#search_name_procesal', defaults: { format: 'js' },as: 'search_name_procesal'
   post 'search_rut_suprema' =>'searches#search_rut_suprema', defaults: { format: 'js' },as: 'search_rut_suprema'
   post 'search_name_suprema' =>'searches#search_name_suprema', defaults: { format: 'js' },as: 'search_name_suprema'
+
+  post 'accounts/add_causa' => 'accounts#add_causa', as: 'add_causa'
   
   # Wiselinks example
   get '/wiselink-example-1' => 'home#wiselink_example_1', as: 'wiselink1'

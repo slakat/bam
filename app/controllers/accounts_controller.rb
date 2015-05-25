@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy, :add_causa]
   load_and_authorize_resource
   respond_to :html
 
@@ -42,14 +42,13 @@ class AccountsController < ApplicationController
     query_string = "%#{params[:q]}%"
 
     causas = LaboralCausa.where((causas_arel[:rit].matches(query_string)).or(causas_arel[:ruc].matches(query_string)).or(causas_arel[:caratulado].matches(query_string)).or(causas_arel[:tribunal].matches(query_string)))
-
-
-    render json: causas
+    render json: causas.as_json()
   end
 
   def add_causa
     causa = GeneralCausa.find(params[:causa])
     @account.general_causas << causa
+    redirect_to request.referer
   end
 
   def remove_causa
@@ -63,6 +62,6 @@ class AccountsController < ApplicationController
     end
 
     def account_params
-      params.require(:account).permit(:name, :lastname, :rut)
+      params.require(:account).permit(:name, :lastname, :rut,:user_causas)
     end
 end
