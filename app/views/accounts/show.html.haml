@@ -41,7 +41,7 @@
         = select_tag :general_causas_ids, options_for_select(Account.all.collect{|s| [s.name, s.id]}, Account.all.pluck(:id)),
                               {multiple: true, class: 'form-control', required: true, data: {behaviour: 'select2'}}
 
--unless @account.general_causas.empty?
+-unless @account.general_causas.count<1
   .row
     .col-md-12
       .grid.simple.can-collapse
