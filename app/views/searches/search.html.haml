@@ -1,0 +1,31 @@
+.row
+  .col-md-12
+    .grid.simple.can-collapse
+      .grid-title
+        %h4.semi-bold Causas
+        .tools
+          %a.marg-t-10.collapse
+      .grid-body
+        %table.table
+          %thead
+            %tr
+              %th RIT
+              %th RUC
+              %th Caratulado
+              %th Tribunal
+          %tbody
+            -@causas.each do |c|
+              -#c=d.causa
+              %tr
+                %td
+                  %span
+                    =c.rit
+                %td
+                  %span
+                    =c.ruc
+                %td
+                  %span
+                    =c.caratulado
+                %td
+                  %span
+                    =c.tribunal

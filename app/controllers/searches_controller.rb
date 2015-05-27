@@ -1,11 +1,15 @@
 class SearchesController < ApplicationController
-  before_action :set_search, only: [:show, :edit, :update, :destroy]
+  before_action :set_search, only: [ :edit, :update, :destroy]
   load_and_authorize_resource
   respond_to :html
 
   def index
     @searches = Search.all
     respond_with(@searches)
+  end
+
+  def search
+    @causas = GeneralCausa.search(params[:q])
   end
 
   def show
@@ -23,7 +27,7 @@ class SearchesController < ApplicationController
   def create
     @search = Search.new(search_params)
     @search.save
-    respond_with(@search)
+    redirect_to(@search)
   end
 
   def update
@@ -118,6 +122,6 @@ class SearchesController < ApplicationController
     end
 
     def search_params
-      params.require(:search).permit(:term)
+      params.require(:search).permit(:term,:q)
     end
 end

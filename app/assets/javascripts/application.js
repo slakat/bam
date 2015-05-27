@@ -62,7 +62,7 @@ onInit(function(){
 
 
 $(document).ready(function() {
-    $("#areas_select").select2();
+    $(".select2-bh").select2();
 
 });
 

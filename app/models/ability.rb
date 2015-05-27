@@ -11,12 +11,14 @@ class Ability
         can :manage, Account, :user_id => user.id
         can :manage, UserCausa, :account_id => user.id
         can :read, GeneralCausa
+        can :read, Home
     elsif user.is? :secretaria
         can :manage, User
         can :manage, Account
         can :manage, UserCausa
         can :manage, GeneralCausa
         can :manage, Cliente
+        can :manage, Home
     elsif user.is? :admin
         can :manage, :all
     end
