@@ -41,9 +41,10 @@ class LaboralScraper
   end
   
   def self.search_by_name(a,b,c)
-    name = a.upcase  
-    last_name = b.upcase
-    second_last_name = c.upcase
+    name, last_name, second_last_name = ""
+    name = a.upcase unless a.nil? 
+    last_name = b.upcase unless b.nil?
+    second_last_name = c.upcase unless c.nil?
      a = Mechanize.new { |agent|
       agent.user_agent_alias = 'Mac Safari'
     }

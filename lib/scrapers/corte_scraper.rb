@@ -58,18 +58,20 @@ module Scrapers
         causa_corte = CorteCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
         causa_corte.save
-        general_causa = user.account.general_causas.build        
+        general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
         general_causa.save
         causa_corte.save
+        user.save
       end
       return @list
     end
     
     def self.search_by_name(a, b, c, user)
-      name = a.upcase  
-      last_name = b.upcase
-      second_last_name = c.upcase
+      name, last_name, second_last_name = ""
+      name = a.upcase unless a.nil? 
+      last_name = b.upcase unless b.nil?
+      second_last_name = c.upcase unless c.nil?
       a = Mechanize.new { |agent|
         agent.user_agent_alias = 'Mac Safari'
       }
@@ -122,10 +124,11 @@ module Scrapers
         causa_corte = CorteCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
         causa_corte.save
-        general_causa = user.account.general_causas.build        
+        general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
         general_causa.save
         causa_corte.save
+        user.save
       end
       return @list
 

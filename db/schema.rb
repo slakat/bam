@@ -13,128 +13,128 @@
 
 ActiveRecord::Schema.define(version: 20150507161610) do
 
-  create_table "accounts", force: true do |t|
-    t.string   "name"
-    t.string   "lastname"
-    t.string   "rut"
-    t.integer  "user_id"
+  create_table "accounts", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "lastname",   limit: 255
+    t.string   "rut",        limit: 255
+    t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "role"
+    t.string   "role",       limit: 255
   end
 
-  create_table "civil_causas", force: true do |t|
-    t.string   "rol"
+  create_table "civil_causas", force: :cascade do |t|
+    t.string   "rol",        limit: 255
     t.date     "date"
-    t.string   "caratulado"
-    t.string   "tribunal"
+    t.string   "caratulado", limit: 255
+    t.string   "tribunal",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "link"
+    t.string   "link",       limit: 255
   end
 
-  create_table "client_causas", force: true do |t|
-    t.integer  "general_causa_id"
-    t.integer  "client_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "clients", force: true do |t|
-    t.string   "name"
-    t.string   "lastname"
-    t.string   "rut"
+  create_table "client_causas", force: :cascade do |t|
+    t.integer  "general_causa_id", limit: 4
+    t.integer  "client_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "corte_causas", force: true do |t|
-    t.string "numero_ingreso"
+  create_table "clients", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "lastname",   limit: 255
+    t.string   "rut",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "corte_causas", force: :cascade do |t|
+    t.string "numero_ingreso",  limit: 255
     t.date   "fecha_ingreso"
-    t.string "ubicacion"
+    t.string "ubicacion",       limit: 255
     t.date   "fecha_ubicacion"
-    t.string "corte"
-    t.string "caratulado"
-    t.string "link"
+    t.string "corte",           limit: 255
+    t.string "caratulado",      limit: 255
+    t.string "link",            limit: 255
   end
 
-  create_table "general_causas", force: true do |t|
-    t.integer  "causa_id"
-    t.string   "causa_type"
+  create_table "general_causas", force: :cascade do |t|
+    t.integer  "causa_id",   limit: 4
+    t.string   "causa_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "laboral_causas", force: true do |t|
-    t.string "rit"
-    t.string "ruc"
+  create_table "laboral_causas", force: :cascade do |t|
+    t.string "rit",        limit: 255
+    t.string "ruc",        limit: 255
     t.date   "fecha"
-    t.string "caratulado"
-    t.string "tribunal"
-    t.string "link"
+    t.string "caratulado", limit: 255
+    t.string "tribunal",   limit: 255
+    t.string "link",       limit: 255
   end
 
-  create_table "movimientos", force: true do |t|
-    t.string   "dato1"
-    t.string   "dato2"
+  create_table "movimientos", force: :cascade do |t|
+    t.string   "dato1",      limit: 255
+    t.string   "dato2",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "procesal_causas", force: true do |t|
-    t.string "tribunal"
-    t.string "tipo"
-    t.string "rol_interno"
-    t.string "rol_unico"
-    t.string "identificacion_causa"
-    t.string "estado"
-    t.string "link"
+  create_table "procesal_causas", force: :cascade do |t|
+    t.string "tribunal",             limit: 255
+    t.string "tipo",                 limit: 255
+    t.string "rol_interno",          limit: 255
+    t.string "rol_unico",            limit: 255
+    t.string "identificacion_causa", limit: 255
+    t.string "estado",               limit: 255
+    t.string "link",                 limit: 255
   end
 
-  create_table "retiros", force: true do |t|
-    t.string   "cuaderno"
-    t.string   "data_retiro"
-    t.string   "estado"
+  create_table "retiros", force: :cascade do |t|
+    t.string   "cuaderno",    limit: 255
+    t.string   "data_retiro", limit: 255
+    t.string   "estado",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "searches", force: true do |t|
-    t.string   "term"
-    t.integer  "account_id"
+  create_table "searches", force: :cascade do |t|
+    t.string   "term",       limit: 255
+    t.integer  "account_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "suprema_causas", force: true do |t|
-    t.string "numero_ingreso"
-    t.string "tipo_recurso"
+  create_table "suprema_causas", force: :cascade do |t|
+    t.string "numero_ingreso",  limit: 255
+    t.string "tipo_recurso",    limit: 255
     t.date   "fecha_ingreso"
-    t.string "ubicacion"
+    t.string "ubicacion",       limit: 255
     t.date   "fecha_ubicacion"
-    t.string "corte"
-    t.string "caratulado"
-    t.string "link"
+    t.string "corte",           limit: 255
+    t.string "caratulado",      limit: 255
+    t.string "link",            limit: 255
   end
 
-  create_table "user_causas", force: true do |t|
-    t.integer  "general_causa_id"
-    t.integer  "account_id"
+  create_table "user_causas", force: :cascade do |t|
+    t.integer  "general_causa_id", limit: 4
+    t.integer  "account_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

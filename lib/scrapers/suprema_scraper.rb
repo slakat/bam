@@ -63,17 +63,18 @@ module Scrapers
         puts n.body
       end
 
-      #list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
-      #user = User.last
+      # list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
+      # user = User.last
       
       @list.each do |list|
         causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
         causa_suprema.save
-        general_causa = user.account.general_causas.build        
+        general_causa = user.general_causas.build        
         causa_suprema.general_causa = general_causa
         general_causa.save
         causa_suprema.save
+        user.save
       end
 
       return @list
@@ -81,9 +82,10 @@ module Scrapers
     end
     
     def self.search_by_name(a, b, c, user)
-      name = a.upcase  
-      last_name = b.upcase
-      second_last_name = c.upcase
+      name, last_name, second_last_name = ""
+      name = a.upcase unless a.nil? 
+      last_name = b.upcase unless b.nil?
+      second_last_name = c.upcase unless c.nil?
        a = Mechanize.new { |agent|
         agent.user_agent_alias = 'Mac Safari'
       }
@@ -144,10 +146,11 @@ module Scrapers
         causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
         causa_suprema.save
-        general_causa = user.account.general_causas.build        
+        general_causa = user.general_causas.build        
         causa_suprema.general_causa = general_causa
         general_causa.save
         causa_suprema.save
+        user.save
       end
 
 
