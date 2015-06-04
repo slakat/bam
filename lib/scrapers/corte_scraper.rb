@@ -60,6 +60,7 @@ module Scrapers
         causa_corte.save
         general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
+        user.general_causas << general_causa
         general_causa.save
         causa_corte.save
         user.save
@@ -126,6 +127,7 @@ module Scrapers
         causa_corte.save
         general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
+        user.general_causas << general_causa
         general_causa.save
         causa_corte.save
         user.save

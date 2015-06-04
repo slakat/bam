@@ -15,11 +15,12 @@ module Scrapers
 
     	def search_by_name(a, b, c, user)
     		@scrapers.each do |scraper|
-                t = Thread.new { scraper.search_by_name a, b, c, user }                
+                puts user
+                scraper.search_by_name a, b, c, user
             end
     	end
 
-    	def self.search_by_rut(input, user)
+    	def search_by_rut(input, user)
     		@scrapers[0..3].each do |scraper|
                 t = Thread.new { scraper.search_by_rut input, user }
             end

@@ -37,6 +37,7 @@ module Scrapers
                 causa_laboral.save
                 general_causa = user.general_causas.build        
                 causa_laboral.general_causa = general_causa
+                user.general_causas << general_causa
                 general_causa.save
                 causa_laboral.save
                 user.save
@@ -84,6 +85,7 @@ module Scrapers
                 causa_laboral.save
                 general_causa = user.general_causas.build        
                 causa_laboral.general_causa = general_causa
+                user.general_causas << general_causa
                 general_causa.save
                 causa_laboral.save
                 user.save

@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
          		:recoverable, :rememberable, :trackable, :validatable
 
 	has_one		:account
-  after_commit  :find_causas, on: :create
 
 	def to_s
 		"#{self.account.name} #{self.account.lastname}"
@@ -20,9 +19,4 @@ class User < ActiveRecord::Base
   end
 
 
-  def find_causas
-    scraper = Scrapers::Scraper.new
-    scraper.search_by_name self.account.name, self.account.lastname.split(" ")[0], self.account.lastname.split(" ")[1], self.account
-    scraper.search_by_rut self.account.rut, self.account
-  end
 end

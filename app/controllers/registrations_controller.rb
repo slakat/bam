@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
 
 		def add_account
 		    if resource.persisted? # user is created successfuly
-		    	account = Account.new params[:user][:account].to_h
+				account = Account.new params[:user].require(:account).permit(:name, :lastname, :rut, :user_causas)	
 		    	if account.valid?
 		    		resource.account = account
 		    		resource.account.save
