@@ -54,13 +54,13 @@ module Scrapers
 
       @list=[]
       #puts page.search("table#filaSel tr").inner_text
-      puts page.content
+      # puts page.content
       page.search('table#contentCells tr').each do |n|
         properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
         things = [properties[1].strip, properties[2],properties[3],properties[4],properties[5],properties[6].strip,properties[7]]
         things << n.search('td a').map{|link| link['href']}.first.strip     
         @list << (things)
-        puts n.body
+        #puts n.body
       end
 
       # list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
@@ -69,10 +69,23 @@ module Scrapers
       @list.each do |list|
         causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_suprema.save
-        general_causa = user.general_causas.build        
+        # causa_suprema.save
+        # general_causa = user.general_causas.build        
+        # causa_suprema.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
+        # causa_suprema.save
+        # user.save
+        # puts "Se ha agregado una causa de suprema (por rut)"
+        if causa_suprema.save
+          puts "Se ha agregado una causa de suprema (por nombre)"
+        else
+          puts "Se ha reasignado una causa suprema existente (por nombre)"
+          causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
+        general_causa = user.general_causas.build
         causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa
+        user.general_causas << general_causa        
         general_causa.save
         causa_suprema.save
         user.save
@@ -137,7 +150,7 @@ module Scrapers
       #puts page.search("table#filaSel tr").inner_text
       page.search('table#contentCells tr.texto').each do |n|
       properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-      puts n
+      #puts n
       things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
       things << n.search('td a').map{|link| link['href']}.first.strip     
       @list << (things)
@@ -146,19 +159,29 @@ module Scrapers
       @list.each do |list|
         causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_suprema.save
-        general_causa = user.general_causas.build        
+        # causa_suprema.save
+        # general_causa = user.general_causas.build        
+        # causa_suprema.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
+        # causa_suprema.save
+        # user.save
+        # puts "Se ha agregado una causa de suprema (por rut)"
+        if causa_suprema.save
+          puts "Se ha agregado una causa de suprema (por nombre)"
+        else
+          puts "Se ha reasignado una causa suprema existente (por nombre)"
+          causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
+        general_causa = user.general_causas.build
         causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa
+        user.general_causas << general_causa        
         general_causa.save
         causa_suprema.save
         user.save
       end
 
-
       return @list
-
-
     end
 
   end

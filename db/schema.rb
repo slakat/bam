@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.string   "tribunal",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "link",       limit: 255
+    t.text     "link",       limit: 65535
   end
 
   create_table "client_causas", force: :cascade do |t|
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte",           limit: 255
     t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.text   "link",            limit: 65535
   end
 
   create_table "general_causas", force: :cascade do |t|
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha"
     t.string "caratulado", limit: 255
     t.string "tribunal",   limit: 255
-    t.string "link",       limit: 255
+    t.text   "link",       limit: 65535
   end
 
   create_table "movimientos", force: :cascade do |t|
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.string "rol_unico",            limit: 255
     t.string "identificacion_causa", limit: 255
     t.string "estado",               limit: 255
-    t.string "link",                 limit: 255
+    t.text   "link",                 limit: 65535
   end
 
   create_table "retiros", force: :cascade do |t|
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte",           limit: 255
     t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.text   "link",            limit: 65535
   end
 
   create_table "user_causas", force: :cascade do |t|

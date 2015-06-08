@@ -1,5 +1,4 @@
 module Scrapers
-
   class CivilScraper
     
     def self.search_by_rut(input, user)
@@ -19,7 +18,7 @@ module Scrapers
         page = a.get("http://civil.poderjudicial.cl/CIVILPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
       end
 
-      puts a.cookies[0]
+      # puts a.cookies[0]
       page = a.post('http://civil.poderjudicial.cl/CIVILPORWEB/AtPublicoDAction.do', {
         "TIP_Consulta"=>"2",
         "TIP_Lengueta"=>"tdTres",
@@ -52,21 +51,20 @@ module Scrapers
         things << n.search('td.textoC a').map{|link| link['href']}.first.strip
         @list << (things)
       end
-      #puts @list
-
+    
       #list = ["C-4023-1999", "30/07/1999", "VELASCO PATRICIO/SOC.DE LUBRIC", "2\xBA Juzgado Civil de Santiago", "/CIVILPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&TIP_Cuaderno=49&CRR_IdCuaderno=3627217&ROL_Causa=4023&TIP_Causa=C&ERA_Causa=1999&CRR_IdCausa=3038972&COD_Tribunal=260&TIP_Informe=1&"] 
       @list.each do |list|        
-        #NO se porque no pesca
-        # list.each do |l|          
-        #   puts l           
-        #   l = l.encode('UTF-8', :invalid => :replace, :undef => :replace) 
-        # end 
-
         causa_civil = CivilCausa.new rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), date: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace)
-        causa_civil.save
-        general_causa = user.general_causas.build        
+        
+        if causa_civil.save
+          puts "Se ha agregado una causa de civil (por rut)"
+        else
+          puts "Se ha reasignado una causa civil existente (por rut)"
+          causa_civil = CivilCausa.find_by(rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
+        general_causa = user.general_causas.build
         causa_civil.general_causa = general_causa
-        user.general_causas << general_causa
+        user.general_causas << general_causa        
         general_causa.save
         causa_civil.save
         user.save
@@ -79,7 +77,7 @@ module Scrapers
       name = a.upcase unless a.nil? 
       last_name = b.upcase unless b.nil?
       second_last_name = c.upcase unless c.nil?
-       a = Mechanize.new { |agent|
+      a = Mechanize.new { |agent|
         agent.user_agent_alias = 'Mac Safari'
       }
 
@@ -87,35 +85,33 @@ module Scrapers
         # search_result = page.form_with(:name => 'InicioAplicacionForm'){ |frm|
 
         # }.submit
-
         a.cookie_jar
-
         page = a.get("http://civil.poderjudicial.cl/CIVILPORWEB/AtPublicoViewAccion.do?tipoMenuATP=1")
       end
 
-      puts a.cookies[0]
+      # puts a.cookies[0]
       page = a.post('http://civil.poderjudicial.cl/CIVILPORWEB/AtPublicoDAction.do', {
-      "TIP_Consulta"=>"3",
-      "TIP_Lengueta"=>"tdCuatro",
-      "SeleccionL"=>"0",
-      "TIP_Causa"=>"",
-      "ROL_Causa"=>"",
-      "ERA_Causa"=>"",
-      "RUC_Era"=>"",
-      "RUC_Tribunal"=>"3",
-      "RUC_Numero"=>"",
-      "RUC_Dv"=>"",
-      "FEC_Desde"=>"26/04/2015",
-      "FEC_Hasta"=>"26/04/2015",
-      "SEL_Litigantes"=>"0",
-      "RUT_Consulta"=>"",
-      "RUT_DvConsulta"=>"",
-      "NOM_Consulta"=>name,
-      "APE_Paterno"=>last_name,
-      "APE_Materno"=>second_last_name,
-      "COD_Tribunal"=>"0",
-      "irAccionAtPublico"=>"Consulta",
-        },{'Cookie'=>"FLG_Version=0; FLG_Turno=0; CRR_IdFuncionario=1; COD_TipoCargo=2; COD_Tribunal=1000; COD_Corte=90; COD_Usuario=autoconsulta1; GLS_Tribunal=Tribunal de Prueba; GLS_Comuna=Santiago; COD_Ambiente=3; COD_Aplicacion=2; GLS_Usuario=Juan Pe\xf1a Perez; HORA_LOGIN=05:05; #{a.cookies[0]};"})
+        "TIP_Consulta"=>"3",
+        "TIP_Lengueta"=>"tdCuatro",
+        "SeleccionL"=>"0",
+        "TIP_Causa"=>"",
+        "ROL_Causa"=>"",
+        "ERA_Causa"=>"",
+        "RUC_Era"=>"",
+        "RUC_Tribunal"=>"3",
+        "RUC_Numero"=>"",
+        "RUC_Dv"=>"",
+        "FEC_Desde"=>"26/04/2015",
+        "FEC_Hasta"=>"26/04/2015",
+        "SEL_Litigantes"=>"0",
+        "RUT_Consulta"=>"",
+        "RUT_DvConsulta"=>"",
+        "NOM_Consulta"=>name,
+        "APE_Paterno"=>last_name,
+        "APE_Materno"=>second_last_name,
+        "COD_Tribunal"=>"0",
+        "irAccionAtPublico"=>"Consulta",
+      },{'Cookie'=>"FLG_Version=0; FLG_Turno=0; CRR_IdFuncionario=1; COD_TipoCargo=2; COD_Tribunal=1000; COD_Corte=90; COD_Usuario=autoconsulta1; GLS_Tribunal=Tribunal de Prueba; GLS_Comuna=Santiago; COD_Ambiente=3; COD_Aplicacion=2; GLS_Usuario=Juan Pe\xf1a Perez; HORA_LOGIN=05:05; #{a.cookies[0]};"})
 
 
       @list=[]
@@ -131,22 +127,29 @@ module Scrapers
         @list << (things)
       end
 
-      puts @list.first
+      # puts @list.first
       @list.each do |list|        
         #NO se porque no pesca
         # list.each do |l|          
-        #   puts l           
+        #   puts l     puts      
         #   l = l.encode('UTF-8', :invalid => :replace, :undef => :replace) 
         # end 
 
         causa_civil = CivilCausa.new rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), date: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), tribunal: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace)
-        causa_civil.save
+        
+        if causa_civil.save
+          puts "Se ha agregado una causa de civil (por nombre)"
+        else
+          puts "Se ha reasignado una causa civil existente (por nombre)"
+          causa_civil = CivilCausa.find_by(rol: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
         general_causa = user.general_causas.build        
         causa_civil.general_causa = general_causa
         user.general_causas << general_causa
         general_causa.save
         causa_civil.save
-        user.save
+        user.save        
+
       end
 
       return @list

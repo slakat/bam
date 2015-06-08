@@ -4,9 +4,9 @@ usr_admin = User.create!(
 )
 
 acnt_admin = Account.create!(
-    name: 'Admin',
-    lastname: 'Bam',
-    rut: '11111111-1',
+    name: 'Jeronimo',
+    lastname: 'Alvear',
+    rut: '10696737-7',
     role: 'admin',
     user_id: usr_admin.id
 )
@@ -36,3 +36,4 @@ acnt_tom = Account.create!(
     role: 'admin',
     user_id: usr_tom.id
 )
+

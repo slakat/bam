@@ -77,10 +77,23 @@ module Scrapers
        @list.each do |list|
         causa_procesal = ProcesalCausa.new tribunal: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), identificacion_causa: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), estado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)#, link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_procesal.save
-        general_causa = user.general_causas.build        
+        # causa_procesal.save
+        # general_causa = user.general_causas.build        
+        # causa_procesal.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
+        # causa_procesal.save
+        # user.save
+        # puts "Se ha agregado una causa de procesal (por rut)"
+        if causa_procesal.save
+          puts "Se ha agregado una causa de procesal (por rut)"
+        else
+          puts "Se ha reasignado una causa procesal existente (por rut)"
+          causa_procesal = ProcesalCausa.find_by(rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
+        general_causa = user.general_causas.build
         causa_procesal.general_causa = general_causa
-        user.general_causas << general_causa
+        user.general_causas << general_causa        
         general_causa.save
         causa_procesal.save
         user.save
@@ -146,7 +159,7 @@ module Scrapers
         "autoScroll"=>"",
         "javax.faces.ViewState"=>a.page.forms[0]['javax.faces.ViewState']})
         
-        puts page
+        #puts page
         
         @list=[]
         page.search("tr.extdt-firstrow.rich-extdt-firstrow").each do |n|
@@ -155,9 +168,9 @@ module Scrapers
           n.search('.texto').each do |content|
             properties << content.content
           end
-          puts properties            
+          #puts properties            
           things = [properties[0].strip,properties[1], "#{properties[2]}-#{properties[3]}", properties[4], properties[5]]
-          puts things
+          #puts things
           @list << (things)
         end
       end
@@ -165,10 +178,23 @@ module Scrapers
       @list.each do |list|
         causa_procesal = ProcesalCausa.new tribunal: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), identificacion_causa: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), estado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace)#, link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_procesal.save
-        general_causa = user.general_causas.build        
+        # causa_procesal.save
+        # general_causa = user.general_causas.build        
+        # causa_procesal.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
+        # causa_procesal.save
+        # user.save
+        # puts "Se ha agregado una causa de procesal (por nombre)"   
+        if causa_procesal.save
+          puts "Se ha agregado una causa de procesal (por nombre)"
+        else
+          puts "Se ha reasignado una causa procesal existente (por nombre)"
+          causa_procesal = ProcesalCausa.find_by(rol_interno: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), rol_unico: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
+        general_causa = user.general_causas.build
         causa_procesal.general_causa = general_causa
-        user.general_causas << general_causa
+        user.general_causas << general_causa        
         general_causa.save
         causa_procesal.save
         user.save
