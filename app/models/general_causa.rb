@@ -8,8 +8,8 @@ class GeneralCausa < ActiveRecord::Base
 	has_many		:accounts, through: :user_causas
 
 	has_many		:movimientos
-	has_many		:retiros
-
+	
+	has_many		:litigantes
 
 	def self.search(q)
 		causas_arel      = LaboralCausa.arel_table

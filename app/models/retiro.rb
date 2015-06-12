@@ -1,3 +1,3 @@
 class Retiro < ActiveRecord::Base
-	belongs_to		:general_causa
+	belongs_to		:civil_causa
 end

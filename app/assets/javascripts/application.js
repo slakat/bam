@@ -19,7 +19,7 @@
 //= require gritter
 //= require wiselinks
 //= require underscore
-
+//= require best_in_place
 
 //= require angular
 //= require angular-route
@@ -63,6 +63,7 @@ onInit(function(){
 
 $(document).ready(function() {
     $(".select2-bh").select2();
+    $(".best_in_place").best_in_place();
 
 });
 

@@ -132,7 +132,7 @@ gem 'angularjs-rails', '~> 1.3.0'
 
 #para realizar scraper
 gem 'mechanize'
-
+gem 'best_in_place'
 gem 'better_errors'
 gem 'binding_of_caller'
 

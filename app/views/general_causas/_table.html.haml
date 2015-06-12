@@ -14,9 +14,14 @@
 								%th RUC
 								%th Caratulado
 								%th Tribunal
+								%th Not1
+								%th Not2
+								%th Not3
 						%tbody
 							-general_causas.each do |d|
 								-c=d.causa
+								-user_causa = d.user_causas.find_by(account_id: current_user.account.id)
+
 								-unless c.nil?
 									%tr
 										%td
@@ -31,5 +36,15 @@
 										%td
 											%span
 												=#c.tribunal
+										- unless user_causa.nil?												
+											%td
+												%span
+													=role_inline(user_causa, :not1)
+											%td													
+												%span
+													=role_inline(user_causa, :not2)
+											%td
+												%span
+													=role_inline(user_causa, :not3)
 
 
