@@ -7,6 +7,13 @@ class GeneralCausa < ActiveRecord::Base
 	has_many		:user_causas
 	has_many		:accounts, through: :user_causas
 
+	has_many		:general_causa_cortes
+	has_many		:corte_causas, through: :general_causa_cortes
+
+	has_many		:general_causa_suprema
+	has_many		:suprema_causas, through: :general_causa_suprema
+
+
 	has_many		:movimientos
 	
 	has_many		:litigantes
