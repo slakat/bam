@@ -108,11 +108,54 @@ class CivilScraper
       else
         things = [properties[0].strip,properties[3],properties[4],properties[5]]
       end
-      things << n.search('td.textoC a').map{|link| link['href']}.first.strip     
+      things << n.search('td.textoC a').map{|link| link['href']}.first.strip
+
+
+      b = Mechanize.new { |agent|
+        agent.user_agent_alias = 'Mac Safari'
+      }
+
+      page = b.post('http://civil.poderjudicial.cl'+things.last)
+
+      #puts page.content
+
+      doc = page.search('table tr')
+      level_2 = doc[2].search('td')
+      rol= level_2[0].text.split(':')[1].strip
+      fecha = level_2[2].text.split(':')[1].strip
+      level_3 = doc[3].search('td')
+      est_adm = level_3[0].text.split(':')[1].strip
+      ubicacion= level_3[2].text.split(':')[1].strip
+      level_4 = doc[4].search('td')
+      est_proc = level_4[1].text.split(':')[1].strip
+      level_5 = doc[5].search('td')
+      tribunal = level_5[0].text.split(':')[1].strip
+
+      litigantes = []
+
+      page.search('#Litigantes tr.lineaGrilla1', '#Litigantes tr.lineaGrilla2').each do |l|
+        data = []
+        l.search('td').each do |a|
+          data << a.text.strip
+        end
+        litigantes << data
+      end
+
+      page.search('#ReceptorDIV table')[3].search('tr','tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
+        r.search('td').each do |t|
+          puts t.text.strip
+        end
+      end
+
+      break
+
+
       @list << (things)
     end
 
     puts @list.first
+
+
 
     return @list
 

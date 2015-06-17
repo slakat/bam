@@ -1,7 +1,5 @@
 %h1 Busca causas laborales por rut
 
-%select.select2-search
-
 #reportes.bg-petro
   .container#report-form
     .row.marg-t-20
@@ -16,7 +14,7 @@
             .col-md-9
             = text_field_tag :rut,'',behaviour
         =submit_tag 'Buscar rut' 
-        
+
     .row.marg-t-20
       = form_tag search_name_civil_path, id: 'raw-search-form', role: 'form', remote: true do
 
@@ -31,7 +29,6 @@
             = text_field_tag :last_name,'',behaviour
             = text_field_tag :second_last_name,'',behaviour
         =submit_tag 'Buscar nombre'
-       
-       
+
     .row
       #results
