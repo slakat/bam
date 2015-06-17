@@ -14,3 +14,5 @@
   %dd= @client.lastname
   %dt Rut:
   %dd= @client.rut
+
+=render partial: "general_causas/table", locals: { general_causas: @client.general_causas }

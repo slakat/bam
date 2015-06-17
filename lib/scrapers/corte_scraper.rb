@@ -50,20 +50,33 @@ module Scrapers
         things << n.search('td a').map{|link| link['href']}.first.strip
         @list << (things)
       end
-      puts @list.first
+      # puts @list.first
 
       # list = ["Familia-4846-2007", "  24/12/2007 ", " Primera Instancia ", "  28/03/2008 ", " C.A. de Santiago ", "MU\xD1OZ / SEPULVEDA", "/SITCORTEPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Libro=11&ROL_Recurso=4846&ERA_Recurso=2007&COD_Corte=90&"]
       # user = User.last
       @list.each do |list|
         causa_corte = CorteCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_corte.save
+        # causa_corte.save
+        # general_causa = user.general_causas.build        
+        # causa_corte.general_causa = general_causa
+        # general_causa.save
+        # causa_corte.save
+        # user.save
+        # puts "Se ha agregado una causa de corte (por rut)"
+        if causa_corte.save
+          puts "Se ha agregado una causa de corte (por nombre)"
+        else
+          puts "Se ha reasignado una causa corte existente (por nombre)"
+          causa_corte = CorteCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
         general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
         user.general_causas << general_causa
         general_causa.save
         causa_corte.save
-        user.save
+        user.save        
+
       end
       return @list
     end
@@ -119,18 +132,31 @@ module Scrapers
         @list << (things)
       end
 
-      puts @list.first
+      #puts @list.first
 
       @list.each do |list|
         causa_corte = CorteCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace)
          
-        causa_corte.save
+        # causa_corte.save
+        # general_causa = user.general_causas.build        
+        # causa_corte.general_causa = general_causa
+        # general_causa.save
+        # causa_corte.save
+        # user.save
+        # puts "Se ha agregado una causa de corte (por nombre)"
+        if causa_corte.save
+          puts "Se ha agregado una causa de corte (por nombre)"
+        else
+          puts "Se ha reasignado una causa corte existente (por nombre)"
+          causa_corte = CorteCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
+        end        
         general_causa = user.general_causas.build        
         causa_corte.general_causa = general_causa
         user.general_causas << general_causa
         general_causa.save
         causa_corte.save
-        user.save
+        user.save        
+
       end
       return @list
 

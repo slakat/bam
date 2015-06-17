@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'user_causa/update'
+
   resources :movimientos
 
   resources :retiros
 
   resources :general_causas
+  resources :user_causa, only: [:update]
 
   resources :searches
 

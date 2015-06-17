@@ -4,12 +4,13 @@ usr_admin = User.create!(
 )
 
 acnt_admin = Account.create!(
-    name: 'Admin',
-    lastname: 'Bam',
-    rut: '11111111-1',
+    name: 'Jeronimo',
+    lastname: 'Alvear',
+    rut: '10696737-7',
     role: 'admin',
     user_id: usr_admin.id
 )
+acnt_admin.save
 
 usr_kathy = User.create!(
     email: 'slakat@gmail.com',
@@ -23,6 +24,7 @@ acnt_kathy = Account.create!(
     role: 'admin',
     user_id: usr_kathy.id
 )
+acnt_kathy.save
 
 usr_tom = User.create!(
     email: 'tpgunther@uc.cl',
@@ -36,3 +38,4 @@ acnt_tom = Account.create!(
     role: 'admin',
     user_id: usr_tom.id
 )
+acnt_tom.save

@@ -3,6 +3,7 @@ class CreateGeneralCausas < ActiveRecord::Migration
     create_table :general_causas do |t|      
       t.integer :causa_id
       t.string :causa_type
+      
 
       t.timestamps
     end

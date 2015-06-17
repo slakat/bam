@@ -6,9 +6,9 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     cannot :manage, :all
-    if user.is? :abogado
-        can :manage, User, :id => user.id
-        can :manage, Account, :user_id => user.id
+    can :manage, User, :id => user.id
+    can :manage, Account, :user_id => user.id
+    if user.is? :abogado        
         can :manage, UserCausa, :account_id => user.id
         can :read, GeneralCausa
         can :read, Home

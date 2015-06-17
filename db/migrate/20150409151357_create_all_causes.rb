@@ -6,6 +6,9 @@ class CreateAllCauses < ActiveRecord::Migration
     	t.date		:fecha
     	t.string	:caratulado
     	t.string	:tribunal    	
+        t.string    :estado_procesal
+        t.string    :estado_administrativo
+        t.string    :ubicacion
     end
 
     create_table :procesal_causas do |t|
@@ -15,6 +18,11 @@ class CreateAllCauses < ActiveRecord::Migration
     	t.string	:rol_unico
     	t.string	:identificacion_causa
     	t.string	:estado
+        t.string    :fecha_ingreso
+        t.string    :estado_procesal
+        t.string    :estado_administrativo
+        t.string    :ubicacion        
+
     end
 
     create_table :suprema_causas do |t|    	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507161610) do
+ActiveRecord::Schema.define(version: 20150612130332) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.string   "tribunal",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "link",       limit: 255
+    t.text     "link",       limit: 65535
   end
 
   create_table "client_causas", force: :cascade do |t|
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte",           limit: 255
     t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.text   "link",            limit: 65535
   end
 
   create_table "general_causas", force: :cascade do |t|
@@ -71,7 +71,14 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha"
     t.string "caratulado", limit: 255
     t.string "tribunal",   limit: 255
-    t.string "link",       limit: 255
+    t.text   "link",       limit: 65535
+  end
+
+  create_table "litigantes", force: :cascade do |t|
+    t.string   "name",             limit: 255
+    t.integer  "general_causa_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "movimientos", force: :cascade do |t|
@@ -88,7 +95,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.string "rol_unico",            limit: 255
     t.string "identificacion_causa", limit: 255
     t.string "estado",               limit: 255
-    t.string "link",                 limit: 255
+    t.text   "link",                 limit: 65535
   end
 
   create_table "retiros", force: :cascade do |t|
@@ -114,7 +121,7 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.date   "fecha_ubicacion"
     t.string "corte",           limit: 255
     t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.text   "link",            limit: 65535
   end
 
   create_table "user_causas", force: :cascade do |t|
@@ -122,6 +129,9 @@ ActiveRecord::Schema.define(version: 20150507161610) do
     t.integer  "account_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "not1",             limit: 4, default: 1
+    t.integer  "not2",             limit: 4, default: 1
+    t.integer  "not3",             limit: 4, default: 1
   end
 
   create_table "users", force: :cascade do |t|

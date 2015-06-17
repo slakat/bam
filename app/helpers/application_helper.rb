@@ -17,4 +17,8 @@ module ApplicationHelper
             }
     )
   end
+
+  def role_inline role, symbol
+    best_in_place role, symbol, as: :select, :url => user_causa_path(role), collection: [[1,"ON"],[2,"OFF"]] , "rel"=>"tooltip", "title"=>"ON/OFF"
+  end
 end
