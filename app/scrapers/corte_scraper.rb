@@ -115,29 +115,23 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
     doc = page.search('table.textoPortal tr')
 
     level_2 = doc[0].search('td')
-    rit= level_2[0].text.split(':')[1].strip
-    fecha = level_2[2].text.split(':')[1].strip
-
-    puts rit
-    level_3 = doc[1].search('td')
-    ruc = level_3[0].text.split(':')[1].strip
-
-    level_4 = doc[2].search('td')
-    est_adm = level_4[0].text.split(':')[1].strip
-    est_proc = level_4[2].text.split(':')[1].strip
+    libro= level_2[1].text.split(':')[1].strip
+    est_recurso = level_2[2].text.split(':')[1].strip
+    fecha = level_2[3].text.split(':')[1].strip
 
 
-    level_5 = doc[3].search('td')
-    tribunal = level_5[0].text.split(':')[1].strip
+    level_3 = doc[2].search('td')
+    ubicacion = level_3[0].text.split(':')[1].strip
+    est_procesal = level_3[1].text.split(':')[1].strip
 
-    puts rit, fecha , ruc, est_adm,est_proc,tribunal
+    puts libro,est_recurso,fecha, ubicacion,est_procesal
+
 
     litigantes = []
 
-    page.search('#Litigantes tr.filadostabla', '#Litigantes tr.filaunodtabla').each do |l|
+    page.search('#divLitigantes tr.textoPortal').each do |l|
       data = []
       l.search('td').each_with_index do |a,index|
-        next if index<2
 
         data << a.text.strip
       end
@@ -145,6 +139,17 @@ page = a.post('http://corte.poderjudicial.cl/SITCORTEPORWEB/AtPublicoDAction.do'
     end
     puts litigantes
 
+    #expediente
+    level_4 = doc[6].search('td')
+    rol_rit= level_4[0].text.split(':')[1].strip
+    ruc = level_4[1].text.split(':')[1].strip
+    fecha = level_4[2].text.split(':')[1].strip
+    caratulado = doc[7].search('td')[0].text.split(':')[1].strip
+    tribunal =  doc[9].search('td')[0].text.split(':')[1].strip
+
+    puts rol_rit,ruc, fecha,caratulado,tribunal
+
+    break
 
     @list << (things)
     end

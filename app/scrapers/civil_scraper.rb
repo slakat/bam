@@ -142,9 +142,12 @@ class CivilScraper
       end
 
       page.search('#ReceptorDIV table')[3].search('tr','tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
-        r.search('td').each do |t|
-          puts t.text.strip
-        end
+        data = r.search('td')
+        cuaderno = data[0].text.strip
+        datos_retiro = data[1].text.strip
+        descripcion = data[2].text.strip
+        puts cuaderno,datos_retiro,descripcion
+
       end
 
       break
