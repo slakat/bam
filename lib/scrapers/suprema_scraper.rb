@@ -83,12 +83,12 @@ module Scrapers
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
         end        
-        general_causa = user.general_causas.build
-        causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa        
-        general_causa.save
+        # general_causa = user.general_causas.build
+        # causa_suprema.general_causa = general_causa
+        # user.general_causas << general_causa        
+        # general_causa.save
         causa_suprema.save
-        user.save
+        # user.save
       end
 
       return @list
@@ -173,12 +173,12 @@ module Scrapers
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
         end        
-        general_causa = user.general_causas.build
-        causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa        
-        general_causa.save
+        # general_causa = user.general_causas.build
+        # causa_suprema.general_causa = general_causa
+        # user.general_causas << general_causa        
+        # general_causa.save
         causa_suprema.save
-        user.save
+        # user.save
       end
 
       return @list

@@ -70,12 +70,12 @@ module Scrapers
           puts "Se ha reasignado una causa corte existente (por nombre)"
           causa_corte = CorteCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
         end        
-        general_causa = user.general_causas.build        
-        causa_corte.general_causa = general_causa
-        user.general_causas << general_causa
-        general_causa.save
+        # general_causa = user.general_causas.build        
+        # causa_corte.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
         causa_corte.save
-        user.save        
+        # user.save        
 
       end
       return @list
@@ -150,12 +150,12 @@ module Scrapers
           puts "Se ha reasignado una causa corte existente (por nombre)"
           causa_corte = CorteCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
         end        
-        general_causa = user.general_causas.build        
-        causa_corte.general_causa = general_causa
-        user.general_causas << general_causa
-        general_causa.save
+        # general_causa = user.general_causas.build        
+        # causa_corte.general_causa = general_causa
+        # user.general_causas << general_causa
+        # general_causa.save
         causa_corte.save
-        user.save        
+        # user.save                
 
       end
       return @list
