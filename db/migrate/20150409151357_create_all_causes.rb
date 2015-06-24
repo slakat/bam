@@ -42,6 +42,9 @@ class CreateAllCauses < ActiveRecord::Migration
     	t.date		:fecha_ubicacion
     	t.string	:corte
     	t.string	:caratulado
+        t.string    :libro
+        t.string    :estado_administrativo
+        t.string    :estado_procesal
     end
 
     

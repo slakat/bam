@@ -15,7 +15,7 @@ module Scrapers
 
     def search_by_name(a, b, c, user)
       @scrapers.each do |scraper|
-        t = Thread.new { scraper.search_by_name a, b, c, user }
+        t = Thread.new { scraper.search_by_name a, b, c, user }        
       end
     end
 
