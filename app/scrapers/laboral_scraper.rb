@@ -68,54 +68,54 @@ class LaboralScraper
   @list=[]
     #puts page.search("table#filaSel tr").inner_text
     page.search('table#filaSel tr').each do |n|
-    properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-    things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6]]
-    things << n.search('td a').map{|link| link['href']}.first.strip
+      properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
+      things = [properties[0].strip,properties[3],properties[4],properties[5],properties[6]]
+      things << n.search('td a').map{|link| link['href']}.first.strip
 
 
-    b = Mechanize.new { |agent|
-      agent.user_agent_alias = 'Mac Safari'
-    }
+      b = Mechanize.new { |agent|
+        agent.user_agent_alias = 'Mac Safari'
+      }
 
-    page = b.post('http://laboral.poderjudicial.cl'+things.last)
+      page = b.post('http://laboral.poderjudicial.cl'+things.last)
 
-    #puts page.content
+      #puts page.content
 
-    doc = page.search('tr.textoPortal')
-    level_2 = doc[0].search('td')
-    rit= level_2[0].text.split(':')[1].strip
-    fecha = level_2[2].text.split(':')[1].strip
+      doc = page.search('tr.textoPortal')
+      level_2 = doc[0].search('td')
+      rit= level_2[0].text.split(':')[1].strip
+      fecha = level_2[2].text.split(':')[1].strip
 
-    level_3 = doc[1].search('td')
-    ruc = level_3[0].text.split(':')[1].strip
+      level_3 = doc[1].search('td')
+      ruc = level_3[0].text.split(':')[1].strip
 
-    level_4 = doc[2].search('td')
-    est_adm = level_4[0].text.split(':')[1].strip
-    est_proc = level_4[2].text.split(':')[1].strip
-
-
-    level_5 = doc[3].search('td')
-    tribunal = level_5[0].text.split(':')[1].strip
-
-    puts rit, fecha , ruc, est_adm,est_proc,tribunal
-
-    litigantes = []
-
-    page.search('#Litigantes tr.filadostabla', '#Litigantes tr.filaunodtabla').each do |l|
-      data = []
-      l.search('td').each_with_index do |a,index|
-        next if index<2
-
-        data << a.text.strip
-      end
-      litigantes << data
-    end
-    puts litigantes
+      level_4 = doc[2].search('td')
+      est_adm = level_4[0].text.split(':')[1].strip
+      est_proc = level_4[2].text.split(':')[1].strip
 
 
+      level_5 = doc[3].search('td')
+      tribunal = level_5[0].text.split(':')[1].strip
+
+      puts rit, fecha , ruc, est_adm,est_proc,tribunal
+
+      litigantes = []
+
+      page.search('#Litigantes tr.filadostabla', '#Litigantes tr.filaunodtabla').each do |l|
+          data = []
+          l.search('td').each_with_index do |a,index|
+            next if index<2
+
+            data << a.text.strip
+          end
+          litigantes << data
+        end
+      puts litigantes
 
 
-    @list << (things)
+
+
+      @list << (things)
     end
 
     puts @list.first[0]
