@@ -189,9 +189,9 @@
 
 
         
-        puts page.links.map(&:href)
-        search_result = n.click
-        puts search_result
+        #puts page.links.map(&:href)
+        #search_result = n.click
+        #puts search_result
 
         doc = page.search('tr.textoPortal')
         level_2 = doc[0].search('td')
@@ -204,7 +204,6 @@
         level_4 = doc[2].search('td')
         est_adm = level_4[0].text.split(':')[1].strip
         est_proc = level_4[2].text.split(':')[1].strip
-
 
         level_5 = doc[3].search('td')
         tribunal = level_5[0].text.split(':')[1].strip
@@ -225,9 +224,8 @@
         puts litigantes
 
 
-        break
-
         @list << (things)
+        break
 
       end
 

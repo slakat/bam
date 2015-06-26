@@ -120,13 +120,81 @@ page = a.post('http://suprema.poderjudicial.cl/SITSUPPORWEB/AtPublicoDAction.do'
     #puts page.search("table#filaSel tr").inner_text
     page.search('table#contentCells tr.texto').each do |n|
     properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-    puts n
+    #puts n
     things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
-    things << n.search('td a').map{|link| link['href']}.first.strip     
+    things << n.search('td a').map{|link| link['href']}.first.strip
+
+
+    b = Mechanize.new { |agent|
+      agent.user_agent_alias = 'Mac Safari'
+    }
+
+    page = b.post('http://suprema.poderjudicial.cl'+things.last)
+
+    #puts page.content
+
+    doc = page.search('table.texto tr')
+
+
+    level_2 = doc[2].search('td')
+
+    #puts level_2
+    libro= level_2[1].text.split(':')[1].strip
+    est_recurso = level_2[2].text.split(':')[1].strip
+    fecha = level_2[3].text.split(':')[1].split('     Hora')[0].strip
+
+
+    level_3 = doc[4].search('td')
+    ubicacion = level_3[0].text.split(':')[1].strip
+    est_procesal = level_3[1].text.split(':')[1].strip
+
+    puts libro,est_recurso,fecha, ubicacion,est_procesal
+
+
+    litigantes = []
+
+    page.search('#contentCellsLitigantes tr.texto').each do |l|
+      data = []
+      l.search('td').each_with_index do |a,index|
+
+        data << a.text.strip
+      end
+      litigantes << data
+    end
+    puts litigantes
+
+    #expediente primera instancia
+    doc = page.search('div#expediente1').search('table.texto tr')
+    level_4 = doc[1].search('table.texto tr').search('td')
+    rol_rit= level_4[0].text.split(':')[1].strip
+    ruc = level_4[1].text.split(':')[1].strip
+
+    fecha = level_4[2].text.split(':')[1].strip
+    caratulado = level_4[3].text.split(':')[1].strip
+    tribunal =  level_4[5].text.split(':')[1].strip
+
+    puts rol_rit,ruc, fecha,caratulado,tribunal
+
+    #expediente corte
+    doc = page.search('div#expediente').search('table.texto tr')
+    level_4 = doc[1].search('table.texto tr').search('td')
+    puts level_4
+    corte= level_4[0].text.split(':')[1].strip
+    libro = level_4[2].text.split(':')[1].strip
+
+    rol_ing = level_4[3].text.split(':')[1].strip
+    recurso = level_4[4].text.split(':')[1].strip
+
+    puts corte,libro,rol_ing,recurso
+
+    break
+
     @list << (things)
     end
 
-    puts @list.first
+    #puts @list.first
+
+
 
     return @list
 
