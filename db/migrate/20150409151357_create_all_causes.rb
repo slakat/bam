@@ -33,6 +33,9 @@ class CreateAllCauses < ActiveRecord::Migration
     	t.date		:fecha_ubicacion
     	t.string	:corte
     	t.string	:caratulado
+        t.string    :libro
+        t.string    :estado_recurso
+        t.string    :estado_procesal    
     end
 
     create_table :corte_causas do |t|

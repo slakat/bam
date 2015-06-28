@@ -57,40 +57,145 @@ module Scrapers
       # puts page.content
       page.search('table#contentCells tr').each do |n|
         properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-        things = [properties[1].strip, properties[2],properties[3],properties[4],properties[5],properties[6].strip,properties[7]]
-        things << n.search('td a').map{|link| link['href']}.first.strip     
+        #puts n
+        things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
+        things << n.search('td a').map{|link| link['href']}.first.strip
+
+
+        b = Mechanize.new { |agent|
+          agent.user_agent_alias = 'Mac Safari'
+        }
+
+        page = b.post('http://suprema.poderjudicial.cl'+things.last)
+
+        #puts page.content
+
+        doc = page.search('table.texto tr')
+
+
+        level_2 = doc[2].search('td')
+
+        #puts level_2
+        libro= level_2[1].text.split(':')[1].strip
+        est_recurso = level_2[2].text.split(':')[1].strip
+        fecha = level_2[3].text.split(':')[1].split('     Hora')[0].strip
+
+
+        level_3 = doc[4].search('td')
+        ubicacion = level_3[0].text.split(':')[1].strip
+        est_procesal = level_3[1].text.split(':')[1].strip
+
+        puts libro,est_recurso,fecha, ubicacion,est_procesal
+
+         causa_suprema = SupremaCausa.new(
+          numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), 
+          tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]), 
+          fecha_ingreso: Scrapers::CorteScraper.clear_string(things[2]), 
+          ubicacion: Scrapers::CorteScraper.clear_string(things[3]), 
+          fecha_ubicacion: Scrapers::CorteScraper.clear_string(things[4]), 
+          corte: Scrapers::CorteScraper.clear_string(things[5]), 
+          caratulado: Scrapers::CorteScraper.clear_string(things[6]), 
+          link: Scrapers::CorteScraper.clear_string(things[7]),
+          libro: Scrapers::CorteScraper.clear_string(libro),
+          estado_recurso: Scrapers::CorteScraper.clear_string(est_recurso),
+          estado_procesal: Scrapers::CorteScraper.clear_string(est_procesal)
+        )
+         
+
+        litigantes = []
+        litigantes_rb = []
+        page.search('#contentCellsLitigantes tr.texto').each do |l|
+          data = []
+          l.search('td').each_with_index do |a,index|
+
+            data << a.text.strip
+          end
+          litigantes << data
+          litigantes_rb << Litigante.create(
+            participante: Scrapers::LaboralScraper.clear_string(data[0]),
+            rut: Scrapers::LaboralScraper.clear_string(data[1]),
+            persona: Scrapers::LaboralScraper.clear_string(data[2]),
+            nombre: Scrapers::LaboralScraper.clear_string(data[3])
+            )   
+        end
+        puts litigantes
+
+        #expediente primera instancia
+        doc = page.search('div#expediente1').search('table.texto tr')
+        level_4 = doc[1].search('table.texto tr').search('td')
+        unless level_4.nil?          
+          rol_rit= level_4[0].text.split(':')[1].strip
+          ruc = level_4[1].text.split(':')[1].strip
+
+          fecha2 = level_4[2].text.split(':')[1].strip
+          caratulado = level_4[3].text.split(':')[1].strip
+          tribunal =  level_4[5].text.split(':')[1].strip
+
+          expediente = Expediente.create rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), ruc: Scrapers::CorteScraper.clear_string(ruc), fecha: Scrapers::CorteScraper.clear_string(fecha2), caratulado: Scrapers::CorteScraper.clear_string(caratulado), tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+          puts rol_rit,ruc, fecha2,caratulado,tribunal
+        end
+
+        #expediente corte
+        doc = page.search('div#expediente').search('table.texto tr')
+        level_4 = doc[1].search('table.texto tr').search('td')
+        unless level_4.nil?
+          puts level_4
+          corte= level_4[0].text.split(':')[1].strip
+          libro = level_4[2].text.split(':')[1].strip
+
+          rol_ing = level_4[3].text.split(':')[1].strip
+          recurso = level_4[4].text.split(':')[1].strip
+
+          puts corte,libro,rol_ing,recurso
+          expediente_corte = ExpedienteCorte.create(
+              corte: Scrapers::CorteScraper.clear_string(corte),
+              libro: Scrapers::CorteScraper.clear_string(libro),
+              rol_ing: Scrapers::CorteScraper.clear_string(rol_ing),
+              recurso: Scrapers::CorteScraper.clear_string(recurso)
+            )
+
+        end
+
+        if causa_suprema.save
+          puts "Se ha agregado una causa de suprema (por nombre)"
+        else
+          puts "Se ha reasignado una causa suprema existente (por nombre)"
+          causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
+          if causa_suprema.ubicacion != causa_suprema2.ubicacion
+            #Cambio ubicacion!!!!
+          end
+          if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
+            #cambio estado
+          end
+          causa_suprema = causa_suprema2
+        end 
+        causa_suprema.expediente = expediente
+        expediente.save
+
+        causa_suprema.expediente_corte = expediente_corte
+        expediente_corte.save
+
+        general_causa = user.general_causas.build
+        causa_suprema.general_causa = general_causa
+        user.general_causas << general_causa        
+
+        general_causa.save
+        causa_suprema.save
+        user.save
+
+        litigantes_rb.each do |lit|
+          begin
+            lit.general_causa_id = general_causa.id
+            lit.save
+          rescue
+          end
+        end
         @list << (things)
-        #puts n.body
       end
 
       # list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
       # user = User.last
       
-      @list.each do |list|
-        causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
-         
-        # causa_suprema.save
-        # general_causa = user.general_causas.build        
-        # causa_suprema.general_causa = general_causa
-        # user.general_causas << general_causa
-        # general_causa.save
-        # causa_suprema.save
-        # user.save
-        # puts "Se ha agregado una causa de suprema (por rut)"
-        if causa_suprema.save
-          puts "Se ha agregado una causa de suprema (por nombre)"
-        else
-          puts "Se ha reasignado una causa suprema existente (por nombre)"
-          causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
-        end        
-        # general_causa = user.general_causas.build
-        # causa_suprema.general_causa = general_causa
-        # user.general_causas << general_causa        
-        # general_causa.save
-        causa_suprema.save
-        # user.save
-      end
-
       return @list
 
     end
@@ -148,37 +253,142 @@ module Scrapers
 
       @list=[]
       #puts page.search("table#filaSel tr").inner_text
-      page.search('table#contentCells tr.texto').each do |n|
-      properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
-      #puts n
-      things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
-      things << n.search('td a').map{|link| link['href']}.first.strip     
-      @list << (things)
-      end
+      page.search('table#contentCells tr').each do |n|
+        properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
+        #puts n
+        things = [properties[1].strip,properties[2],properties[3],properties[4],properties[5],properties[6],properties[7]]
+        things << n.search('td a').map{|link| link['href']}.first.strip
 
-      @list.each do |list|
-        causa_suprema = SupremaCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace) , link: list[7].encode('UTF-8', :invalid => :replace, :undef => :replace)
+
+        b = Mechanize.new { |agent|
+          agent.user_agent_alias = 'Mac Safari'
+        }
+
+        page = b.post('http://suprema.poderjudicial.cl'+things.last)
+
+        #puts page.content
+
+        doc = page.search('table.texto tr')
+
+
+        level_2 = doc[2].search('td')
+
+        #puts level_2
+        libro= level_2[1].text.split(':')[1].strip
+        est_recurso = level_2[2].text.split(':')[1].strip
+        fecha = level_2[3].text.split(':')[1].split('     Hora')[0].strip
+
+
+        level_3 = doc[4].search('td')
+        ubicacion = level_3[0].text.split(':')[1].strip
+        est_procesal = level_3[1].text.split(':')[1].strip
+
+        puts libro,est_recurso,fecha, ubicacion,est_procesal
+
+         causa_suprema = SupremaCausa.new(
+          numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), 
+          tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]), 
+          fecha_ingreso: Scrapers::CorteScraper.clear_string(things[2]), 
+          ubicacion: Scrapers::CorteScraper.clear_string(things[3]), 
+          fecha_ubicacion: Scrapers::CorteScraper.clear_string(things[4]), 
+          corte: Scrapers::CorteScraper.clear_string(things[5]), 
+          caratulado: Scrapers::CorteScraper.clear_string(things[6]), 
+          link: Scrapers::CorteScraper.clear_string(things[7]),
+          libro: Scrapers::CorteScraper.clear_string(libro),
+          estado_recurso: Scrapers::CorteScraper.clear_string(est_recurso),
+          estado_procesal: Scrapers::CorteScraper.clear_string(est_procesal)
+        )
          
-        # causa_suprema.save
-        # general_causa = user.general_causas.build        
-        # causa_suprema.general_causa = general_causa
-        # user.general_causas << general_causa
-        # general_causa.save
-        # causa_suprema.save
-        # user.save
-        # puts "Se ha agregado una causa de suprema (por rut)"
+
+        litigantes = []
+        litigantes_rb = []
+        page.search('#contentCellsLitigantes tr.texto').each do |l|
+          data = []
+          l.search('td').each_with_index do |a,index|
+
+            data << a.text.strip
+          end
+          litigantes << data
+          litigantes_rb << Litigante.create(
+            participante: Scrapers::LaboralScraper.clear_string(data[0]),
+            rut: Scrapers::LaboralScraper.clear_string(data[1]),
+            persona: Scrapers::LaboralScraper.clear_string(data[2]),
+            nombre: Scrapers::LaboralScraper.clear_string(data[3])
+            )   
+        end
+        puts litigantes
+
+        #expediente primera instancia
+        doc = page.search('div#expediente1').search('table.texto tr')
+        level_4 = doc[1].search('table.texto tr').search('td')
+        unless level_4.nil?          
+          rol_rit= level_4[0].text.split(':')[1].strip
+          ruc = level_4[1].text.split(':')[1].strip
+
+          fecha2 = level_4[2].text.split(':')[1].strip
+          caratulado = level_4[3].text.split(':')[1].strip
+          tribunal =  level_4[5].text.split(':')[1].strip
+
+          expediente = Expediente.create rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), ruc: Scrapers::CorteScraper.clear_string(ruc), fecha: Scrapers::CorteScraper.clear_string(fecha2), caratulado: Scrapers::CorteScraper.clear_string(caratulado), tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+          puts rol_rit,ruc, fecha2,caratulado,tribunal
+        end
+
+        #expediente corte
+        doc = page.search('div#expediente').search('table.texto tr')
+        level_4 = doc[1].search('table.texto tr').search('td')
+        unless level_4.nil?
+          puts level_4
+          corte= level_4[0].text.split(':')[1].strip
+          libro = level_4[2].text.split(':')[1].strip
+
+          rol_ing = level_4[3].text.split(':')[1].strip
+          recurso = level_4[4].text.split(':')[1].strip
+
+          puts corte,libro,rol_ing,recurso
+          expediente_corte = ExpedienteCorte.create(
+              corte: Scrapers::CorteScraper.clear_string(corte),
+              libro: Scrapers::CorteScraper.clear_string(libro),
+              rol_ing: Scrapers::CorteScraper.clear_string(rol_ing),
+              recurso: Scrapers::CorteScraper.clear_string(recurso)
+            )
+
+        end
+
         if causa_suprema.save
           puts "Se ha agregado una causa de suprema (por nombre)"
         else
           puts "Se ha reasignado una causa suprema existente (por nombre)"
-          causa_suprema = SupremaCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), tipo_recurso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
-        end        
-        # general_causa = user.general_causas.build
-        # causa_suprema.general_causa = general_causa
-        # user.general_causas << general_causa        
-        # general_causa.save
+          causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
+          if causa_suprema.ubicacion != causa_suprema2.ubicacion
+            #Cambio ubicacion!!!!
+          end
+          if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
+            #cambio estado
+          end
+          causa_suprema = causa_suprema2
+        end 
+        causa_suprema.expediente = expediente
+        expediente.save
+
+        causa_suprema.expediente_corte = expediente_corte
+        expediente_corte.save
+
+        general_causa = user.general_causas.build
+        causa_suprema.general_causa = general_causa
+        user.general_causas << general_causa        
+
+        general_causa.save
         causa_suprema.save
-        # user.save
+        user.save
+
+        litigantes_rb.each do |lit|
+          begin
+            lit.general_causa_id = general_causa.id
+            lit.save
+          rescue
+          end
+        end
+        @list << (things)
       end
 
       return @list

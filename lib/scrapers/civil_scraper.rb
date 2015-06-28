@@ -121,12 +121,12 @@ module Scrapers
           puts "Se ha agregado una causa de civil (por rut)"
         else
           puts "Se ha reasignado una causa civil existente (por rut)"
-          causa_civil2 = CivilCausa.find_by(rol: Scrapers::LaboralScraper.clear_string(things[0], caratulado: Scrapers::LaboralScraper.clear_string(things[2]))
+          causa_civil2 = CivilCausa.find_by(rol: Scrapers::LaboralScraper.clear_string(things[0]), caratulado: Scrapers::LaboralScraper.clear_string(things[2]))
 
           if causa_civil.ubicacion != causa_civil2.ubicacion
             #Cambio ubicacion!!!!
           end
-          if causa_civil.est_proc != causa_civil2.est_proc
+          if causa_civil.estado_procesal != causa_civil2.estado_procesal
             #cambio estado
           end
           causa_civil = causa_civil2
@@ -143,6 +143,7 @@ module Scrapers
         user.save
 
         retiros.each do |retiro|
+          #comparar retiros
           causa_civil.retiros << retiro          
         end
 
@@ -289,7 +290,7 @@ module Scrapers
           if causa_civil.ubicacion != causa_civil2.ubicacion
             #Cambio ubicacion!!!!
           end
-          if causa_civil.est_proc != causa_civil2.est_proc
+          if causa_civil.estado_procesal != causa_civil2.estado_procesal
             #cambio estado
           end
           causa_civil = causa_civil2

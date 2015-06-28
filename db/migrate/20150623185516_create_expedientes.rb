@@ -7,6 +7,7 @@ class CreateExpedientes < ActiveRecord::Migration
       t.string :caratulado
       t.string :tribunal
       t.integer :corte_causa_id
+      t.integer :suprema_causa_id
 
       t.timestamps null: false
     end

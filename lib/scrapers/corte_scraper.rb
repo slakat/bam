@@ -128,7 +128,7 @@ module Scrapers
           puts "Se ha agregado una causa de corte (por nombre)"
         else
           puts "Se ha reasignado una causa corte existente (por nombre)"
-          causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), fecha_ingreso: Scrapers::CorteScraper.clear_string(things[1]))
+          causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
           puts causa_corte2.id
           if causa_corte.ubicacion != causa_corte2.ubicacion
             #Cambio ubicacion!!!!
@@ -290,19 +290,20 @@ module Scrapers
           caratulado: Scrapers::CorteScraper.clear_string(things[5]), 
           link: Scrapers::CorteScraper.clear_string(things[6]))
          
-        
+        @@asd = causa_corte
         if causa_corte.save
           puts "Se ha agregado una causa de corte (por nombre)"
         else
           puts "Se ha reasignado una causa corte existente (por nombre)"
-          causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), fecha_ingreso: Scrapers::CorteScraper.clear_string(things[1]))
-          puts causa_corte2.id
+          causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
+         
           if causa_corte.ubicacion != causa_corte2.ubicacion
             #Cambio ubicacion!!!!
           end
           if causa_corte.estado_procesal != causa_corte2.estado_procesal
             #cambio estado
           end
+          
           causa_corte = causa_corte2
         end        
         causa_corte.expediente = expediente
