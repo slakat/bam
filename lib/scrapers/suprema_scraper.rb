@@ -162,10 +162,27 @@ module Scrapers
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
           if causa_suprema.ubicacion != causa_suprema2.ubicacion
-            #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_suprema2.ubicacion,
+                new_value: causa_suprema.ubicacion,
+                attribute: "Ubicacion",
+                identificador: causa_suprema2.rol,
+                tipo: "Suprema"
+              )    
+            causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_suprema2.estado_procesal,
+                new_value: causa_suprema.estado_procesal,
+                attribute: "Estado Procesal",
+                identificador: causa_suprema2.rol,
+                tipo: "Suprema"
+              )    
+            causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           causa_suprema = causa_suprema2
         end 

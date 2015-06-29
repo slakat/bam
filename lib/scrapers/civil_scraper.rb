@@ -125,9 +125,27 @@ module Scrapers
 
           if causa_civil.ubicacion != causa_civil2.ubicacion
             #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_civil2.ubicacion,
+                new_value: causa_civil.ubicacion,
+                attribute: "Ubicación",
+                identificador: causa_civil2.rol,
+                tipo: "Civil"
+              )    
+            causa_civil2.ubicacion = causa_civil.ubicacion
           end
           if causa_civil.estado_procesal != causa_civil2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_civil2.estado_procesal,
+                new_value: causa_civil.estado_procesal,
+                attribute: "Estado Procesal",
+                identificador: causa_civil2.rol,
+                tipo: "Civil"
+              )    
+            causa_civil2.estado_procesal = causa_civil.estado_procesal
           end
           causa_civil = causa_civil2
         end        
@@ -144,7 +162,22 @@ module Scrapers
 
         retiros.each do |retiro|
           #comparar retiros
-          causa_civil.retiros << retiro          
+          causa1 = causa_civil.retiros.find(cuaderno: retiro.cuadero, datos_retiro: retiro.datos_retiro)
+          if causa1.nil?
+            causa_civil.retiros << retiro          
+          else
+            if causa1.estado != causa_civil.estado
+              causa_civil.retiros << retiro          
+              CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa1.estado,
+                new_value: causa_civil.estado,
+                attribute: "Retiros",
+                identificador: causa_civil.rol,
+                tipo: "Civil"
+              )    
+            end
+          end
         end
 
         litigantes_rb.each do |lit|

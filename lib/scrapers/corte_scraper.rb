@@ -131,10 +131,27 @@ module Scrapers
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
           puts causa_corte2.id
           if causa_corte.ubicacion != causa_corte2.ubicacion
-            #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_corte2.ubicacion,
+                new_value: causa_corte.ubicacion,
+                attribute: "Ubicacion",
+                identificador: causa_corte2.rol,
+                tipo: "Corte"
+              )    
+            causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
           if causa_corte.estado_procesal != causa_corte2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_corte2.estado_procesal,
+                new_value: causa_corte.estado_procesal,
+                attribute: "Estado Procesal",
+                identificador: causa_corte2.rol,
+                tipo: "Corte"
+              )    
+            causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
           causa_corte = causa_corte2
         end        

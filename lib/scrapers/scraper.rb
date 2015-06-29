@@ -15,13 +15,38 @@ module Scrapers
 
     def search_by_name(a, b, c, user)
       @scrapers.each do |scraper|
-        t = Thread.new { scraper.search_by_name a, b, c, user }        
+          t = Thread.new { scraper.search_by_name a, b, c, user }        
+        end
+      aa = Scrapers::TypoGenerator.getAllTypos(a)      
+      bb = Scrapers::TypoGenerator.getAllTypos(b)
+      cc = Scrapers::TypoGenerator.getAllTypos(c)
+
+      aa.each do |aaa|
+        @scrapers.each do |scraper|
+          t = Thread.new { scraper.search_by_name aaa, b, c, user }        
+        end
+      end
+      bb.each do |bbb|
+        @scrapers.each do |scraper|
+          t = Thread.new { scraper.search_by_name a, bbb, c, user }        
+        end
+      end
+      cc.each do |ccc|
+        @scrapers.each do |scraper|
+          t = Thread.new { scraper.search_by_name a, b, ccc, user }        
+        end
       end
     end
 
   	def search_by_rut(input, user)
   		@scrapers[0..3].each do |scraper|
         t = Thread.new { scraper.search_by_rut input, user }
+      end
+      aa = Scrapers::TypoGenerator.getAllTypos(input)      
+      aa.each do |aaa|
+        @scrapers[0..3].each do |scraper|
+          t = Thread.new { scraper.search_by_rut aaa, user }
+        end
       end
   	end
 

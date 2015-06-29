@@ -3,13 +3,37 @@ module Scrapers
 		@alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
 		@vowels = "aeiouy"
 
+    def self.getAllTypos s
+        puts "Run all previous methods"
+        kwds = []
+        for keyword in insertedKey(s)
+          kwds.append(keyword)
+        end
+        for keyword in skipLetter(s)
+            kwds.append(keyword)
+          end
+        for keyword in doubleLetter(s)
+            kwds.append(keyword)
+          end
+        for keyword in self.reverseLetter(s)
+            kwds.append(keyword)
+          end
+        for keyword in self.wrongVowel(s)
+            kwds.append(keyword)
+          end
+        for keyword in self.wrongKey(s)
+            kwds.append(keyword)    
+          end
+        return kwds
+    end
+
 		def self.insertedKey s
 	  	puts "Produce a list of keywords using the `inserted key' method"
 	    kwds = []
 
-	    for i in 0..(s.length) do
+	    for i in 0..(s.length-1) do
 				for char in @alphabet.split("") do
-					kwds.append(s[0..i] << char << s[i..s.length])
+					kwds.append(s[0..i] << char << s[i+1..s.length])
 	      end
 	    end
 			kwds
@@ -80,8 +104,7 @@ module Scrapers
 
       for i in 0..s.length - 1
         for letter in @alphabet.split("")
-          kwd = s[0..i] + letter + s[(i + 1)..s.length]
-          puts kwd
+          kwd = s[0..i] + letter + s[(i + 1)..s.length]          
           kwds.append(kwd)
         end
       end

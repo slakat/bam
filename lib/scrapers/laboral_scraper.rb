@@ -99,6 +99,15 @@ module Scrapers
           #end
           if causa_laboral.estado_procesal != causa_laboral2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_laboral2.estado_procesal,
+                new_value: causa_laboral.estado_procesal,
+                attribute: "Estado Procesal",
+                identificador: causa_laboral2.ruc,
+                tipo: "Laboral"
+              )    
+            causa_laboral2.estado_procesal = causa_laboral.estado_procesal
           end
           causa_laboral = causa_laboral2
         end        
