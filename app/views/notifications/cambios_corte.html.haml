@@ -4,7 +4,7 @@
 
 .row
   %p
-    ="Se han realizado los siguientes cambios en los retiros de receptero de la causa con el identificador #{@parameters[:identificator]}"
+    ="Se han realizado los siguientes cambios en el estado procesal/ubicación de la causa con el identificador #{@parameters[:identificator]}"
 
 .row
   =render partial: "general_causas/changes_table", locals: { changes: @parameters[:changes] }
