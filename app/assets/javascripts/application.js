@@ -12,6 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
+//= require dataTables/extras/dataTables.responsive
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.foundation
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require dataTables/jquery.dataTables
 //= require bootstrap
 //= require select2
 //= require jquery_nested_form
@@ -35,10 +42,20 @@
 //= require_self
 //= require_tree .
 
-@import url('http://code.jquery.com/jquery-1.11.1.min.js');
-@import url('http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js');
-
 $(function(){
+
+    $('.datatable').DataTable({
+        responsive: true,
+        // ajax: ...,
+        // autoWidth: false,
+         pagingType: 'simple_numbers'
+        // processing: true,
+         //serverSide: true,
+
+        // Optional, if you want full pagination controls.
+        // Check dataTables documentation to learn more about available options.
+        // http://datatables.net/reference/option/pagingType
+    });
     $(':checkbox').radiocheck();
     $('[data-toggle="checkbox"]').radiocheck();
     $('[data-toggle="radio"]').radiocheck();
