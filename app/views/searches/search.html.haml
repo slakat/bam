@@ -13,6 +13,7 @@
               %th RUC/ROL/RIT
               %th Caratulado
               %th Tribunal
+              %th Ver
 
           %tbody
             -@causas.each do |d|
@@ -30,3 +31,6 @@
                 %td
                   %span
                     =c.tribunal
+                %td
+                  %span
+                    = link_to "Ver", general_causa_path(c), class: "btn btn-primary"

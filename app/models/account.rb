@@ -21,5 +21,9 @@ class Account < ActiveRecord::Base
 		scraper.search_by_rut self.rut, self
 		scraper.search_by_name self.name, self.lastname.split(" ")[0], self.lastname.split(" ")[1], self		
 	end
+
+	def nombre
+		name << " " << lastname
+	end
 	
 end

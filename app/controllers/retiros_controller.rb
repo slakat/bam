@@ -42,6 +42,6 @@ class RetirosController < ApplicationController
     end
 
     def retiro_params
-      params.require(:retiro).permit(:cuaderno, :data_retiro, :status)
+      params.require(:retiro).permit(:cuaderno, :datos_retiro, :estado)
     end
 end

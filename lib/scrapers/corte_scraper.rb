@@ -129,6 +129,9 @@ module Scrapers
         
         if causa_corte.save
           puts "Se ha agregado una causa de corte (por nombre)"
+          general_causa = user.general_causas.build        
+          causa_corte.general_causa = general_causa
+          user.general_causas << general_causa
         else
           puts "Se ha reasignado una causa corte existente (por nombre)"
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
@@ -140,7 +143,8 @@ module Scrapers
                 new_value: causa_corte.ubicacion,
                 atributo: "Ubicacion",
                 identificador: causa_corte2.rol,
-                tipo: "Corte"
+                tipo: "Corte",
+                general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
@@ -152,11 +156,13 @@ module Scrapers
                 new_value: causa_corte.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_corte2.rol,
-                tipo: "Corte"
+                tipo: "Corte",
+                general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
           causa_corte = causa_corte2
+          general_causa = causa_corte.general_causa          
         end        
         causa_corte.expediente = expediente
         expediente.save
@@ -165,9 +171,7 @@ module Scrapers
         # aca hay que buscar la causa anterior y vincularla!!
         ######################################################
 
-        general_causa = user.general_causas.build        
-        causa_corte.general_causa = general_causa
-        user.general_causas << general_causa
+        
         general_causa.save
         causa_corte.save
         user.save        
@@ -236,6 +240,7 @@ module Scrapers
 
       @list=[]
       #puts page.search("table#filaSel tr").inner_text
+          end
       page.search('div#divRecursos table tr.textoPortal').each do |n|
         properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
         things = [properties[0],properties[3],properties[4],properties[5],properties[6],properties[7]]
@@ -316,6 +321,9 @@ module Scrapers
         
         if causa_corte.save
           puts "Se ha agregado una causa de corte (por nombre)"
+          general_causa = user.general_causas.build        
+          causa_corte.general_causa = general_causa
+          user.general_causas << general_causa
         else
           puts "Se ha reasignado una causa corte existente (por nombre)"
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
@@ -327,7 +335,8 @@ module Scrapers
                 new_value: causa_corte.ubicacion,
                 atributo: "Ubicacion",
                 identificador: causa_corte2.rol,
-                tipo: "Corte"
+                tipo: "Corte",
+                general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
@@ -339,11 +348,13 @@ module Scrapers
                 new_value: causa_corte.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_corte2.rol,
-                tipo: "Corte"
+                tipo: "Corte",
+                general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
-          causa_corte = causa_corte2
+          causa_corte = causa_corte2          
+          general_causa = causa_corte.general_causa          
         end        
         causa_corte.expediente = expediente
         expediente.save
@@ -352,9 +363,7 @@ module Scrapers
         # aca hay que buscar la causa anterior y vincularla!!
         ######################################################
 
-        general_causa = user.general_causas.build        
-        causa_corte.general_causa = general_causa
-        user.general_causas << general_causa
+        
         general_causa.save
         causa_corte.save
         user.save        

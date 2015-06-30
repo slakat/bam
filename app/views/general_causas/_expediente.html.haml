@@ -1,0 +1,37 @@
+/ = render "general_causas/changes_table", changes: CausaChange.all
+
+.row
+	.col-md-12
+		.grid.simple.can-collapse
+			.grid-title
+				%h4.semi-bold Expediente
+				.tools
+					%a.marg-t-10.collapse
+			.grid-body
+				%table.table.table-striped.datatable.display.responsive.no-wrap
+					%thead
+						%tr
+							%th Identificador
+							%th Ruc
+							%th Fecha
+							%th Caratulado
+							%th Tribunal				
+					%tbody						
+						-unless change.nil?
+							%tr
+								%td
+									%span
+										=change.rol_rit
+								%td
+									%span
+										=change.ruc
+								%td
+									%span
+										=change.fecha
+								%td
+									%span
+										=change.caratulado
+								%td
+									%span
+										=change.tribunal
+								

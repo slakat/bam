@@ -15,6 +15,7 @@
                             %th Ret. Receptores
                             %th Ing. Cortes
                             %th Cambios Cortes
+                            %th Ver
                     %tbody
                         -general_causas.each do |d|
                             -c=d.causa
@@ -55,4 +56,7 @@
                                         %td
                                             %span
                                                 %input{type: "checkbox", "data-toggle"=>"switch", id:"custom-switch-01", checked: role_value(user_causa,:not3),class:'switch',name: "not3_#{user_causa.id}"}
+                                        %td
+                                            %span
+                                                = link_to "Ver", general_causa_path(user_causa), class: "btn btn-primary"
 

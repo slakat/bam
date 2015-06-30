@@ -88,6 +88,6 @@ class AccountsController < ApplicationController
     end
 
     def account_params
-      params.require(:account).permit(:name, :lastname, :rut,:user_causas)
+      params.require(:account).permit(:name, :lastname, :rut,:user_causas, :role)
     end
 end

@@ -41,6 +41,15 @@ class GeneralCausasController < ApplicationController
     respond_with(@general_causa)
   end
 
+  def changes
+    @changes = []
+    current_user.account.general_causas.each do |gc|
+      gc.causa_changes.each do |cc|
+        @changes << cc
+      end
+    end    
+  end
+
   private
     def set_general_causa
       @general_causa = GeneralCausa.find(params[:id])

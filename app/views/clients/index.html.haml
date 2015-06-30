@@ -8,6 +8,7 @@
       %th Name
       %th Apellido
       %th Rut
+      %th Ver
 
 
   %tbody
@@ -16,5 +17,7 @@
         %td= client.name
         %td= client.lastname
         %td= client.rut
+        %td= link_to "Ver", client, class: "btn btn-primary"
+
 
 

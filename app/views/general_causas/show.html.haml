@@ -5,14 +5,66 @@
   = link_to edit_general_causa_path(@general_causa), :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-pencil
     Edit
-  %h1 Show general_causa
+  %h1 Datos de Causa
 
 %dl.dl-horizontal
   %dt Rol:
-  %dd= @general_causa.rol
-  %dt Date:
-  %dd= @general_causa.date
+  %dd= @general_causa.causa.identificator
+  %dt Competencia:
+  %dd= competencia(@general_causa.causa.class.to_s)
   %dt Caratulado:
-  %dd= @general_causa.caratulado
+  %dd= @general_causa.causa.caratulado
   %dt Tribunal:
-  %dd= @general_causa.tribunal
+  %dd= @general_causa.causa.tribunal
+
+.row.marg-t-40
+  %h4 Asignar a Usuario
+  = form_tag('/accounts/add_causa') do
+    .col-md-11
+      #causas-select-container.form-group      
+        / = select_tag 'id', options_from_collection_for_select(Account.all, :id, :nombre), class: "form-control select select-default w-100pc", data: "select2"
+        - options = options_from_collection_for_select(Account.all, :id, :nombre)
+        = hidden_field_tag :causa, @general_causa.id
+        = select2_helper :id, options, behaviour: "select2"
+    .col-md-4
+      .form-group
+        = submit_tag 'Agregar', class: 'btn btn-primary'
+
+.row.marg-t-40
+  -if @general_causa.litigantes
+    %h4 Litigantes
+    .col-md-12.my-causas
+      .grid.simple.can-collapse
+        .grid-body
+          %table.table.table-striped.datatable.display.responsive.no-wrap
+            %thead
+              %tr
+                %th Nombre
+                %th Rut
+                %th Persona
+                %th Participante              
+            %tbody
+              - @general_causa.litigantes.each do |lit|
+                %tr
+                  %td
+                    %span
+                      = lit.nombre
+                  %td
+                    %span
+                      = lit.rut
+                  %td
+                    %span
+                      = lit.persona
+                  %td
+                    %span
+                      = lit.participante
+
+- if competencia(@general_causa.causa.class.to_s) == "Civil"
+  = render "general_causas/changes_table", changes: @general_causa.causa.retiros
+
+- if @general_causa.causa.class.to_s == "CorteCausa" or @general_causa.causa.class.to_s == "SupremaCausa"
+  = render "general_causas/expediente", change: @general_causa.causa.expediente
+
+- if @general_causa.causa.class.to_s == "SupremaCausa"
+  = render "general_causas/expediente_corte", change: @general_causa.causa.expediente_corte
+

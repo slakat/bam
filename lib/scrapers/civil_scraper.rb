@@ -128,6 +128,9 @@ module Scrapers
         
         if causa_civil.save
           puts "Se ha agregado una causa de civil (por rut)"
+          general_causa = user.general_causas.build
+          causa_civil.general_causa = general_causa
+          user.general_causas << general_causa        
         else
           puts "Se ha reasignado una causa civil existente (por rut)"
           causa_civil2 = CivilCausa.find_by(rol: Scrapers::LaboralScraper.clear_string(things[0]), caratulado: Scrapers::LaboralScraper.clear_string(things[2]))
@@ -140,7 +143,8 @@ module Scrapers
                 new_value: causa_civil.ubicacion,
                 atributo: "Ubicación",
                 identificador: causa_civil2.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil2.general_causa.id
               )    
             causa_civil2.ubicacion = causa_civil.ubicacion
           end
@@ -152,18 +156,18 @@ module Scrapers
                 new_value: causa_civil.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_civil2.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil2.general_causa.id
               )    
             causa_civil2.estado_procesal = causa_civil.estado_procesal
           end
           causa_civil = causa_civil2
+          general_causa = causa_civil.general_causa
         end        
 
         
 
-        general_causa = user.general_causas.build
-        causa_civil.general_causa = general_causa
-        user.general_causas << general_causa        
+        
 
         general_causa.save
         causa_civil.save
@@ -184,7 +188,8 @@ module Scrapers
                 new_value: retiro.estado,
                 atributo: "Retiros",
                 identificador: causa_civil.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil.general_causa.id
               )    
               retiro.save
             else
@@ -254,7 +259,6 @@ module Scrapers
 
 
       @list=[]
-      puts page
       page.search('table#contentCellsAddTabla tr').each do |n|
         properties = n.search('td.textoC a/text()','td/text()').collect {|text| text.to_s}
         if properties[5].nil?
@@ -319,7 +323,7 @@ module Scrapers
 
             ret = Retiro.new(cuaderno: Scrapers::LaboralScraper.clear_string(cuaderno), datos_retiro: Scrapers::LaboralScraper.clear_string(datos_retiro), estado: Scrapers::LaboralScraper.clear_string(descripcion))
             if ret.save
-              retiros << ret            
+              retiros << ret
             end
           
         end
@@ -338,6 +342,9 @@ module Scrapers
         
         if causa_civil.save
           puts "Se ha agregado una causa de civil (por rut)"
+          general_causa = user.general_causas.build
+          causa_civil.general_causa = general_causa
+          user.general_causas << general_causa        
         else
           puts "Se ha reasignado una causa civil existente (por rut)"
           causa_civil2 = CivilCausa.find_by(rol: Scrapers::LaboralScraper.clear_string(things[0]), caratulado: Scrapers::LaboralScraper.clear_string(things[2]))
@@ -350,7 +357,8 @@ module Scrapers
                 new_value: causa_civil.ubicacion,
                 atributo: "Ubicación",
                 identificador: causa_civil2.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil2.general_causa.id
               )    
             causa_civil2.ubicacion = causa_civil.ubicacion
           end
@@ -362,18 +370,18 @@ module Scrapers
                 new_value: causa_civil.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_civil2.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil2.general_causa.id
               )    
             causa_civil2.estado_procesal = causa_civil.estado_procesal
           end
           causa_civil = causa_civil2
+          general_causa = causa_civil.general_causa
         end        
 
         
 
-        general_causa = user.general_causas.build
-        causa_civil.general_causa = general_causa
-        user.general_causas << general_causa        
+        
 
         general_causa.save
         causa_civil.save
@@ -394,7 +402,8 @@ module Scrapers
                 new_value: retiro.estado,
                 atributo: "Retiros",
                 identificador: causa_civil.rol,
-                tipo: "Civil"
+                tipo: "Civil",
+                general_causa_id: causa_civil.general_causa.id
               )    
               retiro.save
             else
@@ -419,7 +428,6 @@ module Scrapers
         
       # end
       return @list
-
     end
 
   end

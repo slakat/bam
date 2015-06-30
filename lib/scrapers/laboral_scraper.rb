@@ -94,6 +94,9 @@ module Scrapers
         
         if causa_laboral.save
           puts "Se ha agregado una causa de laboral (por rut)"
+          general_causa = user.general_causas.build        
+          causa_laboral.general_causa = general_causa
+          user.general_causas << general_causa
         else
           puts "Se ha reasignado una causa corte laboral (por rut)"
           causa_laboral2 = LaboralCausa.find_by(rit: Scrapers::LaboralScraper.clear_string(things[0]), ruc: Scrapers::LaboralScraper.clear_string(things[1]))
@@ -108,19 +111,16 @@ module Scrapers
                 new_value: causa_laboral.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_laboral2.ruc,
-                tipo: "Laboral"
+                tipo: "Laboral",
+                general_causa_id: causa_laboral2.general_causa.id
               )    
             causa_laboral2.estado_procesal = causa_laboral.estado_procesal
           end
           causa_laboral = causa_laboral2
+          general_causa = causa_laboral.general_causa
         end        
           
-                
-        general_causa = user.general_causas.build        
-        causa_laboral.general_causa = general_causa
-        user.general_causas << general_causa
-
-
+        
         general_causa.save
         causa_laboral.save
         user.save        
@@ -236,6 +236,9 @@ module Scrapers
         
         if causa_laboral.save
           puts "Se ha agregado una causa de laboral (por rut)"
+          general_causa = user.general_causas.build        
+          causa_laboral.general_causa = general_causa
+          user.general_causas << general_causa
         else
           puts "Se ha reasignado una causa corte laboral (por rut)"
           causa_laboral2 = LaboralCausa.find_by(rit: Scrapers::LaboralScraper.clear_string(things[0]), ruc: Scrapers::LaboralScraper.clear_string(things[1]))
@@ -250,19 +253,16 @@ module Scrapers
                 new_value: causa_laboral.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_laboral2.ruc,
-                tipo: "Laboral"
+                tipo: "Laboral",
+                general_causa_id: causa_laboral2.general_causa.id
               )    
             causa_laboral2.estado_procesal = causa_laboral.estado_procesal
           end
           causa_laboral = causa_laboral2
+          general_causa = causa_laboral.general_causa
         end        
           
-                
-        general_causa = user.general_causas.build        
-        causa_laboral.general_causa = general_causa
-        user.general_causas << general_causa
-
-
+        
         general_causa.save
         causa_laboral.save
         user.save        

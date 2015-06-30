@@ -167,6 +167,9 @@ module Scrapers
 
         if causa_suprema.save
           puts "Se ha agregado una causa de suprema (por nombre)"
+          general_causa = user.general_causas.build
+          causa_suprema.general_causa = general_causa
+          user.general_causas << general_causa        
         else
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
@@ -177,7 +180,8 @@ module Scrapers
                 new_value: causa_suprema.ubicacion,
                 atributo: "Ubicacion",
                 identificador: causa_suprema2.rol,
-                tipo: "Suprema"
+                tipo: "Suprema",
+                general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
@@ -189,11 +193,13 @@ module Scrapers
                 new_value: causa_suprema.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_suprema2.rol,
-                tipo: "Suprema"
+                tipo: "Suprema",
+                general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           causa_suprema = causa_suprema2
+          general_causa = causa_suprema.general_causa
         end 
         causa_suprema.expediente = expediente
         expediente.save
@@ -201,9 +207,7 @@ module Scrapers
         causa_suprema.expediente_corte = expediente_corte
         expediente_corte.save
 
-        general_causa = user.general_causas.build
-        causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa        
+        
 
         general_causa.save
         causa_suprema.save
@@ -391,6 +395,9 @@ module Scrapers
 
         if causa_suprema.save
           puts "Se ha agregado una causa de suprema (por nombre)"
+          general_causa = user.general_causas.build
+          causa_suprema.general_causa = general_causa
+          user.general_causas << general_causa        
         else
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
@@ -401,7 +408,8 @@ module Scrapers
                 new_value: causa_suprema.ubicacion,
                 atributo: "Ubicacion",
                 identificador: causa_suprema2.rol,
-                tipo: "Suprema"
+                tipo: "Suprema",
+                general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
@@ -413,11 +421,13 @@ module Scrapers
                 new_value: causa_suprema.estado_procesal,
                 atributo: "Estado Procesal",
                 identificador: causa_suprema2.rol,
-                tipo: "Suprema"
+                tipo: "Suprema",
+                general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           causa_suprema = causa_suprema2
+          general_causa = causa_suprema.general_causa
         end 
         causa_suprema.expediente = expediente
         expediente.save
@@ -425,9 +435,7 @@ module Scrapers
         causa_suprema.expediente_corte = expediente_corte
         expediente_corte.save
 
-        general_causa = user.general_causas.build
-        causa_suprema.general_causa = general_causa
-        user.general_causas << general_causa        
+        
 
         general_causa.save
         causa_suprema.save

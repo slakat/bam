@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630065247) do
+ActiveRecord::Schema.define(version: 20150630162033) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -25,13 +25,14 @@ ActiveRecord::Schema.define(version: 20150630065247) do
 
   create_table "causa_changes", force: :cascade do |t|
     t.date     "fecha"
-    t.string   "old_value",     limit: 255
-    t.string   "new_value",     limit: 255
-    t.string   "atributo",      limit: 255
-    t.string   "identificador", limit: 255
-    t.string   "tipo",          limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "old_value",        limit: 255
+    t.string   "new_value",        limit: 255
+    t.string   "atributo",         limit: 255
+    t.string   "identificador",    limit: 255
+    t.string   "tipo",             limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "general_causa_id", limit: 4
   end
 
   create_table "civil_causas", force: :cascade do |t|

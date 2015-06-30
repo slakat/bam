@@ -6,14 +6,27 @@
         - @account.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :lastname
-    = f.text_field :lastname
-  .field
-    = f.label :rut
-    = f.text_field :rut
+  .field.row
+    .col-md-2
+      = f.label :name
+    .col-md-4
+      = f.text_field :name
+  .field.row
+    .col-md-2
+      = f.label :lastname
+    .col-md-4
+      = f.text_field :lastname
+  .field.row
+    .col-md-2
+      = f.label :rut
+    .col-md-4
+      = f.text_field :rut
+  - if current_user.is? :admin
+    .field.row
+      .col-md-2
+        = f.label :role
+      .col-md-4
+        = f.select :role, [:admin, :secretaria, :abogado]
+
   .actions
     = f.submit 'Save'

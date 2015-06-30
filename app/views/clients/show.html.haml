@@ -15,4 +15,38 @@
   %dt Rut:
   %dd= @client.rut
 
-=render partial: "general_causas/table", locals: { general_causas: @client.general_causas }
+
+.row
+  .col-md-12.my-causas
+    .grid.simple.can-collapse
+      .grid-body
+        %table.table.table-striped.datatable.display.responsive.no-wrap
+          %thead
+            %tr
+              %th Identificador
+              %th Caratulado
+              %th Tribunal
+              %th Competencia
+              -#%th CA
+              -#%th CS              
+          %tbody
+            -@client.general_causas.each do |d|
+              -c=d.causa
+              -user_causa = d.user_causas.find_by(account_id: @client.id)
+
+              -unless c.nil?
+                %tr
+                  %td
+                    %span
+                      =c.identificator
+                  %td
+                    %span
+                      =c.caratulado
+                  %td
+                    %span
+                      =c.tribunal
+                  %td
+                    %span
+                      =competencia(c.class.to_s)
+                  
+

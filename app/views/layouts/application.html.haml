@@ -34,16 +34,17 @@
                 %li
                   = link_to "Login", new_user_session_path
             - else
-              - if can? :manage, GeneralCausa
+              - if can? :read, GeneralCausa
                 %li{class: active_class(general_causas_path)}
                   = link_to "Causas", general_causas_path
                 %li
-                  = link_to "Eº Receptores", "#"
+                  = link_to "Cambios", changes_path
                 %li{class: active_class(cortes_path)}
-                  = link_to "Eº CA/CS", cortes_path
+                  = link_to "Cortes", cortes_path
               - if can? :manage, Client
                 %li
                   = link_to "Clientes", clients_path
+                  
               %ul.nav.navbar-nav.navbar-right
                 %li.dropdown
                   %a.dropdown-toggle{href:'#',"data-toggle"=>'dropdown'}

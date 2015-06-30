@@ -17,7 +17,7 @@ class GeneralCausa < ActiveRecord::Base
 	# has_many		:general_causa_suprema
 	# has_many		:suprema_causas, through: :general_causa_suprema
 
-
+	has_many		:causa_changes	
 	has_many		:movimientos	
 	has_many		:litigantes
 

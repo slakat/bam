@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get '/accounts/:id/causas' => 'accounts#causas', as: 'lawyer_causas'
   get '/accounts/:id/clients' => 'accounts#clients', as: 'lawyer_clients'
 
-
+  get 'changes' => "general_causas#changes", as: 'changes'
 
 
   get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
