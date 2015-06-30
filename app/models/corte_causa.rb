@@ -13,4 +13,25 @@ class CorteCausa < ActiveRecord::Base
   def tribunal
     self.corte
   end
+
+  def get_expediente
+    
+
+    causa = CivilCausa.where(rol: self.expediente.rol_rit, tribunal: self.expediente.tribunal)
+    if causa.nil?
+      causa = LaboralCausa.where(rit: self.expediente.rol_rit, tribunal: self.expediente.tribunal)
+    end
+    if causa.nil?
+      causa = ProcesalCausa.where(rol_interno: self.expediente.rol_rit, tribunal: self.expediente.tribunal)
+    end
+    if causa.nil?
+      causa = ProcesalCausa.where(rol_unico: self.expediente.rol_rit, tribunal: self.expediente.tribunal)
+    end
+    unless causa.nil?
+      causa.first
+    else
+      nil
+    end
+
+  end
 end

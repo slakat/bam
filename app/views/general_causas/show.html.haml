@@ -64,7 +64,16 @@
 
 - if @general_causa.causa.class.to_s == "CorteCausa" or @general_causa.causa.class.to_s == "SupremaCausa"
   = render "general_causas/expediente", change: @general_causa.causa.expediente
+  -unless @general_causa.causa.get_expediente.nil?
+    = link_to "Ver expediente", general_causas_path(@general_causa.causa.get_expediente.id), class: "btn btn-primary"
+  -else 
+    No se logro vincular la causa
 
 - if @general_causa.causa.class.to_s == "SupremaCausa"
   = render "general_causas/expediente_corte", change: @general_causa.causa.expediente_corte
+  -unless @general_causa.causa.get_expediente_corte.nil?
+    = link_to "Ver expediente", general_causas_path(@general_causa.causa.get_expediente_corte.id), class: "btn btn-primary"
+  -else 
+    No se logro vincular la causa
+
 
