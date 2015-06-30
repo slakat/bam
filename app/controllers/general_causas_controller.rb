@@ -4,8 +4,13 @@ class GeneralCausasController < ApplicationController
   respond_to :html
 
   def index
-    @general_causas = GeneralCausa.all
+
+    @general_causas = current_user.account.general_causas.where.not(:causa_type => ["CorteCausa", "SupremaCausa"])
     respond_with(@general_causas)
+  end
+
+  def cortes
+    @general_causas = current_user.account.general_causas.where(:causa_type => ["CorteCausa", "SupremaCausa"])
   end
 
   def show

@@ -1,7 +1,8 @@
 .page-header
-  = link_to new_general_causa_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Causa
-  %h1 Listing general_causas
+  %h1 Mis Causas
+%h4 Civil - Laboral - Procesal
 
-=render partial: "general_causas/table", locals: { general_causas: @general_causas }
+
+=render partial: "general_causas/table", locals: { general_causas: @general_causas, lawyer: current_user }
+
+

@@ -4,8 +4,6 @@
 %p
   %b Name:
   = @account.name
-%p
-  %b Lastname:
   = @account.lastname
 %p
   %b Rut:
@@ -18,32 +16,14 @@
 -#.row{'ng-controller' => 'AddCausasController', 'ng-init' => "id = #{@account.id}"}
 -# .col-md-12
 
-
-
-.row
-  .col-md-12
-    %h4 Agregar nueva causa
-    = form_tag('/accounts/add_causa') do
-      .col-md-8
-        #causas-select-container.form-group
-          = text_field_tag 'causa', '',class: 'form-control', name: 'causa', id: 'account_id'
-          = hidden_field_tag 'id',@account.id
-      .col-md-4
-        .form-group
-          = submit_tag 'Agregar', class: 'btn btn-primary'
-
-
-.row
-  .col-md-12
-    .form-group
-      %label.form-label Seleccionar Cliente
-      .controls
-        = select_tag :general_causas_ids, options_for_select(Account.all.collect{|s| [s.name, s.id]}, Account.all.pluck(:id)),
-                              {multiple: true, class: 'form-control', required: true, data: {behaviour: 'select2'}}
-
-=render partial: "general_causas/table", locals: { general_causas: @account.general_causas }
-
-
-:javascript
-  initBla('#causas-select-container');
-  $(".select2-search").show();
+-if current_user.is? :admin
+  .row
+    .col-md-8.col-md-offset-3
+      %h3 Panel de Administración
+      -unless current_page? account_path(current_user)
+        = link_to 'Gestionar Clientes', lawyer_clients_path(@account.id), class: "btn btn-info"
+        = link_to 'Gestionar Causas', lawyer_causas_path(@account.id), class: "btn btn-info"
+      -else
+        = link_to 'Gestionar Abogados', admin_users_path(@account), class: "btn btn-info"
+        = link_to 'Gestionar Clientes', admin_clients_path, class: "btn btn-info"
+        = link_to 'Revisar Historial de búsquedas', admin_records_path , class: "btn btn-info"

@@ -1,0 +1,38 @@
+.page-header
+  %h1 Causas
+%h4
+  =@account.name
+  =@account.lastname
+
+.row.add_new
+  %h4
+    %span.glyphicon.glyphicon-plus
+    Agregar nueva causa
+  .col-md-8.col-md-offset-2
+    .col-md-11
+      =label_tag :comp,"Selecciona Competencia:", class:"label label-warning"
+      %select.form-control.select-primary{"data-toggle"=>"select",id: "competencia_select"}
+        %option{value:"0"} Todos
+        %option{value:"1"} Laboral
+        %option{value:"2"} Civil
+        %option{value:"3"} Procesal
+        %option{value:"4"} Corte de Apelaciones
+        %option{value:"5"} Corte Suprema
+    %br
+    = form_tag('/accounts/add_causa') do
+      .col-md-11
+        #causas-select-container.form-group
+          =label_tag :comp,"Ingresa los términos a buscar:", class:"label label-warning"
+          = text_field_tag 'causa', '',class: 'form-control', name: 'causa', id: 'account_id', placeholder: "Buscar..."
+          = hidden_field_tag 'id',@account.id
+      .col-md-4
+        .form-group
+          = submit_tag 'Agregar', class: 'btn btn-primary'
+
+
+=render partial: "general_causas/table", locals: { general_causas: @account.general_causas, lawyer: @account.user }
+
+
+:javascript
+  initBla('#causas-select-container');
+  $(".select2-search").show();

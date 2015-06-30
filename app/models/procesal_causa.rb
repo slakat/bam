@@ -6,4 +6,8 @@ class ProcesalCausa < ActiveRecord::Base
   def identificator
   	self.rol_unico
   end
+
+  def caratulado
+    self.identificacion_causa
+  end
 end

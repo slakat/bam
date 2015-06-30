@@ -1,0 +1,31 @@
+.page-header
+  %h1 Historial de Búsquedas
+
+.row
+  .col-md-12.my-causas
+    .grid.simple.can-collapse
+      .grid-body
+        %table.table.table-striped.datatable.display.responsive.no-wrap
+          %thead
+            %tr
+              %th Búsqueda
+              %th Competencias
+              %th Usuario
+              %th Fecha
+          %tbody
+            -@records.each do |c|
+
+              -unless c.nil?
+                %tr
+                  %td
+                    %span
+                      =c.query
+                  %td
+                    %span
+                      =c.competencias
+                  %td
+                    %span
+                      =c.user
+                  %td
+                    %span
+                      =c.created_at

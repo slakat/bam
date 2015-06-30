@@ -7,6 +7,8 @@ class Account < ActiveRecord::Base
 
 	has_many			:searches
 
+	has_many      :clients
+
 	#Validaciones
 	validates 		:name, :lastname, :rut, presence: true
 

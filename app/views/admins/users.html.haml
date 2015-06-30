@@ -1,0 +1,42 @@
+.page-header
+  %h1 Abogados
+
+= link_to new_account_path, :class => 'btn btn-primary' do
+  %span.glyphicon.glyphicon-plus
+  Nuevo Abogado
+
+.row
+  .col-md-12.my-causas
+    .grid.simple.can-collapse
+      .grid-body
+        %table.table.table-striped.datatable.display.responsive.no-wrap
+          %thead
+            %tr
+              %th Nombre
+              %th Apellidos
+              %th Email
+              %th Rut
+              -#%th
+              %th
+              %th
+          %tbody
+            -@users.each do |c|
+
+              -unless c.nil?
+                %tr
+                  %td
+                    %span
+                      =c.account.name
+                  %td
+                    %span
+                      =c.account.lastname
+                  %td
+                    %span
+                      =c.email
+                  %td
+                    %span
+                      =c.account.rut
+                  -#%td= link_to 'Show', client
+                  %td= link_to 'Editar', edit_account_path(c.account)
+                  %td= link_to 'Borrar', c.account, :data => { confirm: 'Are you sure?' }, :method => :delete
+

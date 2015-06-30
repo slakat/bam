@@ -1,50 +1,58 @@
--unless general_causas.count<1
-	.row
-		.col-md-12
-			.grid.simple.can-collapse
-				.grid-title
-					%h4.semi-bold Causas
-					.tools
-						%a.marg-t-10.collapse
-				.grid-body
-					%table.table
-						%thead
-							%tr
-								%th RIT
-								%th RUC
-								%th Caratulado
-								%th Tribunal
-								%th Not1
-								%th Not2
-								%th Not3
-						%tbody
-							-general_causas.each do |d|
-								-c=d.causa
-								-user_causa = d.user_causas.find_by(account_id: current_user.account.id)
 
-								-unless c.nil?
-									%tr
-										%td
-											%span
-												=c.identificator
-										%td
-											%span
-												=#c.ruc
-										%td
-											%span
-												=#c.caratulado
-										%td
-											%span
-												=#c.tribunal
-										- unless user_causa.nil?												
-											%td
-												%span
-													=role_inline(user_causa, :not1)
-											%td													
-												%span
-													=role_inline(user_causa, :not2)
-											%td
-												%span
-													=role_inline(user_causa, :not3)
+.row
+    .col-md-12.my-causas
+        .grid.simple.can-collapse
+            .grid-body
+                %table.table.table-striped.datatable.display.responsive.no-wrap
+                    %thead
+                        %tr
+                            %th Identificador
+                            %th Caratulado
+                            %th Tribunal
+                            %th Competencia
+                            -#%th CA
+                            -#%th CS
+                            %th Ret. Receptores
+                            %th Ing. Cortes
+                            %th Cambios Cortes
+                    %tbody
+                        -general_causas.each do |d|
+                            -c=d.causa
+                            -user_causa = d.user_causas.find_by(account_id: lawyer.account.id)
 
+                            -unless c.nil?
+                                %tr
+                                    %td
+                                        %span
+                                            =c.identificator
+                                    %td
+                                        %span
+                                            =c.caratulado
+                                    %td
+                                        %span
+                                            =c.tribunal
+                                    %td
+                                        %span
+                                            =competencia(c.class.to_s)
+                                    -#%td
+                                        %span
+                                            -#if c.apelaciones?
+                                            -
+                                    -#%td
+                                        %span
+                                            -#if c.suprema?
+                                            -
+                                    - unless user_causa.nil?
+                                        %td
+                                            %span
+                                                -if c.class.to_s == "CivilCausa"
+                                                    %input{type: "checkbox", "data-toggle"=>"switch", id:"custom-switch-01", checked: role_value(user_causa,:not1),class:'switch',name: "not1_#{user_causa.id}"}
+                                                -else
+                                                    ="-"
+                                        %td
+                                            %span
+                                                %input{type: "checkbox", "data-toggle"=>"switch", id:"custom-switch-01", checked: role_value(user_causa,:not2),class:'switch',name: "not2_#{user_causa.id}"}
+                                        %td
+                                            %span
+                                                %input{type: "checkbox", "data-toggle"=>"switch", id:"custom-switch-01", checked: role_value(user_causa,:not3),class:'switch',name: "not3_#{user_causa.id}"}
 

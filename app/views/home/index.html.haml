@@ -11,13 +11,36 @@
           .col-md-10
             .row
               .col-md-3
-                %p.txt-white.font-light.txt-12.pull-left.marg-t-20= 'Ingrese Causas'
+                =#%p.txt-white.font-light.txt-12.pull-left.marg-t-20= 'Ingrese Causas'
                 = popover_tag('Buscar Causa', 'Ingrese algún dato de referencia')
               .col-md-7
                 = text_field_tag :q,'', class: 'form-control select2-bh'
               .col-md-2
                 =submit_tag 'Buscar', :name => nil , class: 'btn btn-primary'
+            .row
+              .col-md-7.col-md-offset-3
 
-                =# select_tag :area_id, options_from_collection_for_select(User.all, :id, :email), class: 'form-control select2-bh', required: true, id: 'areas_select'
+                =label_tag :civil, class: 'checkbox' do
+                  = check_box_tag :civil, true
+                  %span Civil
+
+                =label_tag :laboral, class: 'checkbox' do
+                  = check_box_tag :laboral, true
+                  %span Laboral
+
+                =label_tag :procesal, class: 'checkbox' do
+                  = check_box_tag :procesal, true
+                  %span Reforma Procesal
+
+                =label_tag :corte, class: 'checkbox' do
+                  = check_box_tag :corte, true
+                  %span Corte de Apelaciones
+
+                =label_tag :suprema, class: 'checkbox' do
+                  = check_box_tag :suprema, true
+                  %span Corte Suprema
+
+
+    =# select_tag :area_id, options_from_collection_for_select(User.all, :id, :email), class: 'form-control select2-bh', required: true, id: 'areas_select'
 
 

@@ -23,25 +23,37 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
+
           = link_to "Procurador Web", root_path, :class => "navbar-brand"
         .collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            %li.active
+          %ul.nav.navbar-nav.navbar-right
+            %li{class: active_class(root_path)}
               = link_to "Home", root_path
-            - if can? :manage, GeneralCausa
-              %li
-                = link_to "Causas", general_causas_path
-            - if can? :manage, Client
-              %li
-                = link_to "Clientes", clients_path
             -unless user_signed_in?
-              %li
-                = link_to "Login", new_user_session_path
+              %ul.nav.navbar-nav.navbar-right
+                %li
+                  = link_to "Login", new_user_session_path
             - else
-              %li
-                = link_to current_user, account_path(current_user.account)
-              %li
-                = link_to "Logout", destroy_user_session_path, method: :delete
+              - if can? :manage, GeneralCausa
+                %li{class: active_class(general_causas_path)}
+                  = link_to "Causas", general_causas_path
+                %li
+                  = link_to "Eº Receptores", "#"
+                %li{class: active_class(cortes_path)}
+                  = link_to "Eº CA/CS", cortes_path
+              - if can? :manage, Client
+                %li
+                  = link_to "Clientes", clients_path
+              %ul.nav.navbar-nav.navbar-right
+                %li.dropdown
+                  %a.dropdown-toggle{href:'#',"data-toggle"=>'dropdown'}
+                    =current_user
+                    %b.caret
+                  %ul.dropdown-menu
+                    %li
+                      = link_to 'Perfil', account_path(current_user.account)
+                    %li
+                      = link_to "Logout", destroy_user_session_path, method: :delete
     #main-container
       .container
         - flash.each do |name, msg|

@@ -1,26 +1,20 @@
 .page-header
-  = link_to new_client_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Client
-  %h1 Listing clients
+  %h1 Mis Clientes
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
+
+%table.table.table-striped.table-bordered.table-hover.datatable.display.responsive.no-wrap
+  %thead
+    %tr
+      %th Name
+      %th Apellido
+      %th Rut
+
+
+  %tbody
+    - @clients.each do |client|
       %tr
-        %th Name
-        %th Lastname
-        %th Rut
-        %th
-        %th
-        %th
+        %td= client.name
+        %td= client.lastname
+        %td= client.rut
 
-    %tbody
-      - @clients.each do |client|
-        %tr
-          %td= client.name
-          %td= client.lastname
-          %td= client.rut
-          %td= link_to 'Show', client
-          %td= link_to 'Edit', edit_client_path(client)
-          %td= link_to 'Destroy', client, :data => { confirm: 'Are you sure?' }, :method => :delete
+

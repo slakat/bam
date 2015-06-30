@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629193752) do
+ActiveRecord::Schema.define(version: 20150630065247) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150629193752) do
     t.string   "rut",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id", limit: 4
   end
 
   create_table "corte_causas", force: :cascade do |t|
@@ -169,6 +170,14 @@ ActiveRecord::Schema.define(version: 20150629193752) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "civil_causa_id", limit: 4
+  end
+
+  create_table "search_records", force: :cascade do |t|
+    t.string   "query",        limit: 255
+    t.string   "competencias", limit: 255
+    t.string   "user",         limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "searches", force: :cascade do |t|

@@ -136,6 +136,8 @@ gem 'best_in_place'
 gem 'better_errors'
 gem 'binding_of_caller'
 
+#datatables
+gem 'jquery-datatables-rails', '~> 3.3.0'
 
 gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-bundler', '~> 1.1.2'
