@@ -4,7 +4,7 @@
 
 .row
   %p
-    ="Se han realizado los siguientes cambios en el estado procesal/ubicación de la causa con el identificador #{@parameters[:identificator]}"
+    ="Se han realizado los siguientes cambios en el estado procesal/ubicación de la causa con el identificador #{@parameters[:identificator]} ( causa de #{@parameters[:competencia]})"
 
 .row
   =render partial: "general_causas/changes_table", locals: { changes: @parameters[:changes] }
