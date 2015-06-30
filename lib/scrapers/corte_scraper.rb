@@ -137,7 +137,7 @@ module Scrapers
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
           puts causa_corte2.id
           if causa_corte.ubicacion != causa_corte2.ubicacion
-            CausaChange.create(   
+            cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: causa_corte2.ubicacion,
                 new_value: causa_corte.ubicacion,
@@ -147,10 +147,21 @@ module Scrapers
                 general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_corte2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Apelaciones"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           if causa_corte.estado_procesal != causa_corte2.estado_procesal
             #cambio estado
-            CausaChange.create(   
+            cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: causa_corte2.estado_procesal,
                 new_value: causa_corte.estado_procesal,
@@ -160,6 +171,17 @@ module Scrapers
                 general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_corte2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Apelaciones"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           causa_corte = causa_corte2
           general_causa = causa_corte.general_causa          
@@ -329,7 +351,7 @@ module Scrapers
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
           puts causa_corte2.id
           if causa_corte.ubicacion != causa_corte2.ubicacion
-            CausaChange.create(   
+            cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: causa_corte2.ubicacion,
                 new_value: causa_corte.ubicacion,
@@ -339,10 +361,21 @@ module Scrapers
                 general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_corte2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Apelaciones"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           if causa_corte.estado_procesal != causa_corte2.estado_procesal
             #cambio estado
-            CausaChange.create(   
+            cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: causa_corte2.estado_procesal,
                 new_value: causa_corte.estado_procesal,
@@ -352,6 +385,17 @@ module Scrapers
                 general_causa_id: causa_corte2.general_causa.id
               )    
             causa_corte2.estado_procesal = causa_corte.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_corte2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Apelaciones"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           causa_corte = causa_corte2          
           general_causa = causa_corte.general_causa          

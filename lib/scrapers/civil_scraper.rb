@@ -182,7 +182,7 @@ module Scrapers
           else
             if ret.estado != retiro.estado
               causa_civil.retiros << retiro          
-              CausaChange.create(   
+              cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: ret.estado,
                 new_value: retiro.estado,
@@ -190,8 +190,18 @@ module Scrapers
                 identificador: causa_civil.rol,
                 tipo: "Civil",
                 general_causa_id: causa_civil.general_causa.id
-              )    
+              )
               retiro.save
+
+              user_causa = UserCausa.where(general_causa_id: causa_civil2.general_causa_id, account_id: user.id)    
+              if !user_causa.nil? user_causa.not1 == 1                
+                @parameters = {}
+                @parameters[:subject] = "Cambio de Receptor"
+                @parameters[:identificator] = causa_civil.identificator
+                @parameters[:name] = user.nombre
+                @parameters[:changes] = [cambios_a]
+                Notifications.receptores(@parameters, user.email).deliver_now
+              end
             else
               retiro.destroy
             end
@@ -396,7 +406,7 @@ module Scrapers
           else
             if ret.estado != retiro.estado
               causa_civil.retiros << retiro          
-              CausaChange.create(   
+              cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: ret.estado,
                 new_value: retiro.estado,
@@ -406,6 +416,16 @@ module Scrapers
                 general_causa_id: causa_civil.general_causa.id
               )    
               retiro.save
+
+              user_causa = UserCausa.where(general_causa_id: causa_civil2.general_causa_id, account_id: user.id)    
+              if !user_causa.nil? user_causa.not1 == 1
+                @parameters = {}
+                @parameters[:subject] = "Cambio de Receptor"
+                @parameters[:identificator] = causa_civil.identificator
+                @parameters[:name] = user.nombre
+                @parameters[:changes] = [cambios_a]
+                Notifications.receptores(@parameters, user.email).deliver_now
+              end
             else
               retiro.destroy
             end

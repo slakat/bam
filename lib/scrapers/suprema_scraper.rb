@@ -174,7 +174,7 @@ module Scrapers
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
           if causa_suprema.ubicacion != causa_suprema2.ubicacion
-            CausaChange.create(   
+            cambios_a = CausaChange.create(   
                 fecha: Date.today,
                 old_value: causa_suprema2.ubicacion,
                 new_value: causa_suprema.ubicacion,
@@ -184,6 +184,17 @@ module Scrapers
                 general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_suprema2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Suprema"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
             #cambio estado
@@ -197,6 +208,17 @@ module Scrapers
                 general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_suprema2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Suprema"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           causa_suprema = causa_suprema2
           general_causa = causa_suprema.general_causa
@@ -412,6 +434,17 @@ module Scrapers
                 general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_suprema2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Suprema"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
             #cambio estado
@@ -425,6 +458,17 @@ module Scrapers
                 general_causa_id: causa_suprema2.general_causa.id
               )    
             causa_suprema2.estado_procesal = causa_suprema.estado_procesal
+
+            user_causa = UserCausa.where(general_causa_id: causa_suprema2.general_causa_id, account_id: user.id)    
+            if !user_causa.nil? user_causa.not1 == 2               
+              @parameters = {}
+              @parameters[:subject] = "Cambio de Corte"
+              @parameters[:identificator] = causa_corte.identificator
+              @parameters[:name] = user.nombre
+              @parameters[:competencia] = "Corte de Suprema"
+              @parameters[:changes] = [cambios_a]
+              Notifications.cambios_corte(@parameters, user.email).deliver_now
+            end
           end
           causa_suprema = causa_suprema2
           general_causa = causa_suprema.general_causa
