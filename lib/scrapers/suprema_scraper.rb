@@ -111,12 +111,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: Scrapers::LaboralScraper.clear_string(data[0]),
             rut: Scrapers::LaboralScraper.clear_string(data[1]),
             persona: Scrapers::LaboralScraper.clear_string(data[2]),
             nombre: Scrapers::LaboralScraper.clear_string(data[3])
             )   
+          if lit.save
+            litigantes_rb << lit
+          end       
         end
         puts litigantes
 
@@ -131,7 +134,13 @@ module Scrapers
           caratulado = level_4[3].text.split(':')[1].strip
           tribunal =  level_4[5].text.split(':')[1].strip
 
-          expediente = Expediente.create rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), ruc: Scrapers::CorteScraper.clear_string(ruc), fecha: Scrapers::CorteScraper.clear_string(fecha2), caratulado: Scrapers::CorteScraper.clear_string(caratulado), tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+          expediente = Expediente.create(
+            rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), 
+            ruc: Scrapers::CorteScraper.clear_string(ruc), 
+            fecha: Scrapers::CorteScraper.clear_string(fecha2), 
+            caratulado: Scrapers::CorteScraper.clear_string(caratulado), 
+            tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+            )
           puts rol_rit,ruc, fecha2,caratulado,tribunal
         end
 
@@ -166,7 +175,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_suprema2.ubicacion,
                 new_value: causa_suprema.ubicacion,
-                attribute: "Ubicacion",
+                atributo: "Ubicacion",
                 identificador: causa_suprema2.rol,
                 tipo: "Suprema"
               )    
@@ -178,7 +187,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_suprema2.estado_procesal,
                 new_value: causa_suprema.estado_procesal,
-                attribute: "Estado Procesal",
+                atributo: "Estado Procesal",
                 identificador: causa_suprema2.rol,
                 tipo: "Suprema"
               )    
@@ -326,12 +335,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: Scrapers::LaboralScraper.clear_string(data[0]),
             rut: Scrapers::LaboralScraper.clear_string(data[1]),
             persona: Scrapers::LaboralScraper.clear_string(data[2]),
             nombre: Scrapers::LaboralScraper.clear_string(data[3])
             )   
+          if lit.save
+            litigantes_rb << lit
+          end       
         end
         puts litigantes
 
@@ -346,7 +358,13 @@ module Scrapers
           caratulado = level_4[3].text.split(':')[1].strip
           tribunal =  level_4[5].text.split(':')[1].strip
 
-          expediente = Expediente.create rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), ruc: Scrapers::CorteScraper.clear_string(ruc), fecha: Scrapers::CorteScraper.clear_string(fecha2), caratulado: Scrapers::CorteScraper.clear_string(caratulado), tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+          expediente = Expediente.create(
+            rol_rit: Scrapers::CorteScraper.clear_string(rol_rit), 
+            ruc: Scrapers::CorteScraper.clear_string(ruc), 
+            fecha: Scrapers::CorteScraper.clear_string(fecha2), 
+            caratulado: Scrapers::CorteScraper.clear_string(caratulado), 
+            tribunal: Scrapers::CorteScraper.clear_string(tribunal)
+            )
           puts rol_rit,ruc, fecha2,caratulado,tribunal
         end
 
@@ -377,10 +395,27 @@ module Scrapers
           puts "Se ha reasignado una causa suprema existente (por nombre)"
           causa_suprema2 = SupremaCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]), tipo_recurso: Scrapers::CorteScraper.clear_string(things[1]))
           if causa_suprema.ubicacion != causa_suprema2.ubicacion
-            #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_suprema2.ubicacion,
+                new_value: causa_suprema.ubicacion,
+                atributo: "Ubicacion",
+                identificador: causa_suprema2.rol,
+                tipo: "Suprema"
+              )    
+            causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           if causa_suprema.estado_procesal != causa_suprema2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_suprema2.estado_procesal,
+                new_value: causa_suprema.estado_procesal,
+                atributo: "Estado Procesal",
+                identificador: causa_suprema2.rol,
+                tipo: "Suprema"
+              )    
+            causa_suprema2.estado_procesal = causa_suprema.estado_procesal
           end
           causa_suprema = causa_suprema2
         end 
@@ -408,6 +443,9 @@ module Scrapers
         @list << (things)
       end
 
+      # list = ["3990-2012", " (Familia) Casaci\xF3n Fondo  ", "  22/05/2012 ", " Fallado y devuelto ", "  20/07/2012 ", " Corte Suprema ", "  \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t\t-- \r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t\t", "/SITSUPPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Ubicacion=0&GLS_Causa=0&COD_Libro=6&ROL_Recurso=3990&ERA_Recurso=2012&COD_Corte=1&GLS_Caratulado=--&"] 
+      # user = User.last
+      
       return @list
     end
 

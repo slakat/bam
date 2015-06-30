@@ -78,31 +78,40 @@ module Scrapers
         litigantes = []
         litigantes_rb = []
         page.search('#Litigantes tr.lineaGrilla1', '#Litigantes tr.lineaGrilla2').each do |l|
-          data = []
-          l.search('td').each do |a|
-            data << a.text.strip            
+          begin 
+            data = []
+            l.search('td').each do |a|
+              data << a.text.strip            
+            end
+            litigantes << data
+            lit = Litigante.new(
+              participante: Scrapers::LaboralScraper.clear_string(data[0]),
+              rut: Scrapers::LaboralScraper.clear_string(data[1]),
+              persona: Scrapers::LaboralScraper.clear_string(data[2]),
+              nombre: Scrapers::LaboralScraper.clear_string(data[3])
+              )   
+            if lit.save
+              litigantes_rb << lit
+            end       
+          rescue
           end
-          litigantes << data
-          litigantes_rb << Litigante.create(
-            participante: Scrapers::LaboralScraper.clear_string(data[0]),
-            rut: Scrapers::LaboralScraper.clear_string(data[1]),
-            persona: Scrapers::LaboralScraper.clear_string(data[2]),
-            nombre: Scrapers::LaboralScraper.clear_string(data[3])
-            )          
         end
 
         retiros = Array.new
-        page.search('#ReceptorDIV table')[3].search('tr','tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
-          begin
+        page.search('#ReceptorDIV table')[3].search('tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
+          
+          
             data = r.search('td')
             cuaderno = data[0].text.strip
             datos_retiro = data[1].text.strip
             descripcion = data[2].text.strip
             puts cuaderno,datos_retiro,descripcion
-            retiros << Retiro.create(cuaderno: Scrapers::LaboralScraper.clear_string(cuaderno), datos_retiro: Scrapers::LaboralScraper.clear_string(datos_retiro), estado: Scrapers::LaboralScraper.clear_string(descripcion))
-          rescue
 
-          end
+            ret = Retiro.new(cuaderno: Scrapers::LaboralScraper.clear_string(cuaderno), datos_retiro: Scrapers::LaboralScraper.clear_string(datos_retiro), estado: Scrapers::LaboralScraper.clear_string(descripcion))
+            if ret.save
+              retiros << ret
+            end
+          
         end
         
         causa_civil = CivilCausa.new(
@@ -129,7 +138,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_civil2.ubicacion,
                 new_value: causa_civil.ubicacion,
-                attribute: "Ubicación",
+                atributo: "Ubicación",
                 identificador: causa_civil2.rol,
                 tipo: "Civil"
               )    
@@ -141,7 +150,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_civil2.estado_procesal,
                 new_value: causa_civil.estado_procesal,
-                attribute: "Estado Procesal",
+                atributo: "Estado Procesal",
                 identificador: causa_civil2.rol,
                 tipo: "Civil"
               )    
@@ -162,20 +171,24 @@ module Scrapers
 
         retiros.each do |retiro|
           #comparar retiros
-          causa1 = causa_civil.retiros.find(cuaderno: retiro.cuadero, datos_retiro: retiro.datos_retiro)
-          if causa1.nil?
-            causa_civil.retiros << retiro          
+          ret = causa_civil.retiros.find_by(cuaderno: retiro.cuaderno, datos_retiro: retiro.datos_retiro)
+          if ret.nil?
+            causa_civil.retiros << retiro
+            retiro.save          
           else
-            if causa1.estado != causa_civil.estado
+            if ret.estado != retiro.estado
               causa_civil.retiros << retiro          
               CausaChange.create(   
                 fecha: Date.today,
-                old_value: causa1.estado,
-                new_value: causa_civil.estado,
-                attribute: "Retiros",
+                old_value: ret.estado,
+                new_value: retiro.estado,
+                atributo: "Retiros",
                 identificador: causa_civil.rol,
                 tipo: "Civil"
               )    
+              retiro.save
+            else
+              retiro.destroy
             end
           end
         end
@@ -241,7 +254,7 @@ module Scrapers
 
 
       @list=[]
-      #puts page.search("table#filaSel tr").inner_text
+      puts page
       page.search('table#contentCellsAddTabla tr').each do |n|
         properties = n.search('td.textoC a/text()','td/text()').collect {|text| text.to_s}
         if properties[5].nil?
@@ -275,31 +288,40 @@ module Scrapers
         litigantes = []
         litigantes_rb = []
         page.search('#Litigantes tr.lineaGrilla1', '#Litigantes tr.lineaGrilla2').each do |l|
-          data = []
-          l.search('td').each do |a|
-            data << a.text.strip            
+          begin 
+            data = []
+            l.search('td').each do |a|
+              data << a.text.strip            
+            end
+            litigantes << data
+            lit = Litigante.new(
+              participante: Scrapers::LaboralScraper.clear_string(data[0]),
+              rut: Scrapers::LaboralScraper.clear_string(data[1]),
+              persona: Scrapers::LaboralScraper.clear_string(data[2]),
+              nombre: Scrapers::LaboralScraper.clear_string(data[3])
+              )   
+            if lit.save
+              litigantes_rb << lit
+            end       
+          rescue
           end
-          litigantes << data
-          litigantes_rb << Litigante.create(
-            participante: Scrapers::LaboralScraper.clear_string(data[0]),
-            rut: Scrapers::LaboralScraper.clear_string(data[1]),
-            persona: Scrapers::LaboralScraper.clear_string(data[2]),
-            nombre: Scrapers::LaboralScraper.clear_string(data[3])
-            )          
         end
 
         retiros = Array.new
-        page.search('#ReceptorDIV table')[3].search('tr','tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
-          begin
+        page.search('#ReceptorDIV table')[3].search('tr.lineaGrilla1','tr.lineaGrilla2').each do |r|
+          
+          
             data = r.search('td')
             cuaderno = data[0].text.strip
             datos_retiro = data[1].text.strip
             descripcion = data[2].text.strip
             puts cuaderno,datos_retiro,descripcion
-            retiros << Retiro.create(cuaderno: Scrapers::LaboralScraper.clear_string(cuaderno), datos_retiro: Scrapers::LaboralScraper.clear_string(datos_retiro), estado: Scrapers::LaboralScraper.clear_string(descripcion))
-          rescue
 
-          end
+            ret = Retiro.new(cuaderno: Scrapers::LaboralScraper.clear_string(cuaderno), datos_retiro: Scrapers::LaboralScraper.clear_string(datos_retiro), estado: Scrapers::LaboralScraper.clear_string(descripcion))
+            if ret.save
+              retiros << ret            
+            end
+          
         end
         
         causa_civil = CivilCausa.new(
@@ -322,9 +344,27 @@ module Scrapers
 
           if causa_civil.ubicacion != causa_civil2.ubicacion
             #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_civil2.ubicacion,
+                new_value: causa_civil.ubicacion,
+                atributo: "Ubicación",
+                identificador: causa_civil2.rol,
+                tipo: "Civil"
+              )    
+            causa_civil2.ubicacion = causa_civil.ubicacion
           end
           if causa_civil.estado_procesal != causa_civil2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_civil2.estado_procesal,
+                new_value: causa_civil.estado_procesal,
+                atributo: "Estado Procesal",
+                identificador: causa_civil2.rol,
+                tipo: "Civil"
+              )    
+            causa_civil2.estado_procesal = causa_civil.estado_procesal
           end
           causa_civil = causa_civil2
         end        
@@ -340,7 +380,27 @@ module Scrapers
         user.save
 
         retiros.each do |retiro|
-          causa_civil.retiros << retiro          
+          #comparar retiros
+          ret = causa_civil.retiros.find_by(cuaderno: retiro.cuaderno, datos_retiro: retiro.datos_retiro)
+          if ret.nil?
+            causa_civil.retiros << retiro
+            retiro.save          
+          else
+            if ret.estado != retiro.estado
+              causa_civil.retiros << retiro          
+              CausaChange.create(   
+                fecha: Date.today,
+                old_value: ret.estado,
+                new_value: retiro.estado,
+                atributo: "Retiros",
+                identificador: causa_civil.rol,
+                tipo: "Civil"
+              )    
+              retiro.save
+            else
+              retiro.destroy
+            end
+          end
         end
 
         litigantes_rb.each do |lit|
@@ -353,7 +413,11 @@ module Scrapers
 
         @list << (things)
       end
-
+      
+      #list = ["C-4023-1999", "30/07/1999", "VELASCO PATRICIO/SOC.DE LUBRIC", "2\xBA Juzgado Civil de Santiago", "/CIVILPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&TIP_Cuaderno=49&CRR_IdCuaderno=3627217&ROL_Causa=4023&TIP_Causa=C&ERA_Causa=1999&CRR_IdCausa=3038972&COD_Tribunal=260&TIP_Informe=1&"] 
+      # @list.each do |list|        
+        
+      # end
       return @list
 
     end

@@ -1,0 +1,39 @@
+/ = render "general_causas/changes_table", changes: CausaChange.all
+
+.row
+	.col-md-12
+		.grid.simple.can-collapse
+			.grid-title
+				%h4.semi-bold Cambios
+				.tools
+					%a.marg-t-10.collapse
+			.grid-body
+				%table.table
+					%thead
+						%tr
+							%th Identificador
+							%th Valor Antiguo
+							%th Valor Nuevo
+							%th Atributo
+							%th Tipo							
+					%tbody
+						-changes.each do |c|
+							
+							-unless c.nil?
+								%tr
+									%td
+										%span
+											=c.identificator
+									%td
+										%span
+											=c.old_value
+									%td
+										%span
+											=c.new_value
+									%td
+										%span
+											=c.atributo
+									%td
+										%span
+											=c.tipo
+									

@@ -16,9 +16,17 @@ end
 
 #while($running) do
   
-  # Replace this with your code
-  Rails.logger.auto_flushing = true
-  Rails.logger.info "This daemon is still running at #{Time.now}.\n"
+  
+scraper = Scrapers::Scraper.new
+User.all.each do |user|
+	scraper.search_by_rut user.rut, user
+	scraper.search_by_name user.name, user.lastname.split(" ")[0], user.lastname.split(" ")[1], user		
+end
+
+Account.all.each do |user|
+	scraper.search_by_rut user.rut, user
+	scraper.search_by_name user.name, user.lastname.split(" ")[0], user.lastname.split(" ")[1], user		
+end
   
   #sleep 10
 #end

@@ -86,12 +86,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: data[0],
             rut: data[1],
             persona: data[2],
             nombre: data[3]
             )          
+          if lit.save
+            litigantes_rb << lit
+          end       
         end
         puts litigantes
 
@@ -135,7 +138,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_corte2.ubicacion,
                 new_value: causa_corte.ubicacion,
-                attribute: "Ubicacion",
+                atributo: "Ubicacion",
                 identificador: causa_corte2.rol,
                 tipo: "Corte"
               )    
@@ -147,7 +150,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_corte2.estado_procesal,
                 new_value: causa_corte.estado_procesal,
-                attribute: "Estado Procesal",
+                atributo: "Estado Procesal",
                 identificador: causa_corte2.rol,
                 tipo: "Corte"
               )    
@@ -270,12 +273,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: data[0],
             rut: data[1],
             persona: data[2],
             nombre: data[3]
             )          
+          if lit.save
+            litigantes_rb << lit
+          end       
         end
         puts litigantes
 
@@ -307,20 +313,36 @@ module Scrapers
           caratulado: Scrapers::CorteScraper.clear_string(things[5]), 
           link: Scrapers::CorteScraper.clear_string(things[6]))
          
-        @@asd = causa_corte
+        
         if causa_corte.save
           puts "Se ha agregado una causa de corte (por nombre)"
         else
           puts "Se ha reasignado una causa corte existente (por nombre)"
           causa_corte2 = CorteCausa.find_by(numero_ingreso: Scrapers::CorteScraper.clear_string(things[0]))
-         
+          puts causa_corte2.id
           if causa_corte.ubicacion != causa_corte2.ubicacion
-            #Cambio ubicacion!!!!
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_corte2.ubicacion,
+                new_value: causa_corte.ubicacion,
+                atributo: "Ubicacion",
+                identificador: causa_corte2.rol,
+                tipo: "Corte"
+              )    
+            causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
           if causa_corte.estado_procesal != causa_corte2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_corte2.estado_procesal,
+                new_value: causa_corte.estado_procesal,
+                atributo: "Estado Procesal",
+                identificador: causa_corte2.rol,
+                tipo: "Corte"
+              )    
+            causa_corte2.estado_procesal = causa_corte.estado_procesal
           end
-          
           causa_corte = causa_corte2
         end        
         causa_corte.expediente = expediente
@@ -347,31 +369,11 @@ module Scrapers
         @list << (things)
       end
 
+      # puts @list.first
 
-      #puts @list.first
-
+      # list = ["Familia-4846-2007", "  24/12/2007 ", " Primera Instancia ", "  28/03/2008 ", " C.A. de Santiago ", "MU\xD1OZ / SEPULVEDA", "/SITCORTEPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&COD_Libro=11&ROL_Recurso=4846&ERA_Recurso=2007&COD_Corte=90&"]
+      # user = User.last
       # @list.each do |list|
-      #   causa_corte = CorteCausa.new numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace), ubicacion: list[2].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ubicacion: list[3].encode('UTF-8', :invalid => :replace, :undef => :replace), corte: list[4].encode('UTF-8', :invalid => :replace, :undef => :replace), caratulado: list[5].encode('UTF-8', :invalid => :replace, :undef => :replace), link: list[6].encode('UTF-8', :invalid => :replace, :undef => :replace)
-         
-      #   # causa_corte.save
-      #   # general_causa = user.general_causas.build        
-      #   # causa_corte.general_causa = general_causa
-      #   # general_causa.save
-      #   # causa_corte.save
-      #   # user.save
-      #   # puts "Se ha agregado una causa de corte (por nombre)"
-      #   if causa_corte.save
-      #     puts "Se ha agregado una causa de corte (por nombre)"
-      #   else
-      #     puts "Se ha reasignado una causa corte existente (por nombre)"
-      #     causa_corte = CorteCausa.find_by(numero_ingreso: list[0].encode('UTF-8', :invalid => :replace, :undef => :replace), fecha_ingreso: list[1].encode('UTF-8', :invalid => :replace, :undef => :replace))
-      #   end        
-      #   # general_causa = user.general_causas.build        
-      #   # causa_corte.general_causa = general_causa
-      #   # user.general_causas << general_causa
-      #   # general_causa.save
-      #   causa_corte.save
-      #   # user.save                
 
       # end
       return @list

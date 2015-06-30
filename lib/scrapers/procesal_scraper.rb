@@ -130,12 +130,13 @@ module Scrapers
         tribunales << n.attr("value")
       end
       tribunales.reject! { |c| c == "-1" || c.nil? }
+      # tribunales = [1221]
       #puts tribunales
       ## probar distintos años. Ver si hay algun tribunal que sean todos
       ## almacenar los resultados en la lista
       tribunales.each do |tribunal|
         #puts tribunal
-        begin
+        
           page = a.post('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf', {
           "formConsultaCausas:idTabs"=>"idTabNombre",
           "formConsultaCausas:idValueRadio"=>"1",
@@ -153,7 +154,7 @@ module Scrapers
           "formConsultaCausas:idFormApPater"=>last_name,
           "formConsultaCausas:idFormApMater"=>second_last_name,
           "formConsultaCausas:idFormFecEra"=>"0",
-          "formConsultaCausas:idSelectedCodeTribunalNom"=>27,
+          "formConsultaCausas:idSelectedCodeTribunalNom"=>tribunal,
           "formConsultaCausas:buscar2.x"=>"50",
           "formConsultaCausas:buscar2.y"=>"9",
           "formConsultaCausas:tblListaConsultaNombres:s"=>"-1",
@@ -184,38 +185,41 @@ module Scrapers
             #puts page.links.map(&:href)
             #search_result = n.click
             #puts search_result
-
-            id_case= n['onclick'][/\(['"]([^)]+)['"]\)/, 1]
-
-            b = Mechanize.new { |agent|
-              agent.user_agent_alias = 'Mac Safari'
-            }
-            page = b.post('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf', {"AJAXREQUEST"=>"_viewRoot",                                                      "formConsultaCausas:idTabs"=>"idTabNombre", "formConsultaCausas:idValueRadio"=>"1","formConsultaCausas:idFormRolInterno"=>"", "formConsultaCausas:idFormRolInternoEra"=>"", "formConsultaCausas:idSelectedCodeTipCauRef"=>"", "formConsultaCausas:idFormRolUnico"=>"", "formConsultaCausas:idFormRolUnicoDv"=>"", "formConsultaCausas:idSelectedCodeTribunal"=>"", "formConsultaCausas:tblListaParticipantes:s"=>"-1", "formConsultaCausas:tblListaRelaciones:s"=>"-1", "formConsultaCausas:tblListaTramites:s"=>"-1", "formConsultaCausas:tblListaNotificaciones:s"=>"-1", "formConsultaCausas:idFormNombres"=>name, "formConsultaCausas:idFormApPater"=>last_name, "formConsultaCausas:idFormApMater"=>second_last_name, "formConsultaCausas:idFormFecEra"=>"0", "formConsultaCausas:idSelectedCodeTribunalNom"=>27, "formConsultaCausas:buscar2.x"=>"50", "formConsultaCausas:buscar2.y"=>"9", "formConsultaCausas:tblListaConsultaNombres:s"=>"-1", "formConsultaCausas:tblListaParticipantesNom:s"=>"-1", "formConsultaCausas:tblListaRelacionesNom:"=>"-1", "formConsultaCausas:tblListaTramitesNom:s"=>"-1", "formConsultaCausas:tblListaNotificacionesNom:s"=>"-1", "formConsultaCausas:waitCargaSentOpenedState"=>"", "formConsultaCausas"=>"formConsultaCausas", "autoScroll"=>"", "javax.faces.ViewState"=>a.page.forms[0]['javax.faces.ViewState'], "formConsultaCausas:j_id144" =>"formConsultaCausas:j_id144",
-            "param2"=>id_case,
-            "AJAX:EVENTS_COUNT"=>"1"})
-
-
-            doc = page.search('td.rich-tabpanel-content.textoNegrita table')
-            level_2 = doc[24].search('td')[1].search('label')
+            fecha, etapa = ""
+            
+            begin 
+              id_case= n['onclick'][/\(['"]([^)]+)['"]\)/, 1]
+              b = Mechanize.new { |agent|
+                agent.user_agent_alias = 'Mac Safari'
+              }
+              page = b.post('http://reformaprocesal.poderjudicial.cl/ConsultaCausasJsfWeb/page/panelConsultaCausas.jsf', {"AJAXREQUEST"=>"_viewRoot",                                                      "formConsultaCausas:idTabs"=>"idTabNombre", "formConsultaCausas:idValueRadio"=>"1","formConsultaCausas:idFormRolInterno"=>"", "formConsultaCausas:idFormRolInternoEra"=>"", "formConsultaCausas:idSelectedCodeTipCauRef"=>"", "formConsultaCausas:idFormRolUnico"=>"", "formConsultaCausas:idFormRolUnicoDv"=>"", "formConsultaCausas:idSelectedCodeTribunal"=>"", "formConsultaCausas:tblListaParticipantes:s"=>"-1", "formConsultaCausas:tblListaRelaciones:s"=>"-1", "formConsultaCausas:tblListaTramites:s"=>"-1", "formConsultaCausas:tblListaNotificaciones:s"=>"-1", "formConsultaCausas:idFormNombres"=>name, "formConsultaCausas:idFormApPater"=>last_name, "formConsultaCausas:idFormApMater"=>second_last_name, "formConsultaCausas:idFormFecEra"=>"0", "formConsultaCausas:idSelectedCodeTribunalNom"=>27, "formConsultaCausas:buscar2.x"=>"50", "formConsultaCausas:buscar2.y"=>"9", "formConsultaCausas:tblListaConsultaNombres:s"=>"-1", "formConsultaCausas:tblListaParticipantesNom:s"=>"-1", "formConsultaCausas:tblListaRelacionesNom:"=>"-1", "formConsultaCausas:tblListaTramitesNom:s"=>"-1", "formConsultaCausas:tblListaNotificacionesNom:s"=>"-1", "formConsultaCausas:waitCargaSentOpenedState"=>"", "formConsultaCausas"=>"formConsultaCausas", "autoScroll"=>"", "javax.faces.ViewState"=>a.page.forms[0]['javax.faces.ViewState'], "formConsultaCausas:j_id144" =>"formConsultaCausas:j_id144",
+              "param2"=>id_case,
+              "AJAX:EVENTS_COUNT"=>"1"})
 
 
-            fecha = level_2[5].text
-            etapa = level_2[6].text
+              doc = page.search('td.rich-tabpanel-content.textoNegrita table')
+              level_2 = doc[24].search('td')[1].search('label')
 
-            #ACA HAY 3 CAMPOS: TIPO, NOMBRE Y SITUACION LIBERTAD
-            litigantes = []
-            litigantes_rb = []
-            doc[28].search('tr').each do |l|
-              data = []
-              l.search('td').each_with_index do |a,index|
-                next if index>2
-                data << a.text.strip
+
+              fecha = level_2[5].text
+              etapa = level_2[6].text
+
+              #ACA HAY 3 CAMPOS: TIPO, NOMBRE Y SITUACION LIBERTAD
+              litigantes = []
+              litigantes_rb = []
+              doc[28].search('tr').each do |l|
+                data = []
+                l.search('td').each_with_index do |a,index|
+                  next if index>2
+                  data << a.text.strip
+                end
+                litigantes << data
+                #crear litigante_procesal
+                puts data.count
               end
-              litigantes << data
-              #crear litigante_procesal
-              puts data.count
+              puts litigantes
+            rescue
             end
-            puts litigantes
 
             causa_procesal = ProcesalCausa.new(
               tribunal: Scrapers::LaboralScraper.clear_string(things[0]),
@@ -261,17 +265,8 @@ module Scrapers
               end
             end
 
-
-            @list << (things)
-
-            
+            @list << (things)            
           end  
-        rescue Exception => e
-          
-        end
-        
-
-
       end
 
       # @list.each do |list|

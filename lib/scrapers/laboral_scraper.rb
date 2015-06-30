@@ -67,12 +67,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: Scrapers::LaboralScraper.clear_string(data[0]),
             rut: Scrapers::LaboralScraper.clear_string(data[1]),
             persona: Scrapers::LaboralScraper.clear_string(data[2]),
             nombre: Scrapers::LaboralScraper.clear_string(data[3])
-            )          
+            )     
+          if lit.save
+            litigantes_rb << lit
+          end            
         end
         puts litigantes
 
@@ -103,7 +106,7 @@ module Scrapers
                 fecha: Date.today,
                 old_value: causa_laboral2.estado_procesal,
                 new_value: causa_laboral.estado_procesal,
-                attribute: "Estado Procesal",
+                atributo: "Estado Procesal",
                 identificador: causa_laboral2.ruc,
                 tipo: "Laboral"
               )    
@@ -206,12 +209,15 @@ module Scrapers
             data << a.text.strip
           end
           litigantes << data
-          litigantes_rb << Litigante.create(
+          lit = Litigante.create(
             participante: Scrapers::LaboralScraper.clear_string(data[0]),
             rut: Scrapers::LaboralScraper.clear_string(data[1]),
             persona: Scrapers::LaboralScraper.clear_string(data[2]),
             nombre: Scrapers::LaboralScraper.clear_string(data[3])
-            )          
+            )     
+          if lit.save
+            litigantes_rb << lit
+          end            
         end
         puts litigantes
 
@@ -223,7 +229,7 @@ module Scrapers
             tribunal: Scrapers::LaboralScraper.clear_string(things[4]), 
             link: Scrapers::LaboralScraper.clear_string(things[5]),
             #ubicacion
-            estado_procesal: Scrapers::LaboralScraper.clear_string(est_proc.encode),
+            estado_procesal: Scrapers::LaboralScraper.clear_string(est_proc),
             estado_administrativo: Scrapers::LaboralScraper.clear_string(est_adm)
             )
                                 
@@ -238,6 +244,15 @@ module Scrapers
           #end
           if causa_laboral.estado_procesal != causa_laboral2.estado_procesal
             #cambio estado
+            CausaChange.create(   
+                fecha: Date.today,
+                old_value: causa_laboral2.estado_procesal,
+                new_value: causa_laboral.estado_procesal,
+                atributo: "Estado Procesal",
+                identificador: causa_laboral2.ruc,
+                tipo: "Laboral"
+              )    
+            causa_laboral2.estado_procesal = causa_laboral.estado_procesal
           end
           causa_laboral = causa_laboral2
         end        
@@ -262,6 +277,12 @@ module Scrapers
 
         @list << (things)
       end
+
+      #list = ["M-767-2015", "15- 4-0014884-5", "14/04/2015", "SEGOVIA CON JOFRE", "1\xBA Juzgado de Letras del Trabajo de Santiago", "/SITLAPORWEB/ConsultaDetalleAtPublicoAccion.do?TIP_Consulta=1&TIP_Cuaderno=0&CRR_IdCuaderno=0&ROL_Causa=767&TIP_Causa=M&ERA_Causa=2015&CRR_IdCausa=364088&COD_Tribunal=1348&"]
+      #user = User.last
+      # @list.each do |list|
+                
+      # end
 
       return @list
     end
