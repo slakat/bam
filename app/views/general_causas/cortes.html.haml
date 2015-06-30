@@ -1,0 +1,12 @@
+.page-header
+  %h1 Mis Causas en Corte
+%h4 Corte de Apelaciones - Corte Suprema
+
+
+
+=render partial: "general_causas/table", locals: { general_causas: @general_causas }
+
+
+:javascript
+  initBla('#causas-select-container');
+  $(".select2-search").show();

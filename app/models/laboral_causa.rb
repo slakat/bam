@@ -16,4 +16,5 @@ class LaboralCausa < ActiveRecord::Base
   def identificator
     self.ruc
   end
+
 end

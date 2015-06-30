@@ -2,18 +2,26 @@
   = link_to new_client_path, :class => 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
     New Client
-  %h1 Listing clients
+  %h1 Mis Clientes
+
+
+.row.add_new
+  .col-md-12
+    .form-group
+      %label.form-label.label-warning Seleccionar Cliente
+      .controls
+        = select_tag :general_causas_ids, options_for_select(Account.all.collect{|s| [s.name, s.id]}, Account.all.pluck(:id)),
+                              {multiple: true, class: 'form-control', required: true, data: {behaviour: 'select2'}}
+
 
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
         %th Name
-        %th Lastname
+        %th Apellido
         %th Rut
-        %th
-        %th
-        %th
+
 
     %tbody
       - @clients.each do |client|
@@ -21,6 +29,8 @@
           %td= client.name
           %td= client.lastname
           %td= client.rut
-          %td= link_to 'Show', client
-          %td= link_to 'Edit', edit_client_path(client)
-          %td= link_to 'Destroy', client, :data => { confirm: 'Are you sure?' }, :method => :delete
+
+
+:javascript
+  initBla('#causas-select-container');
+  $(".select2-search").show();

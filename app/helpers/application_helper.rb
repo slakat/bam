@@ -19,6 +19,38 @@ module ApplicationHelper
   end
 
   def role_inline role, symbol
-    best_in_place role, symbol, as: :select, :url => user_causa_path(role), collection: [[1,"ON"],[2,"OFF"]] , "rel"=>"tooltip", "title"=>"ON/OFF"
+    best_in_place role, symbol, as: :select, :url => user_causa_path(role), collection: [[1,"ON"],[2,"OFF"]] , "rel"=>"tooltip", "title"=>"ON/OFF",:html_attrs =>{ "data-toggle"=>"select", class:"select select-default mrs mbm"}
   end
+
+  def role_value role, symbol
+
+    unless role[symbol] == 1
+      return false
+    end
+
+    return true
+
+  end
+
+  def competencia c
+    case c
+      when "LaboralCausa"
+        "Laboral"
+      when "CivilCausa"
+        "Civil"
+      when "ProcesalCausa"
+        "Ref. Procesal"
+      when "CorteCausa"
+        "C. Apelaciones"
+      else
+        "C. Suprema"
+    end
+  end
+
+
+  def active_class(link_path)
+    current_page?(link_path) ? "active" : ""
+  end
+
+
 end

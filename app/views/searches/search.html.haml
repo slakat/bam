@@ -2,27 +2,28 @@
   .col-md-12
     .grid.simple.can-collapse
       .grid-title
-        %h4.semi-bold Causas
+        %h4.semi-bold Resultados de Búsqueda
         .tools
           %a.marg-t-10.collapse
       .grid-body
-        %table.table
+        %table.table.table-striped
           %thead
             %tr
-              %th RIT
-              %th RUC
+              %th Competencia
+              %th RUC/ROL/RIT
               %th Caratulado
               %th Tribunal
+
           %tbody
-            -@causas.each do |c|
-              -#c=d.causa
+            -@causas.each do |d|
+              -c=d.causa
               %tr
                 %td
                   %span
-                    =c.rit
+                    =competencia(c.class.to_s)
                 %td
                   %span
-                    =c.ruc
+                    =c.identificator
                 %td
                   %span
                     =c.caratulado

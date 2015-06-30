@@ -29,10 +29,63 @@
 //= require loading-bar
 //= require ui-select
 //= require ./angular/app
+//= require flat-ui.min
+//= require radiocheck
 
 //= require_self
 //= require_tree .
 
+@import url('http://code.jquery.com/jquery-1.11.1.min.js');
+@import url('http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js');
+
+$(function(){
+    $(':checkbox').radiocheck();
+    $('[data-toggle="checkbox"]').radiocheck();
+    $('[data-toggle="radio"]').radiocheck();
+    $('[data-toggle="dropdown"]').dropdown();
+    // Switches
+    if ($('[data-toggle="switch"]').length) {
+        $('[data-toggle="switch"]').bootstrapSwitch();
+    }
+
+    if ($('[data-toggle="select"]').length) {
+        $('[data-toggle="select"]').select2();
+    }
+
+    $("#custom-switch-01").on("click", function(act_id) {
+        alert("hola");
+        $.ajax({
+            url: "/controller/done",
+            beforeSend: function() { alert("Hi") },
+            data: "id="+act_id,
+            success: function() { alert('Bye') }
+        });
+    });
+
+    $('input[id="custom-switch-01"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        //console.log(this); // DOM element
+        //console.log(event); // jQuery event
+        //console.log(state); // true | false
+
+        var info = this.name.split("_");
+        console.log(info[1]);
+
+        var tracking = 2; //OFF
+        if(state)
+        {
+            tracking = 1; //ON
+
+        }
+
+        $.ajax({
+            type:'PUT',
+            url: "/user_causa/"+info[1],
+            beforeSend: function() { console.log("working") },
+            data: "user_causa["+info[0]+"]="+tracking,
+            success: function() { console.log("success") }
+        });
+    });
+});
 
 function onInit(callback){
     $(document).ready(callback);
@@ -85,8 +138,8 @@ function initBla(id) {
             '</div>' +
             '<div clas="col-sm-10">' +
             '<div class="clearfix">' +
-            '<div class="col-sm-5">' + repo.rit + '</div>' +
-            '<div class="col-sm-5">' + repo.ruc + '</div>' +
+            '<div class="col-sm-5">' + repo.identificator + '</div>' +
+            '<div class="col-sm-5">' + repo.tribunal + '</div>' +
             '</div>';
 
         if (repo.caratulado) {
@@ -105,16 +158,15 @@ function initBla(id) {
     var courses = $('#account_id', id);
 
     courses.css('width', '100%');
-
     courses.select2({
 
         ajax: {
-            url: window.location.pathname.replace(/#.*$/, "") + '/search',
+            url: window.location.origin.replace(/#.*$/, "") + '/search_add_causa',
             dataType: 'json',
             delay: 250,
             data: function (params) {
                 return {
-                    q: params
+                    q: params,c: $('#competencia_select').val()
                 };
             },
             results: function (data, params) {
@@ -136,7 +188,7 @@ function initBla(id) {
                 $.each(data, function(index, item) {
                     results.push({
                         text: item.caratulado,
-                        text: item.rit
+                        text: item.identificator
                     });
                 });
                 return {

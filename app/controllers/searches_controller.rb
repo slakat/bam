@@ -9,7 +9,37 @@ class SearchesController < ApplicationController
   end
 
   def search
-    @causas = GeneralCausa.search(params[:q])
+    @causas = GeneralCausa.search(params[:q],params[:civil],params[:laboral],params[:procesal],params[:corte],params[:suprema])
+
+    competencias = "c: "
+    if params[:civil]
+      competencias = "[Civil]"
+    end
+
+    if params[:laboral]
+      competencias = competencias+"  [Laboral]"
+    end
+
+    if params[:procesal]
+      competencias = competencias+"  [Ref. Procesal]"
+    end
+
+    if params[:corte]
+      competencias = competencias+"  [C. de Apelaciones]"
+
+    end
+    if params[:suprema]
+      competencias = competencias+" [C. Suprema]"
+    end
+
+    if current_user
+      user= current_user.email
+    else
+      user= "Invitado"
+    end
+
+    SearchRecord.create!(query: params[:q],competencias:competencias,user:user)
+
   end
 
   def show
@@ -122,6 +152,6 @@ class SearchesController < ApplicationController
     end
 
     def search_params
-      params.require(:search).permit(:term,:q)
+      params.require(:search).permit(:q,:civil,:laboral,:procesal,:corte,:suprema)
     end
 end

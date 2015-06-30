@@ -37,17 +37,22 @@ class AccountsController < ApplicationController
   end
 
   def search
+    val = params[:c]
+    laboral = (true if val=="1") || (true if val=="0") || false
+    civil = (true if val=="2") || (true if val=="0") || false
+    procesal = (true if val=="3") || (true if val=="0") || false
+    corte = (true if val=="4") || (true if val=="0") || false
+    suprema = (true if val=="5") || (true if val=="0") || false
 
-    causas_arel      = LaboralCausa.arel_table
-    query_string = "%#{params[:q]}%"
-
-    causas = LaboralCausa.where((causas_arel[:rit].matches(query_string)).or(causas_arel[:ruc].matches(query_string)).or(causas_arel[:caratulado].matches(query_string)).or(causas_arel[:tribunal].matches(query_string)))
+    causas = GeneralCausa.search(params[:q],civil,laboral,procesal,corte,suprema)
     render json: causas.as_json()
   end
 
   def add_causa
     causa = GeneralCausa.find(params[:causa])
-    @account.general_causas << causa
+    unless @account.general_causas.include?(causa)
+      @account.general_causas << causa
+    end
     redirect_to request.referer
   end
 

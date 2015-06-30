@@ -24,6 +24,9 @@ module BaseApplication
     config.autoload_paths += %W(#{config.root}/lib)
     config.i18n.default_locale = :es
     I18n.enforce_available_locales = true
+    config.assets.enabled = true
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
 
   end
 end

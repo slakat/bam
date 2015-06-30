@@ -18,7 +18,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'accounts/:id/search' => 'accounts#search'
+  get '/search_add_causa' => 'accounts#search'
+  get '/cortes' => 'general_causas#cortes', as: 'cortes'
 
   get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
   get 'search/raw/civil' => 'searches#raw_civil', as: 'raw_civil_search'

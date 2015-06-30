@@ -8,4 +8,8 @@ class SupremaCausa < ActiveRecord::Base
   def identificator
   	self.numero_ingreso
   end
+
+  def tribunal
+    self.corte
+  end
 end
