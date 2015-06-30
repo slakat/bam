@@ -21,21 +21,20 @@
 
 
 
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
+%table.table.table-striped.table-bordered.table-hover.datatable.display.responsive.no-wrap
+  %thead
+    %tr
+      %th Name
+      %th Apellido
+      %th Rut
+
+
+  %tbody
+    - @account.clients.each do |client|
       %tr
-        %th Name
-        %th Apellido
-        %th Rut
-
-
-    %tbody
-      - @account.clients.each do |client|
-        %tr
-          %td= client.name
-          %td= client.lastname
-          %td= client.rut
+        %td= client.name
+        %td= client.lastname
+        %td= client.rut
 
 
 

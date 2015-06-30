@@ -4,8 +4,6 @@
 %p
   %b Name:
   = @account.name
-%p
-  %b Lastname:
   = @account.lastname
 %p
   %b Rut:
@@ -18,5 +16,14 @@
 -#.row{'ng-controller' => 'AddCausasController', 'ng-init' => "id = #{@account.id}"}
 -# .col-md-12
 
-
-
+-if current_user.is? :admin
+  .row
+    .col-md-8.col-md-offset-3
+      %h3 Panel de Administración
+      -unless current_page? account_path(current_user)
+        = link_to 'Gestionar Clientes', lawyer_clients_path(@account.id), class: "btn btn-info"
+        = link_to 'Gestionar Causas', lawyer_causas_path(@account.id), class: "btn btn-info"
+      -else
+        = link_to 'Gestionar Abogados', admin_users_path(@account), class: "btn btn-info"
+        = link_to 'Gestionar Clientes', admin_clients_path, class: "btn btn-info"
+        = link_to 'Revisar Historial de búsquedas', admin_records_path , class: "btn btn-info"

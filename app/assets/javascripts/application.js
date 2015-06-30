@@ -56,6 +56,8 @@ $(function(){
         // Check dataTables documentation to learn more about available options.
         // http://datatables.net/reference/option/pagingType
     });
+
+
     $(':checkbox').radiocheck();
     $('[data-toggle="checkbox"]').radiocheck();
     $('[data-toggle="radio"]').radiocheck();

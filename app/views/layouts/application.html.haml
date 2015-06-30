@@ -26,7 +26,7 @@
 
           = link_to "Procurador Web", root_path, :class => "navbar-brand"
         .collapse.navbar-collapse
-          %ul.nav.navbar-nav
+          %ul.nav.navbar-nav.navbar-right
             %li{class: active_class(root_path)}
               = link_to "Home", root_path
             -unless user_signed_in?
