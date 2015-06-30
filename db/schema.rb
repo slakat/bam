@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629231847) do
+ActiveRecord::Schema.define(version: 20150630065247) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20150629231847) do
     t.string   "rut",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id", limit: 4
   end
 
   create_table "corte_causas", force: :cascade do |t|

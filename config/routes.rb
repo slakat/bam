@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+
+    end
+  end
+
   get 'user_causa/update'
 
   resources :movimientos
@@ -16,10 +22,21 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :accounts
 
+
   root 'home#index'
 
   get '/search_add_causa' => 'accounts#search'
   get '/cortes' => 'general_causas#cortes', as: 'cortes'
+
+  get '/admin/search_records' => 'admins#search_records', as:'admin_records'
+  get '/admin/clients' => 'admins#clients', as:'admin_clients'
+  get '/admin/users' => 'admins#users', as:'admin_users'
+
+  get '/accounts/:id/causas' => 'accounts#causas', as: 'lawyer_causas'
+  get '/accounts/:id/clients' => 'accounts#clients', as: 'lawyer_clients'
+
+
+
 
   get 'search/raw/laboral' => 'searches#raw_laboral', as: 'raw_laboral_search'
   get 'search/raw/civil' => 'searches#raw_civil', as: 'raw_civil_search'
@@ -38,6 +55,9 @@ Rails.application.routes.draw do
   post 'search_name_suprema' =>'searches#search_name_suprema', defaults: { format: 'js' },as: 'search_name_suprema'
 
   post 'accounts/add_causa' => 'accounts#add_causa', as: 'add_causa'
+  post 'accounts/add_client' => 'accounts#add_client', as: 'add_client'
+  get 'search_clients' => 'accounts#search_clients', as: 'search_clients'
+
 
   get 'search' => 'searches#search', as: 'search_causa'
   

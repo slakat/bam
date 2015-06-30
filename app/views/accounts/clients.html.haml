@@ -1,0 +1,45 @@
+.page-header
+  %h1 Clientes
+%h4
+  =@account.name
+  =@account.lastname
+
+.row.add_new
+  %h4
+    %span.glyphicon.glyphicon-plus
+    Agregar nuevo cliente
+  .col-md-8.col-md-offset-2
+    = form_tag('/accounts/add_client') do
+      .col-md-11
+        #causas-select-container.form-group
+          =label_tag :comp,"Ingresa los términos a buscar:", class:"label label-warning"
+          = text_field_tag 'client', '',class: 'form-control', name: 'client', id: 'account_id', placeholder: "Buscar..."
+          = hidden_field_tag 'id',@account.id
+      .col-md-4
+        .form-group
+          = submit_tag 'Agregar', class: 'btn btn-primary'
+
+
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Apellido
+        %th Rut
+
+
+    %tbody
+      - @account.clients.each do |client|
+        %tr
+          %td= client.name
+          %td= client.lastname
+          %td= client.rut
+
+
+
+
+:javascript
+  initClients('#causas-select-container');
+  $(".select2-search").show();

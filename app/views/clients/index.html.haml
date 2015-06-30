@@ -1,17 +1,5 @@
 .page-header
-  = link_to new_client_path, :class => 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Client
   %h1 Mis Clientes
-
-
-.row.add_new
-  .col-md-12
-    .form-group
-      %label.form-label.label-warning Seleccionar Cliente
-      .controls
-        = select_tag :general_causas_ids, options_for_select(Account.all.collect{|s| [s.name, s.id]}, Account.all.pluck(:id)),
-                              {multiple: true, class: 'form-control', required: true, data: {behaviour: 'select2'}}
 
 
 .table-responsive
@@ -31,6 +19,3 @@
           %td= client.rut
 
 
-:javascript
-  initBla('#causas-select-container');
-  $(".select2-search").show();

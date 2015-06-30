@@ -10,6 +10,7 @@ class Ability
     can :manage, Account, :user_id => user.id
     if user.is? :abogado        
         can :manage, UserCausa, :account_id => user.id
+        can :manage, Search
         can :read, GeneralCausa
         can :read, Home
     elsif user.is? :secretaria

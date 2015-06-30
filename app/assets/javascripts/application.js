@@ -224,3 +224,79 @@ function initBla(id) {
     });
 }
 
+function initClients(id) {
+    $(".select2-search").show();
+
+    function formatRepo (repo) {
+
+        var markup = '<div class="clearfix">' +
+            '<div class="col-sm-1">' +
+            '<i class="fa fa-book"></i>' +
+            '</div>' +
+            '<div clas="col-sm-10">' +
+            '<div class="clearfix">' +
+            '<div class="col-sm-5">' + repo.name +'</div>' +
+            '<div class="col-sm-5">' + repo.rut + '</div>' +
+            '</div>';
+
+
+        markup += '</div></div>';
+
+        return markup;
+    }
+
+    function formatRepoSelection (repo) {
+        return repo.name
+    }
+
+    var courses = $('#account_id', id);
+
+    courses.css('width', '100%');
+    courses.select2({
+
+        ajax: {
+            url: window.location.origin.replace(/#.*$/, "") + '/search_clients',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params
+                };
+            },
+            results: function (data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+                /* return {
+                 results: _.map(data, function(course){
+                 return _.extend(course, { text: 'Rit: '+course.rit.toString() + ', RUC, ' + course.ruc.toString() +', Caratulado: '+course.caratulado });
+                 })
+                 };
+                 },
+                 cache: false
+                 },
+                 minimumInputLength: 3*/
+                var results = [];
+                $.each(data, function(index, item) {
+                    results.push({
+                        text: item.id,
+                        text: item.rut
+                    });
+                });
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) { return markup; },
+        minimumInputLength: 3,
+        formatResult: formatRepo,
+        formatSelection: formatRepoSelection,
+        dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+
+
+    });
+}
