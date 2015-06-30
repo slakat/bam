@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def index
-        json = Retiro.all.to_json( :include => :civil_causas )
+        json = Retiro.all.to_json( :include => :civil_causa )
 
         render json: json
       end
