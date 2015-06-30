@@ -262,7 +262,7 @@ module Scrapers
 
       @list=[]
       #puts page.search("table#filaSel tr").inner_text
-          end
+          
       page.search('div#divRecursos table tr.textoPortal').each do |n|
         properties = n.search('td a/text()','td/text()').collect {|text| text.to_s}
         things = [properties[0],properties[3],properties[4],properties[5],properties[6],properties[7]]
