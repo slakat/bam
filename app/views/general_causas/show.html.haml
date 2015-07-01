@@ -1,3 +1,4 @@
+-behaviour = {behaviour: 'select2'}
 .page-header
   = link_to general_causas_path, :class => 'btn btn-default' do
     %span.glyphicon.glyphicon-list-alt
@@ -17,18 +18,28 @@
   %dt Tribunal:
   %dd= @general_causa.causa.tribunal
 
-.row.marg-t-40
-  %h4 Asignar a Usuario
-  = form_tag('/accounts/add_causa') do
-    .col-md-11
-      #causas-select-container.form-group      
-        / = select_tag 'id', options_from_collection_for_select(Account.all, :id, :nombre), class: "form-control select select-default w-100pc", data: "select2"
-        - options = options_from_collection_for_select(Account.all, :id, :nombre)
-        = hidden_field_tag :causa, @general_causa.id
-        = select2_helper :id, options, behaviour: "select2"
-    .col-md-4
-      .form-group
-        = submit_tag 'Agregar', class: 'btn btn-primary'
+-if current_user.is? :admin
+  .row.marg-t-40
+    %h4 Asignar a Usuario
+    = form_tag('/accounts/add_causa') do
+      .col-md-11
+        #causas-select-container.form-group
+          / = select_tag 'id', options_from_collection_for_select(Account.all, :id, :nombre), class: "form-control select select-default w-100pc", data: "select2"
+          - options = options_from_collection_for_select(Account.all, :id, :nombre)
+          = hidden_field_tag :causa, @general_causa.id
+          = select_tag :id, options_from_collection_for_select(Account.all, :id, :nombre), class: 'lawyers-select form-control', required: true,behaviour: 'select2'
+      .col-md-4
+        .form-group
+          = submit_tag 'Agregar', class: 'btn btn-primary'
+
+
+.row.marg-t-40.padd-t-20.add_new
+  %h4 Causa asignada a:
+
+  %ul
+  -@general_causa.user_causas.each do |a|
+    %li
+      = link_to a.account.nombre,account_path(a.account)
 
 .row.marg-t-40
   -if @general_causa.litigantes
@@ -60,7 +71,7 @@
                       = lit.participante
 
 - if competencia(@general_causa.causa.class.to_s) == "Civil"
-  = render "general_causas/changes_table", changes: @general_causa.causa.retiros
+  = render "retiros/retiros_table", changes: @general_causa.causa.retiros
 
 - if @general_causa.causa.class.to_s == "CorteCausa" or @general_causa.causa.class.to_s == "SupremaCausa"
   = render "general_causas/expediente", change: @general_causa.causa.expediente
@@ -77,3 +88,7 @@
     No se logro vincular la causa
 
 
+:javascript
+  $(".select2-search").show();
+  initDataBehaviour( '#causas-select-container')
+  $(document).ready(function() {$(".lawyers-select").select2();});

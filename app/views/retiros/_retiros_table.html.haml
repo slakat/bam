@@ -1,0 +1,34 @@
+/ = render "general_causas/changes_table", changes: CausaChange.all
+
+.row
+	.col-md-12
+		.grid.simple.can-collapse
+			.grid-title
+				%h4.semi-bold Retiros de Receptor
+				.tools
+					%a.marg-t-10.collapse
+			.grid-body
+				%table.table.table-striped.datatable.display.responsive.no-wrap
+					%thead
+						%tr
+							%th Identificador
+							%th Cuaderno
+							%th Datos
+							%th Estado
+					%tbody
+						-changes.each do |c|
+							
+							-unless c.nil?
+								%tr
+									%td
+										%span
+											=c.civil_causa.identificator
+									%td
+										%span
+											=c.cuaderno
+									%td
+										%span
+											=c.datos_retiro
+									%td
+										%span
+											=c.estado

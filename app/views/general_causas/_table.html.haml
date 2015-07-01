@@ -16,6 +16,7 @@
                             %th Ing. Cortes
                             %th Cambios Cortes
                             %th Ver
+                            %th
                     %tbody
                         -general_causas.each do |d|
                             -c=d.causa
@@ -58,5 +59,14 @@
                                                 %input{type: "checkbox", "data-toggle"=>"switch", id:"custom-switch-01", checked: role_value(user_causa,:not3),class:'switch',name: "not3_#{user_causa.id}"}
                                         %td
                                             %span
-                                                = link_to "Ver", general_causa_path(user_causa), class: "btn btn-primary"
+                                                = link_to "Ver", general_causa_path(d), class: "btn btn-primary"
+                                        -if current_page? lawyer_causas_path(lawyer) and current_user.is? :admin
+                                            %td
+                                                %span
+                                                    = form_tag('/accounts/remove_causa') do
+                                                        = hidden_field_tag 'id',@account.id
+                                                        = hidden_field_tag 'causa', d.id
+                                                        = submit_tag 'Remover', class: 'btn btn-danger'
+
+
 

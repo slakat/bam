@@ -37,6 +37,7 @@
                     %span
                       =c.account.rut
                   -#%td= link_to 'Show', client
+                  %td= link_to 'Ver', account_path(c.account)
                   %td= link_to 'Editar', edit_account_path(c.account)
                   %td= link_to 'Borrar', c.account, :data => { confirm: 'Are you sure?' }, :method => :delete
 

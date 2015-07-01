@@ -36,13 +36,16 @@ ActiveRecord::Schema.define(version: 20150630162033) do
   end
 
   create_table "civil_causas", force: :cascade do |t|
-    t.string   "rol",        limit: 255
-    t.date     "date"
-    t.string   "caratulado", limit: 255
-    t.string   "tribunal",   limit: 255
+    t.string   "rol",             limit: 255
+    t.date     "fecha_ingreso"
+    t.string   "caratulado",      limit: 255
+    t.string   "tribunal",        limit: 255
+    t.string   "estado_procesal", limit: 255
+    t.string   "administrativo",  limit: 255
+    t.string   "ubicacion",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "link",       limit: 255
+    t.text     "link",            limit: 65535
   end
 
   create_table "client_causas", force: :cascade do |t|
@@ -62,13 +65,16 @@ ActiveRecord::Schema.define(version: 20150630162033) do
   end
 
   create_table "corte_causas", force: :cascade do |t|
-    t.string "numero_ingreso",  limit: 255
+    t.string "numero_ingreso",        limit: 255
     t.date   "fecha_ingreso"
-    t.string "ubicacion",       limit: 255
+    t.string "ubicacion",             limit: 255
     t.date   "fecha_ubicacion"
-    t.string "corte",           limit: 255
-    t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.string "corte",                 limit: 255
+    t.string "caratulado",            limit: 255
+    t.string "libro",                 limit: 255
+    t.string "estado_administrativo", limit: 255
+    t.string "estado_procesal",       limit: 255
+    t.text   "link",                  limit: 65535
   end
 
   create_table "expediente_cortes", force: :cascade do |t|
@@ -82,14 +88,15 @@ ActiveRecord::Schema.define(version: 20150630162033) do
   end
 
   create_table "expedientes", force: :cascade do |t|
-    t.string   "rol_rit",        limit: 255
-    t.string   "ruc",            limit: 255
-    t.string   "fecha",          limit: 255
-    t.string   "caratulado",     limit: 255
-    t.string   "tribunal",       limit: 255
-    t.integer  "corte_causa_id", limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "rol_rit",          limit: 255
+    t.string   "ruc",              limit: 255
+    t.string   "fecha",            limit: 255
+    t.string   "caratulado",       limit: 255
+    t.string   "tribunal",         limit: 255
+    t.integer  "corte_causa_id",   limit: 4
+    t.integer  "suprema_causa_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "general_causa_cortes", force: :cascade do |t|
@@ -115,12 +122,15 @@ ActiveRecord::Schema.define(version: 20150630162033) do
   end
 
   create_table "laboral_causas", force: :cascade do |t|
-    t.string "rit",        limit: 255
-    t.string "ruc",        limit: 255
+    t.string "rit",                   limit: 255
+    t.string "ruc",                   limit: 255
     t.date   "fecha"
-    t.string "caratulado", limit: 255
-    t.string "tribunal",   limit: 255
-    t.string "link",       limit: 255
+    t.string "caratulado",            limit: 255
+    t.string "tribunal",              limit: 255
+    t.string "estado_procesal",       limit: 255
+    t.string "estado_administrativo", limit: 255
+    t.string "ubicacion",             limit: 255
+    t.text   "link",                  limit: 65535
   end
 
   create_table "litigantes", force: :cascade do |t|
@@ -141,18 +151,22 @@ ActiveRecord::Schema.define(version: 20150630162033) do
   end
 
   create_table "procesal_causas", force: :cascade do |t|
-    t.string "tribunal",             limit: 255
-    t.string "tipo",                 limit: 255
-    t.string "rol_interno",          limit: 255
-    t.string "rol_unico",            limit: 255
-    t.string "identificacion_causa", limit: 255
-    t.string "estado",               limit: 255
-    t.string "link",                 limit: 255
+    t.string "tribunal",              limit: 255
+    t.string "tipo",                  limit: 255
+    t.string "rol_interno",           limit: 255
+    t.string "rol_unico",             limit: 255
+    t.string "identificacion_causa",  limit: 255
+    t.string "estado",                limit: 255
+    t.string "fecha_ingreso",         limit: 255
+    t.string "estado_procesal",       limit: 255
+    t.string "estado_administrativo", limit: 255
+    t.string "ubicacion",             limit: 255
+    t.text   "link",                  limit: 65535
   end
 
   create_table "retiros", force: :cascade do |t|
     t.string   "cuaderno",       limit: 255
-    t.string   "data_retiro",    limit: 255
+    t.string   "datos_retiro",   limit: 255
     t.string   "estado",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -182,7 +196,10 @@ ActiveRecord::Schema.define(version: 20150630162033) do
     t.date   "fecha_ubicacion"
     t.string "corte",           limit: 255
     t.string "caratulado",      limit: 255
-    t.string "link",            limit: 255
+    t.string "libro",           limit: 255
+    t.string "estado_recurso",  limit: 255
+    t.string "estado_procesal", limit: 255
+    t.text   "link",            limit: 65535
   end
 
   create_table "user_causas", force: :cascade do |t|

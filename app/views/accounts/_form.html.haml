@@ -21,6 +21,11 @@
       = f.label :rut
     .col-md-4
       = f.text_field :rut
+  .field.row
+    .col-md-2
+      = label_tag :email, 'Email'
+    .col-md-4
+      = text_field_tag :email, ''
   - if current_user.is? :admin
     .field.row
       .col-md-2

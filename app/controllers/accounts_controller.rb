@@ -22,7 +22,10 @@ class AccountsController < ApplicationController
 
   def create
     @account = Account.new(account_params)
+    user = User.create(email:params[:email],password: '12345678')
+    @account.user = user
     @account.save
+    user.account = Account.last
     respond_with(@account)
   end
 
@@ -79,7 +82,10 @@ class AccountsController < ApplicationController
 
   def remove_causa
     causa = GeneralCausa.find(params[:causa])
-    #@account.general_causas.
+    if @account.general_causas.include?(causa)
+      @account.general_causas.delete(causa)
+    end
+    redirect_to request.referer
   end
 
   private

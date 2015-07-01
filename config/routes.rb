@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   post 'search_name_suprema' =>'searches#search_name_suprema', defaults: { format: 'js' },as: 'search_name_suprema'
 
   post 'accounts/add_causa' => 'accounts#add_causa', as: 'add_causa'
+  post 'accounts/remove_causa' => 'accounts#remove_causa', as: 'remove_causa'
   post 'accounts/add_client' => 'accounts#add_client', as: 'add_client'
   get 'search_clients' => 'accounts#search_clients', as: 'search_clients'
 
